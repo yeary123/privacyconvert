@@ -18,7 +18,7 @@ export async function POST() {
       },
       body: JSON.stringify({
         intent: "CAPTURE",
-        purchase_units: [{ amount: { currency_code: "USD", value: "99.00" } }],
+        purchase_units: [{ amount: { currency_code: "USD", value: "9.90" } }],
       }),
     });
     const data = await res.json();

@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { toast } from "sonner";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { PayPalButtonsWrapper } from "@/components/PayPalButtons";
+import { PayPalBuyNowButton } from "@/components/PayPalBuyNowButton";
 import { useProStore } from "@/store/useProStore";
 
 const BUYMEACOFFEE_URL = "https://www.buymeacoffee.com/privacyconvert";
@@ -116,47 +115,33 @@ export function PricingContent() {
         </Table>
       </div>
 
-      {/* Pro plans: PayPal + Buy Me a Coffee */}
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle>Monthly</CardTitle>
-            <p className="text-2xl font-bold">$4.9<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <PayPalButtonsWrapper plan="monthly" onSuccess={() => toast.success("Payment successful! Pro is now active.")} />
-            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-muted-foreground hover:underline">
-              Or Buy Me a Coffee
-            </a>
-            <p className="text-xs text-muted-foreground">Pro perks after payment (PayPal or BMC).</p>
-          </CardContent>
-        </Card>
+      {/* Lifetime Pro $9.9 + Buy Me a Coffee */}
+      <div className="grid gap-6 md:grid-cols-2">
         <Card className="border-primary">
           <CardHeader>
-            <CardTitle>Yearly</CardTitle>
-            <p className="text-2xl font-bold">$49<span className="text-sm font-normal text-muted-foreground">/yr</span></p>
-            <p className="text-sm text-muted-foreground">Save ~17%</p>
+            <CardTitle>Lifetime Pro</CardTitle>
+            <p className="text-2xl font-bold">$9.9</p>
+            <p className="text-sm text-muted-foreground">One-time payment, forever Pro.</p>
           </CardHeader>
           <CardContent className="space-y-2">
-            <PayPalButtonsWrapper plan="yearly" onSuccess={() => toast.success("Payment successful! Pro is now active.")} />
-            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-muted-foreground hover:underline">
-              Or Buy Me a Coffee
-            </a>
-            <p className="text-xs text-muted-foreground">Unlock batch, history, P2P.</p>
+            <PayPalBuyNowButton />
+            <p className="text-xs text-muted-foreground">PayPal Buy Now. After payment, Pro activates and you are redirected to the homepage.</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Lifetime</CardTitle>
-            <p className="text-2xl font-bold">$99</p>
-            <p className="text-sm text-muted-foreground">One-time</p>
+            <CardTitle>Donate</CardTitle>
+            <p className="text-sm text-muted-foreground">Support development via Buy Me a Coffee. You may receive a redeem code for Pro.</p>
           </CardHeader>
-          <CardContent className="space-y-2">
-            <PayPalButtonsWrapper plan="lifetime" onSuccess={() => toast.success("Payment successful! Pro is now active.")} />
-            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-muted-foreground hover:underline">
-              Or Buy Me a Coffee
+          <CardContent>
+            <a
+              href={BUYMEACOFFEE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md bg-amber-500 px-4 py-2 text-sm font-medium text-white hover:bg-amber-600"
+            >
+              Buy Me a Coffee
             </a>
-            <p className="text-xs text-muted-foreground">One-time payment, forever Pro.</p>
           </CardContent>
         </Card>
       </div>

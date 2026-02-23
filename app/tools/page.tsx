@@ -21,7 +21,6 @@ const CATEGORIES = [
   { id: "image", label: "Image" },
   { id: "audio", label: "Audio" },
   { id: "video", label: "Video" },
-  { id: "document", label: "Document" },
 ] as const;
 
 export default function ToolsPage() {
@@ -45,6 +44,9 @@ export default function ToolsPage() {
     }
     return list;
   }, [query, category]);
+
+  // All cards link to static /convert/xxx pages (avif-to-png, wav-to-mp3, etc.)
+  const toolHref = (slug: string) => `/convert/${slug}`;
 
   return (
     <div className="container py-8">
@@ -79,7 +81,7 @@ export default function ToolsPage() {
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {filtered.map((tool) => (
-          <Link key={tool.slug} href={`/convert/${tool.slug}`} className="block h-full">
+          <Link key={tool.slug} href={toolHref(tool.slug)} className="block h-full">
             <Card
               className={cn(
                 "h-full transition-colors hover:bg-muted/50",

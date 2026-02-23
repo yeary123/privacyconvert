@@ -13,6 +13,7 @@ import {
   buildHowToSchema,
   buildSoftwareApplicationSchema,
 } from "@/lib/schema";
+import { getConvertSeoContent } from "@/lib/convertSeoContent";
 
 const TOOL_SLUG = "png-to-jpeg";
 const TOOL_NAME = "PNG to JPEG";
@@ -116,6 +117,8 @@ Summary
 PrivacyConvert's PNG to JPEG converter is free, runs 100% in your browser, and never uploads your files. Use it for quick, private conversions with no sign-up. No upload 2026, privacy first file converter, client side and completely local. For unlimited batch and more formats, consider Pro. Vs Convertio, vs VERT.sh, vs localconvert: we share the same no-upload philosophy while offering a clear product and more tools in one place in 2026.
 `.trim();
 
+const TUTORIAL_FULL = getConvertSeoContent("png-to-jpeg") || TUTORIAL_CONTENT;
+
 export default async function PngToJpegPage() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
   const faqSchema = buildFAQSchema(FAQ);
@@ -159,7 +162,7 @@ export default async function PngToJpegPage() {
           </div>
           <aside className="min-w-0 lg:col-span-7">
             <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-              {TUTORIAL_CONTENT}
+              {TUTORIAL_FULL}
             </div>
             <div className="mt-8">
               <h3 className="mb-4 font-semibold">PNG to JPEG FAQ</h3>
