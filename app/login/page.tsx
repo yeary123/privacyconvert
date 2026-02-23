@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Shield, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Shield, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -81,13 +81,16 @@ export default function LoginPage() {
     <div className="container flex min-h-[60vh] flex-col items-center justify-center px-4">
       <Card className="w-full max-w-md border-primary/20">
         <CardHeader className="text-center">
-          <Link href="/" className="inline-flex items-center gap-2 font-semibold text-foreground hover:opacity-90">
-            <Shield className="h-5 w-5 text-primary" aria-hidden />
-            PrivacyConvert
+          <Link
+            href="/"
+            className="mx-auto inline-flex items-center gap-2 font-semibold text-foreground hover:opacity-90"
+          >
+            <Shield className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+            <span>PrivacyConvert</span>
           </Link>
-          <CardTitle className="mt-4">Sign in with magic link</CardTitle>
+          <CardTitle className="mt-4">Secure Email Login</CardTitle>
           <CardDescription>
-            Enter your email and we&apos;ll send you a link to sign in — no password needed.
+            Enter your email to receive a secure, one-time authentication link. No password required for better security.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -99,7 +102,7 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="Enter your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
@@ -108,13 +111,30 @@ export default function LoginPage() {
                 className="h-10"
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Sending…" : "Send magic link"}
-              <ArrowRight className="ml-2 h-4 w-4" />
+            <Button type="submit" className="w-full rounded-lg" disabled={loading}>
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  Send Secure Link
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
             </Button>
           </form>
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            By signing in you agree to use the service. No password is stored.
+          <p className="mt-4 text-center text-sm text-gray-500">
+            By signing in, you agree to our{" "}
+            <Link href="/terms" className="font-medium text-foreground underline underline-offset-2 hover:no-underline">
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link href="/privacy" className="font-medium text-foreground underline underline-offset-2 hover:no-underline">
+              Privacy Policy
+            </Link>
+            . We prioritize your privacy and never store passwords.
           </p>
         </CardContent>
       </Card>
