@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DonationButton } from "@/components/DonationButton";
+import { DonationThankYouWall } from "@/components/DonationThankYouWall";
 
 export const metadata: Metadata = {
   title: "About - No Upload, Local Converter | PrivacyConvert 2026",
@@ -56,6 +57,14 @@ export default function AboutPage() {
           <div className="mt-6">
             <DonationButton />
           </div>
+        </section>
+
+        <section>
+          <h2 className="mb-4 text-xl font-semibold">Donation thank you wall</h2>
+          <p className="mb-4 text-muted-foreground text-sm">
+            Latest supporters via Buy Me a Coffee. Thank you for helping keep PrivacyConvert free and local-first.
+          </p>
+          <DonationThankYouWall />
         </section>
 
         <Card>

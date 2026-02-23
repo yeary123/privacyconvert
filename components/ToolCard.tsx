@@ -17,7 +17,7 @@ export function ToolCard({ slug, name, description, category, proOnly }: ToolCar
       <Card
         className={cn(
           "h-full transition-colors hover:bg-muted/50",
-          proOnly && "border-primary/40 bg-primary/5"
+          proOnly && "border-primary/50 bg-primary/5 ring-1 ring-primary/20"
         )}
       >
         <CardHeader>
@@ -25,7 +25,7 @@ export function ToolCard({ slug, name, description, category, proOnly }: ToolCar
             {name}
             <span className="flex items-center gap-1">
               {proOnly && (
-                <span className="rounded bg-primary/20 px-1.5 py-0.5 text-xs font-medium text-primary">
+                <span className="rounded-full bg-primary/25 px-2 py-0.5 text-xs font-semibold text-primary">
                   Pro
                 </span>
               )}

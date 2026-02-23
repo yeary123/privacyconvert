@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { getSiteSoftwareApplicationSchema } from "@/lib/schema";
 import "./globals.css";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,8 +29,8 @@ export const metadata: Metadata = {
   keywords: ["file converter", "local convert", "no upload", "privacy", "browser", "AVIF", "MP3", "WAV"],
   authors: [{ name: "PrivacyConvert" }],
   openGraph: {
-    title: "PrivacyConvert - Local File Converter, No Upload",
-    description: "100% browser-side conversion. Zero privacy risk. 2026.",
+    title: "PrivacyConvert - Local File Converter, No Upload 2026",
+    description: "100% browser-side conversion. No upload 2026, zero privacy risk.",
     type: "website",
   },
 };
@@ -47,6 +50,19 @@ export default function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
+        {GA_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar />
           <main className="flex-1">{children}</main>

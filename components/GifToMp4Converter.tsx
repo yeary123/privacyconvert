@@ -3,8 +3,9 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { fetchFile } from "@ffmpeg/util";
-import { Loader2, Download, Video } from "lucide-react";
+import { Loader2, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ConversionResult } from "@/components/ConversionResult";
 import { loadFFmpeg } from "@/lib/ffmpeg";
 import { useProStore } from "@/store/useProStore";
 
@@ -14,8 +15,12 @@ function getBatchLimit(isPro: boolean): number {
   return isPro ? 999 : BATCH_LIMIT_FREE;
 }
 
-export function GifToMp4Converter() {
+type Props = { toolSlug?: string };
+
+export function GifToMp4Converter({ toolSlug = "gif-to-mp4" }: Props) {
   const isPro = useProStore((s) => s.isPro);
+  const addHistory = useProStore((s) => s.addHistory);
+  const incrementProtected = useProStore((s) => s.incrementProtected);
   const batchLimit = getBatchLimit(isPro);
   const [loaded, setLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
@@ -75,6 +80,8 @@ export function GifToMp4Converter() {
         }
         ffmpeg.off("progress", onProgress);
         setResults(outputs);
+        if (outputs.length > 0) incrementProtected(outputs.length);
+        if (isPro && outputs.length > 0) addHistory(toolSlug, outputs.length);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Conversion failed");
       } finally {
@@ -82,7 +89,7 @@ export function GifToMp4Converter() {
         setProgress(0);
       }
     },
-    [loaded, batchLimit]
+    [loaded, batchLimit, isPro, addHistory, incrementProtected, toolSlug]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -124,7 +131,7 @@ export function GifToMp4Converter() {
     <div className="space-y-4">
       <div
         {...getRootProps()}
-        className={`rounded-xl border-2 border-dashed p-4 sm:p-6 md:p-8 text-center transition-colors min-h-[120px] sm:min-h-[140px] flex flex-col items-center justify-center ${
+        className={`rounded-xl border-2 border-dashed p-4 sm:p-6 md:p-8 text-center transition-colors min-h-[140px] sm:min-h-[160px] flex flex-col items-center justify-center touch-manipulation select-none ${
           isDragActive ? "border-primary bg-primary/5" : "border-border bg-muted/30"
         } ${converting ? "pointer-events-none opacity-70" : ""}`}
       >
@@ -149,27 +156,12 @@ export function GifToMp4Converter() {
         </div>
       )}
       {error && (
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
+        <div role="alert" className="rounded-lg border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive font-medium">
           {error}
         </div>
       )}
       {results.length > 0 && (
-        <div className="space-y-2">
-          <p className="text-sm font-medium">Download</p>
-          <div className="flex flex-wrap gap-2">
-            {results.map((r) => (
-              <Button
-                key={r.name}
-                variant="outline"
-                size="sm"
-                onClick={() => download(r.name, r.blob)}
-              >
-                <Download className="h-4 w-4" />
-                {r.name}
-              </Button>
-            ))}
-          </div>
-        </div>
+        <ConversionResult results={results} type="video" onDownload={download} />
       )}
     </div>
   );

@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const STORAGE_KEY = "privacyconvert_pro";
+const PROTECTED_COUNT_KEY = "privacyconvert_protected_count";
+const DEFAULT_PROTECTED_COUNT = 128000;
 
 export type ConversionHistoryItem = {
   tool: string;
@@ -17,9 +19,11 @@ export const useProStore = create<{
   addHistory: (tool: string, count: number) => void;
   batchCount: number;
   setBatchCount: (n: number) => void;
+  protectedCount: number;
+  incrementProtected: (n: number) => void;
 }>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       isPro: false,
       setPro: (value) => set({ isPro: value }),
       hydrate: () => {
@@ -28,7 +32,14 @@ export const useProStore = create<{
         try {
           const data = raw ? JSON.parse(raw) : null;
           const isPro = data?.state?.isPro === true;
-          set({ isPro });
+          let protectedCount = get().protectedCount;
+          try {
+            const pc = window.localStorage.getItem(PROTECTED_COUNT_KEY);
+            if (pc) protectedCount = Math.max(DEFAULT_PROTECTED_COUNT, parseInt(pc, 10) || protectedCount);
+          } catch {
+            // ignore
+          }
+          set({ isPro, protectedCount });
         } catch {
           set({ isPro: !!raw });
         }
@@ -43,7 +54,27 @@ export const useProStore = create<{
         })),
       batchCount: 0,
       setBatchCount: (n) => set({ batchCount: n }),
+      protectedCount: DEFAULT_PROTECTED_COUNT,
+      incrementProtected: (n) =>
+        set((s) => {
+          const next = s.protectedCount + n;
+          if (typeof window !== "undefined") {
+            try {
+              window.localStorage.setItem(PROTECTED_COUNT_KEY, String(next));
+            } catch {
+              // ignore
+            }
+          }
+          return { protectedCount: next };
+        }),
     }),
-    { name: STORAGE_KEY }
+    {
+      name: STORAGE_KEY,
+      partialize: (s) => ({
+        isPro: s.isPro,
+        history: s.history,
+        batchCount: s.batchCount,
+      }),
+    }
   )
 );

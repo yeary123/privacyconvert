@@ -19,19 +19,19 @@ type ConversionUIProps = { slug: string };
 export function ConversionUI({ slug }: ConversionUIProps) {
   switch (slug) {
     case "avif-to-png":
-      return <AvifToPngConverter />;
+      return <AvifToPngConverter toolSlug={slug} />;
     case "wav-to-mp3":
-      return <WavToMp3Converter />;
+      return <WavToMp3Converter toolSlug={slug} />;
     case "webp-to-png":
-      return <WebpToPngConverter />;
+      return <WebpToPngConverter toolSlug={slug} />;
     case "mp4-to-webm":
-      return <Mp4ToWebmConverter />;
+      return <Mp4ToWebmConverter toolSlug={slug} />;
     case "png-to-jpeg":
-      return <PngToJpegConverter />;
+      return <PngToJpegConverter toolSlug={slug} />;
     case "ogg-to-mp3":
-      return <OggToMp3Converter />;
+      return <OggToMp3Converter toolSlug={slug} />;
     case "gif-to-mp4":
-      return <GifToMp4Converter />;
+      return <GifToMp4Converter toolSlug={slug} />;
     case "pdf-to-images":
       return <PdfToImagesConverter />;
     default:

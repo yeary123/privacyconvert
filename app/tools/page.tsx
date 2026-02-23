@@ -6,8 +6,15 @@ import { Search, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ToolCard } from "@/components/ToolCard";
 import { TOOLS } from "@/lib/tools";
+import { TOOLS_FAQ } from "@/lib/toolsFaq";
 import { cn } from "@/lib/utils";
 
 const CATEGORIES = [
@@ -100,6 +107,17 @@ export default function ToolsPage() {
       {filtered.length === 0 && (
         <p className="py-8 text-center text-muted-foreground">No tools match your search.</p>
       )}
+      <section className="mt-16 border-t border-border pt-12">
+        <h2 className="mb-6 text-2xl font-bold">Tools FAQ</h2>
+        <Accordion type="single" collapsible className="w-full max-w-2xl">
+          {TOOLS_FAQ.map((item, i) => (
+            <AccordionItem key={i} value={`tools-faq-${i}`}>
+              <AccordionTrigger>{item.q}</AccordionTrigger>
+              <AccordionContent>{item.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </section>
     </div>
   );
 }

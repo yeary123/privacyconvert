@@ -4,8 +4,9 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
-import { Loader2, Download, FileImage } from "lucide-react";
+import { Loader2, FileImage } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ConversionResult } from "@/components/ConversionResult";
 import { loadFFmpeg } from "@/lib/ffmpeg";
 import { useProStore } from "@/store/useProStore";
 
@@ -15,8 +16,12 @@ function getBatchLimit(isPro: boolean): number {
   return isPro ? 999 : BATCH_LIMIT_FREE;
 }
 
-export function AvifToPngConverter() {
+type Props = { toolSlug?: string };
+
+export function AvifToPngConverter({ toolSlug = "avif-to-png" }: Props) {
   const isPro = useProStore((s) => s.isPro);
+  const addHistory = useProStore((s) => s.addHistory);
+  const incrementProtected = useProStore((s) => s.incrementProtected);
   const [loaded, setLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -76,6 +81,8 @@ export function AvifToPngConverter() {
         }
         ffmpeg.off("progress", onProgress);
         setResults(outputs);
+        if (outputs.length > 0) incrementProtected(outputs.length);
+        if (isPro && outputs.length > 0) addHistory(toolSlug, outputs.length);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Conversion failed");
       } finally {
@@ -83,7 +90,7 @@ export function AvifToPngConverter() {
         setProgress(0);
       }
     },
-    [loaded, batchLimit]
+    [loaded, batchLimit, isPro, addHistory, incrementProtected, toolSlug]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -125,11 +132,11 @@ export function AvifToPngConverter() {
     <div className="space-y-4">
       <div
         {...getRootProps()}
-        className={`rounded-xl border-2 border-dashed p-4 sm:p-6 md:p-8 text-center transition-colors min-h-[120px] sm:min-h-[140px] flex flex-col items-center justify-center ${
+        className={`rounded-xl border-2 border-dashed p-4 sm:p-6 md:p-8 text-center transition-colors min-h-[140px] sm:min-h-[160px] flex flex-col items-center justify-center touch-manipulation select-none ${
           isDragActive ? "border-primary bg-primary/5" : "border-border bg-muted/30"
         } ${converting ? "pointer-events-none opacity-70" : ""}`}
       >
-        <input {...getInputProps()} />
+        <input {...getInputProps()} aria-label="Drop or select AVIF files" />
         <FileImage className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
           {converting ? "Converting..." : "Drop AVIF files here, or click to select"}
@@ -150,27 +157,12 @@ export function AvifToPngConverter() {
         </div>
       )}
       {error && (
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
+        <div role="alert" className="rounded-lg border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive font-medium">
           {error}
         </div>
       )}
       {results.length > 0 && (
-        <div className="space-y-2">
-          <p className="text-sm font-medium">Download</p>
-          <div className="flex flex-wrap gap-2">
-            {results.map((r) => (
-              <Button
-                key={r.name}
-                variant="outline"
-                size="sm"
-                onClick={() => download(r.name, r.blob)}
-              >
-                <Download className="h-4 w-4" />
-                {r.name}
-              </Button>
-            ))}
-          </div>
-        </div>
+        <ConversionResult results={results} type="image" onDownload={download} />
       )}
     </div>
   );
