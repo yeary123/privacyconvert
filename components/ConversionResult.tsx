@@ -10,12 +10,14 @@ type ConversionResultProps = {
   results: ResultItem[];
   type: "image" | "audio" | "video";
   onDownload: (name: string, blob: Blob) => void;
+  /** When provided and results.length > 1, show a "Download all" button (e.g. sequential download). */
+  onDownloadAll?: () => void;
 };
 
 /**
  * Preview + download for conversion results. First item shown as preview.
  */
-export function ConversionResult({ results, type, onDownload }: ConversionResultProps) {
+export function ConversionResult({ results, type, onDownload, onDownloadAll }: ConversionResultProps) {
   const first = results[0];
   const previewUrl = useMemo(
     () => (first ? URL.createObjectURL(first.blob) : null),
@@ -51,7 +53,13 @@ export function ConversionResult({ results, type, onDownload }: ConversionResult
           </video>
         )}
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 items-center">
+        {onDownloadAll && results.length > 1 && (
+          <Button variant="default" size="sm" onClick={onDownloadAll}>
+            <Download className="h-4 w-4" />
+            Download all
+          </Button>
+        )}
         {results.map((r) => (
           <Button
             key={r.name}

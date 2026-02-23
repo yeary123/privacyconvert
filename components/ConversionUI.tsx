@@ -1,6 +1,7 @@
 "use client";
 
 import { AvifToPngConverter } from "@/components/AvifToPngConverter";
+import { HeifToJpgConverter } from "@/components/HeifToJpgConverter";
 import { WavToMp3Converter } from "@/components/WavToMp3Converter";
 import { WebpToPngConverter } from "@/components/WebpToPngConverter";
 import { Mp4ToWebmConverter } from "@/components/Mp4ToWebmConverter";
@@ -20,6 +21,8 @@ export function ConversionUI({ slug }: ConversionUIProps) {
   switch (slug) {
     case "avif-to-png":
       return <AvifToPngConverter toolSlug={slug} />;
+    case "heif-to-jpg":
+      return <HeifToJpgConverter toolSlug={slug} />;
     case "wav-to-mp3":
       return <WavToMp3Converter toolSlug={slug} />;
     case "webp-to-png":

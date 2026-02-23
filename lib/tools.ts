@@ -1,5 +1,6 @@
 export const TOOLS = [
   { slug: "avif-to-png", name: "AVIF to PNG", description: "Convert AVIF images to PNG in browser", category: "image", proOnly: false },
+  { slug: "heif-to-jpg", name: "HEIF/HEIC to JPG", description: "Convert HEIF/HEIC images to JPG in browser", category: "image", proOnly: false },
   { slug: "wav-to-mp3", name: "WAV to MP3", description: "Convert WAV audio to MP3 locally", category: "audio", proOnly: false },
   { slug: "webp-to-png", name: "WebP to PNG", description: "Convert WebP to PNG without upload", category: "image", proOnly: false },
   { slug: "mp4-to-webm", name: "MP4 to WebM", description: "Convert MP4 video to WebM in browser", category: "video", proOnly: false },
