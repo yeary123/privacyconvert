@@ -9,9 +9,7 @@ export type PostMeta = {
   readingTime?: string;
 };
 
-/** Stable cover image URL for list cards (derived from slug). */
-export function getPostCoverUrl(slug: string): string {
-  let n = 0;
-  for (let i = 0; i < slug.length; i++) n = (n * 31 + slug.charCodeAt(i)) >>> 0;
-  return `https://picsum.photos/800/450?random=${n % 100}`;
+/** Stable cover image URL for list cards (placeholder only; no people). */
+export function getPostCoverUrl(_slug: string): string {
+  return "https://placehold.co/800x450/1a1a2e/94a3b8?text=PrivacyConvert";
 }

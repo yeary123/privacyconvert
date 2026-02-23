@@ -1,6 +1,6 @@
-# PrivacyConvert — 推广素材 (Phase 7)
+# PrivacyConvert — Promotion Materials (Phase 7)
 
-## Reddit 发帖文案
+## Reddit post copy
 
 ### r/privacy
 **Title:** Convert files in your browser — no upload, no server (privacy-first tool)
@@ -46,7 +46,7 @@ PrivacyConvert is a privacy-first file converter. All conversion runs in your br
 
 ---
 
-## Twitter / X 推广文案
+## Twitter / X promotion copy
 
 **Tweet 1 (short):**
 Convert files in your browser. No upload. No server. Your files never leave your device. → privacyconvert.com
@@ -62,7 +62,7 @@ A clean, modern illustration of a browser window with a lock or shield icon, fil
 
 ---
 
-## 邮件签名
+## Email signature
 
 **Plain text:**
 PrivacyConvert — Convert files in your browser. No upload, zero privacy risk. https://privacyconvert.com
@@ -72,7 +72,7 @@ PrivacyConvert — Convert files in your browser. No upload, zero privacy risk. 
 
 ---
 
-## 分享卡片 (Share card copy)
+## Share card copy
 
 **Headline:** No upload. Your device only.
 

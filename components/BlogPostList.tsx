@@ -62,7 +62,7 @@ export function BlogPostList({ posts }: { posts: PostMeta[] }) {
             variant="outline"
             onClick={() => setShown((n) => n + PER_PAGE)}
           >
-            加载更多
+            Load more
           </Button>
         </div>
       )}

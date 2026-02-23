@@ -5,9 +5,9 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { BlogPostList } from "@/components/BlogPostList";
 
 export const metadata: Metadata = {
-  title: "PrivacyConvert Blog – No Upload 2026 本地文件转换指南",
+  title: "PrivacyConvert Blog – No Upload 2026 Local File Conversion Guide",
   description:
-    "No upload 2026 本地文件转换指南：client side、browser local、completely local 转换技巧，privacy first file converter 对比（vs Convertio、VERT.sh、localconvert）。",
+    "No upload 2026 local file conversion guide: client-side, browser local, completely local conversion tips, privacy-first file converter comparison (vs Convertio, VERT.sh, localconvert).",
   keywords: [
     "no upload 2026",
     "privacy first file converter",
@@ -34,7 +34,7 @@ export default function BlogPage() {
             PrivacyConvert Blog
           </h1>
           <p className="text-lg text-muted-foreground">
-            No Upload 2026 本地文件转换指南 — client side、browser local、privacy first file converter 技巧与对比
+            No upload 2026 local conversion guide — client-side, browser local, privacy-first file converter tips and comparisons
           </p>
         </header>
 
@@ -55,7 +55,7 @@ export default function BlogPage() {
                 Subscribe
               </h3>
               <p className="mb-4 text-sm text-muted-foreground">
-                No upload 2026、privacy first 转换技巧与产品更新，直接发到你的邮箱。
+                No upload 2026 and privacy-first conversion tips and product updates, delivered to your inbox.
               </p>
               <NewsletterForm />
             </div>

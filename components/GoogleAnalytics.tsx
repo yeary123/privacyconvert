@@ -1,6 +1,6 @@
 import Script from "next/script";
 
-// 写死 GA4 测量 ID，无需配置环境变量；不用 GA 时改为空字符串 ""
+// Hardcoded GA4 measurement ID; set to empty string "" when not using GA
 const GA_ID = "G-XXXXXXXXXX";
 
 /**

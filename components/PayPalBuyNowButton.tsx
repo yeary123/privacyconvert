@@ -13,7 +13,7 @@ function PayPalBuyNowInner() {
   const router = useRouter();
 
   const onApprove = useCallback(async () => {
-    toast.success("恭喜！您已成为终身 Pro 用户");
+    toast.success("You're now a Lifetime Pro user. Thank you!");
     await fetchUser();
     router.push("/pricing?success=1");
   }, [fetchUser, router]);

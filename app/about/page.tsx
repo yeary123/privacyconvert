@@ -13,12 +13,13 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="container py-12">
-      <h1 className="mb-2 text-3xl font-bold">About PrivacyConvert</h1>
-      <p className="mb-10 text-muted-foreground">
-        Privacy-first, local-only file conversion. No upload. 2026.
-      </p>
-
-      <div className="mx-auto max-w-3xl space-y-10">
+      <div className="mx-auto max-w-3xl space-y-10 text-center">
+        <div>
+          <h1 className="mb-2 text-3xl font-bold">About PrivacyConvert</h1>
+          <p className="mb-10 text-muted-foreground">
+            Privacy-first, local-only file conversion. No upload. 2026.
+          </p>
+        </div>
         <section>
           <h2 className="mb-4 text-xl font-semibold">Our Privacy Story</h2>
           <p className="text-muted-foreground">
