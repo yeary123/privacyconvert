@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { TOOLS } from "@/lib/tools";
 import { getBlogSlugs } from "@/lib/blog";
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
+const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [

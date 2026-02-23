@@ -3,7 +3,7 @@ import { TOOLS } from "@/lib/tools";
 import { TOOLS_FAQ } from "@/lib/toolsFaq";
 import { buildItemListSchema, buildFAQSchema } from "@/lib/schema";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
 
 export const metadata: Metadata = {
   title: "All Tools - No Upload 2026, Local Convert | PrivacyConvert",

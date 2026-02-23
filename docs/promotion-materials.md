@@ -19,10 +19,10 @@ For anyone who wants to convert formats without sending files to the cloud: I ru
 ---
 
 ### r/SideProject
-**Title:** Launched: PrivacyConvert — no-upload file converter (browser-only, Stripe Pro)
+**Title:** Launched: PrivacyConvert — no-upload file converter (browser-only, PayPal Pro)
 
 **Body:**
-I launched PrivacyConvert: a file converter that runs entirely in the browser. No uploads — conversion happens locally with FFmpeg.wasm. Free tier: one file at a time, no sign-up. Pro (Stripe / Buy Me a Coffee): batch, history, P2P. Tech: Next.js, FFmpeg.wasm, PeerJS. Would love feedback and any ideas for the next formats. [privacyconvert.com](https://privacyconvert.com)
+I launched PrivacyConvert: a file converter that runs entirely in the browser. No uploads — conversion happens locally with FFmpeg.wasm. Free tier: one file at a time, no sign-up. Pro (PayPal / Buy Me a Coffee): batch, history, P2P. Tech: Next.js, FFmpeg.wasm, PeerJS. Would love feedback and any ideas for the next formats. [privacyconvert.com](https://privacyconvert.com)
 
 ---
 

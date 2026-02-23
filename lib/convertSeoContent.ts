@@ -22,7 +22,7 @@ Step 1: Open this page and click “Load FFmpeg”. The first time, about 31 MB 
 
 Privacy and security
 
-We don’t collect, store, or analyze your images. We don’t use tracking pixels or third-party scripts on the conversion page for the conversion itself. Your AVIF and PNG files exist only in your browser session. If you want to support development and get perks like unlimited batch conversion and larger file support, you can upgrade to Pro via Stripe or Buy Me a Coffee — but the core conversion remains local and private for everyone. Comparison: Convertio stores files temporarily on their servers; VERT.sh and localconvert run client-side like us. We differentiate with clearer SEO, a modern stack, and a transparent Free vs Pro model so you know exactly what you get in 2026.
+We don’t collect, store, or analyze your images. We don’t use tracking pixels or third-party scripts on the conversion page for the conversion itself. Your AVIF and PNG files exist only in your browser session. If you want to support development and get perks like unlimited batch conversion and larger file support, you can upgrade to Pro via PayPal or Buy Me a Coffee — but the core conversion remains local and private for everyone. Comparison: Convertio stores files temporarily on their servers; VERT.sh and localconvert run client-side like us. We differentiate with clearer SEO, a modern stack, and a transparent Free vs Pro model so you know exactly what you get in 2026.
 
 Limits: Free vs Pro. Browser support.
 

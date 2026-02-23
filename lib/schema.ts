@@ -2,7 +2,7 @@
  * JSON-LD Schema helpers for SEO (FAQ, SoftwareApplication, HowTo, ItemList).
  */
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
 
 export type FAQItem = { q: string; a: string };
 

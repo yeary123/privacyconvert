@@ -120,7 +120,7 @@ PrivacyConvert's PDF to Images converter (Pro) runs 100% in your browser and nev
 const TUTORIAL_FULL = getConvertSeoContent("pdf-to-images") || TUTORIAL_CONTENT;
 
 export default async function PdfToImagesPage() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
   const faqSchema = buildFAQSchema(FAQ);
   const howToSchema = buildHowToSchema({
     name: `${TOOL_NAME} - No Upload, 100% Local`,

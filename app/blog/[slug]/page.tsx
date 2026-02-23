@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getBlogSlugs, getPostBySlug, getPrevNextSlugs } from "@/lib/blog";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
 
 type Props = { params: Promise<{ slug: string }> };
 

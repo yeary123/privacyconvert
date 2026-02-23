@@ -23,7 +23,7 @@ export const TOOLS_FAQ: FAQItem[] = [
   },
   {
     q: "Do I need an account?",
-    a: "No account is required for free conversion. Use any tool immediately. Pro features can be unlocked via Pricing (Stripe or Buy Me a Coffee).",
+    a: "No account is required for free conversion. Use any tool immediately. Pro features can be unlocked via Pricing (PayPal or Buy Me a Coffee).",
   },
   {
     q: "What is the P2P Batch Transfer card?",

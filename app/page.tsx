@@ -49,7 +49,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Do I need to create an account?",
-    a: "No account is required for free conversion. You can use all free tools immediately. Pro features (unlimited batch, larger files, history) can be unlocked with a one-time or subscription payment via Stripe or Buy Me a Coffee.",
+    a: "No account is required for free conversion. You can use all free tools immediately. Pro features (unlimited batch, larger files, history) can be unlocked with a one-time or subscription payment via PayPal or Buy Me a Coffee.",
   },
   {
     q: "Is there a file size limit?",

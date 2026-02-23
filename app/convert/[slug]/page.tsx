@@ -233,7 +233,7 @@ When you use PrivacyConvert’s AVIF to PNG tool, the site loads FFmpeg (a well-
 
 Privacy and security
 
-We don’t collect, store, or analyze your images. We don’t use tracking pixels or third-party scripts on the conversion page for the conversion itself. Your AVIF and PNG files exist only in your browser session. If you want to support development and get perks like unlimited batch conversion and larger file support, you can upgrade to Pro via Stripe or Buy Me a Coffee — but the core conversion remains local and private for everyone.
+We don’t collect, store, or analyze your images. We don’t use tracking pixels or third-party scripts on the conversion page for the conversion itself. Your AVIF and PNG files exist only in your browser session. If you want to support development and get perks like unlimited batch conversion and larger file support, you can upgrade to Pro via PayPal or Buy Me a Coffee — but the core conversion remains local and private for everyone.
 
 Limits: Free vs Pro
 
@@ -271,7 +271,7 @@ When you use this tool, the site loads FFmpeg (open-source media toolkit) as Web
 
 Privacy and limits
 
-We do not collect, store, or analyze your audio. Free users can convert one file at a time; Pro users get unlimited batch conversion. Same 100% local conversion for everyone — Pro only relaxes limits and adds features like history and P2P transfer. To support development, you can upgrade via Buy Me a Coffee or Stripe. Comparison with Convertio and VERT.sh: Convertio uploads your WAV to their servers; VERT.sh and PrivacyConvert both run conversion in the browser. We offer a clear Free vs Pro model and more tools in one place for 2026.
+We do not collect, store, or analyze your audio. Free users can convert one file at a time; Pro users get unlimited batch conversion. Same 100% local conversion for everyone — Pro only relaxes limits and adds features like history and P2P transfer. To support development, you can upgrade via Buy Me a Coffee or PayPal. Comparison with Convertio and VERT.sh: Convertio uploads your WAV to their servers; VERT.sh and PrivacyConvert both run conversion in the browser. We offer a clear Free vs Pro model and more tools in one place for 2026.
 
 How to use
 
@@ -508,7 +508,7 @@ export default async function ConvertPage({ params }: Props) {
         steps: steps.map((s) => ({ name: s.name, text: s.text })),
       })
     : null;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
   const toolAppSchema = buildSoftwareApplicationSchema({
     name: `${tool.name} - No Upload 2026`,
     description: `${tool.description}. 100% local browser converter. No upload, privacy first.`,

@@ -98,7 +98,7 @@ When you use PrivacyConvert's GIF to MP4 tool, the site loads FFmpeg (open-sourc
 
 Privacy and security
 
-We don't collect, store, or analyze your video. We don't use tracking pixels or third-party scripts on the conversion page for the conversion itself. Your GIF and MP4 files exist only in your browser session. If you want to support development and get perks like unlimited batch conversion, you can upgrade to Pro via Stripe or Buy Me a Coffee — but the core conversion remains local and private for everyone. Comparison: vs Convertio — Convertio stores files temporarily on their servers; vs VERT.sh and vs localconvert — they run client side like us, browser local. We differentiate with a transparent Free vs Pro model so you know exactly what you get in 2026.
+We don't collect, store, or analyze your video. We don't use tracking pixels or third-party scripts on the conversion page for the conversion itself. Your GIF and MP4 files exist only in your browser session. If you want to support development and get perks like unlimited batch conversion, you can upgrade to Pro via PayPal or Buy Me a Coffee — but the core conversion remains local and private for everyone. Comparison: vs Convertio — Convertio stores files temporarily on their servers; vs VERT.sh and vs localconvert — they run client side like us, browser local. We differentiate with a transparent Free vs Pro model so you know exactly what you get in 2026.
 
 Limits: Free vs Pro
 
@@ -120,7 +120,7 @@ PrivacyConvert's GIF to MP4 converter is free, runs 100% in your browser, and ne
 const TUTORIAL_FULL = getConvertSeoContent("gif-to-mp4") || TUTORIAL_CONTENT;
 
 export default async function GifToMp4Page() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
   const faqSchema = buildFAQSchema(FAQ);
   const howToSchema = buildHowToSchema({
     name: `${TOOL_NAME} - No Upload, 100% Local`,

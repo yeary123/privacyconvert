@@ -50,7 +50,7 @@ export default function AboutPage() {
         <section>
           <h2 className="mb-4 text-xl font-semibold">Donation & Thanks</h2>
           <p className="text-muted-foreground">
-            If PrivacyConvert helps you, consider supporting us via Buy Me a Coffee or Stripe (Pro).
+            If PrivacyConvert helps you, consider supporting us via Buy Me a Coffee or PayPal (Pro).
             Donors and Pro users help us pay for hosting and development. We’re grateful to everyone
             who has supported the project.
           </p>

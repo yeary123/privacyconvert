@@ -1,10 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Coffee, CreditCard } from "lucide-react";
+import { Coffee } from "lucide-react";
 
 const BUYMEACOFFEE_URL = "https://www.buymeacoffee.com/privacyconvert";
-const STRIPE_URL = "#"; // Placeholder for Stripe checkout
 
 export function DonationButton() {
   return (
@@ -14,9 +13,6 @@ export function DonationButton() {
           <Coffee className="h-4 w-4" />
           Buy Me a Coffee
         </Button>
-      </a>
-      <a href={STRIPE_URL}>
-        <Button variant="outline" size="lg">Stripe (Pro)</Button>
       </a>
     </div>
   );
