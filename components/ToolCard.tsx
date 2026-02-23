@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-
 type ToolCardProps = {
   slug: string;
   name: string;
@@ -14,12 +12,7 @@ type ToolCardProps = {
 export function ToolCard({ slug, name, description, category, proOnly }: ToolCardProps) {
   return (
     <Link href={`/convert/${slug}`}>
-      <Card
-        className={cn(
-          "h-full transition-colors hover:bg-muted/50",
-          proOnly && "border-primary/50 bg-primary/5 ring-1 ring-primary/20"
-        )}
-      >
+      <Card className="h-full transition-colors hover:bg-muted/50">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             {name}
