@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -18,15 +16,11 @@ import { PayPalBuyNowButton } from "@/components/PayPalBuyNowButton";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
 
-const REDEEM_CODE = "PRO2026";
-
 export function PricingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isPro, setDemoProOverride, fetchUser } = useAuthStore();
+  const { fetchUser } = useAuthStore();
   const hydrate = useProStore((s) => s.hydrate);
-  const [code, setCode] = useState("");
-  const [redeemMessage, setRedeemMessage] = useState<"success" | "invalid" | null>(null);
 
   useEffect(() => {
     hydrate();
@@ -41,17 +35,6 @@ export function PricingContent() {
   }, [searchParams, fetchUser, router]);
 
   const [, startTransition] = useTransition();
-
-  const handleRedeem = () => {
-    if (code.trim().toUpperCase() === REDEEM_CODE) {
-      setDemoProOverride(true);
-      setRedeemMessage("success");
-      setCode("");
-      router.refresh();
-    } else {
-      setRedeemMessage("invalid");
-    }
-  };
 
   return (
     <div className="space-y-12">
@@ -120,56 +103,6 @@ export function PricingContent() {
           </CardContent>
         </Card>
       </div>
-
-      {/* Pro: redeem code + simulate */}
-      <Card id="pro" className="border-dashed scroll-mt-24">
-        <CardHeader>
-          <CardTitle className="text-base">Activate Pro</CardTitle>
-          <p className="text-sm text-muted-foreground">
-            After donating via Buy Me a Coffee you may receive a redeem code. Or simulate Pro for testing (stored in this browser).
-          </p>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-wrap items-end gap-3">
-            <div className="flex-1 min-w-[160px]">
-              <label className="mb-1 block text-xs text-muted-foreground">Redeem code</label>
-              <Input
-                placeholder="e.g. PRO2026"
-                value={code}
-                onChange={(e) => { setCode(e.target.value); setRedeemMessage(null); }}
-                onKeyDown={(e) => e.key === "Enter" && handleRedeem()}
-              />
-            </div>
-            <Button onClick={handleRedeem} type="button">Redeem</Button>
-          </div>
-          {redeemMessage === "success" && (
-            <p className="text-sm text-green-600 dark:text-green-400">Pro activated in this browser.</p>
-          )}
-          {redeemMessage === "invalid" && (
-            <p className="text-sm text-destructive">Invalid code.</p>
-          )}
-          <div className="flex flex-wrap items-center gap-4 pt-2 border-t border-border">
-            <Button
-              onClick={() => {
-                if (isPro) {
-                  setDemoProOverride(false);
-                  router.refresh();
-                } else {
-                  setDemoProOverride(true);
-                  router.refresh();
-                }
-              }}
-              variant={isPro ? "secondary" : "default"}
-              type="button"
-            >
-              {isPro ? "Turn off Pro (demo)" : "Turn on Pro (demo)"}
-            </Button>
-            <span className="text-sm text-muted-foreground">
-              {isPro ? "Pro is active — batch & more unlocked." : "Pro is off."}
-            </span>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }

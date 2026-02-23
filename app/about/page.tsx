@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DonationButton } from "@/components/DonationButton";
-import { DonationThankYouWall } from "@/components/DonationThankYouWall";
 
 export const metadata: Metadata = {
   title: "About - No Upload, Local Converter | PrivacyConvert 2026",
   description:
-    "Why we built a 100% local file converter. No upload, zero privacy risk. Our story and thanks to donors. 2026.",
+    "Why we built a 100% local file converter. No upload, zero privacy risk. Our story and thanks to Pro users. 2026.",
   keywords: ["about", "privacy", "no upload", "local converter", "2026"],
 };
 
@@ -43,29 +41,9 @@ export default function AboutPage() {
           <p className="text-muted-foreground">
             PrivacyConvert is built by a small team that cares about privacy and open tooling. We
             don’t collect your files, we don’t track you for ads, and we don’t sell data. We offer
-            optional Pro and donations so we can maintain the site and add more formats and tools
+            optional Pro so we can maintain the site and add more formats and tools
             in 2026 and beyond.
           </p>
-        </section>
-
-        <section>
-          <h2 className="mb-4 text-xl font-semibold">Donation & Thanks</h2>
-          <p className="text-muted-foreground">
-            If PrivacyConvert helps you, consider supporting us via Buy Me a Coffee or PayPal (Pro).
-            Donors and Pro users help us pay for hosting and development. We’re grateful to everyone
-            who has supported the project.
-          </p>
-          <div className="mt-6">
-            <DonationButton />
-          </div>
-        </section>
-
-        <section>
-          <h2 className="mb-4 text-xl font-semibold">Donation thank you wall</h2>
-          <p className="mb-4 text-muted-foreground text-sm">
-            Latest supporters via Buy Me a Coffee. Thank you for helping keep PrivacyConvert free and local-first.
-          </p>
-          <DonationThankYouWall />
         </section>
 
         <Card>
@@ -73,7 +51,7 @@ export default function AboutPage() {
             <CardTitle className="text-base">Thank you</CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
-            To everyone who uses PrivacyConvert and everyone who donates or goes Pro — thank you.
+            To everyone who uses PrivacyConvert and everyone who goes Pro — thank you.
             We’ll keep improving the tools and keeping your files local.
           </CardContent>
         </Card>
