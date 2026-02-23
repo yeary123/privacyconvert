@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 const footerLinks = [
   { href: "/", label: "Home" },
@@ -19,12 +20,17 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-muted/30">
       <div className="container py-10">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="mb-2 font-semibold">PrivacyConvert</p>
             <p className="text-sm text-muted-foreground">
               100% client-side conversion. No upload, no server, zero privacy risk. 2026.
             </p>
+          </div>
+          <div>
+            <p className="mb-2 font-semibold">Newsletter</p>
+            <p className="mb-2 text-sm text-muted-foreground">Tips and updates. No spam.</p>
+            <NewsletterForm />
           </div>
           <div>
             <p className="mb-2 font-semibold">Links</p>

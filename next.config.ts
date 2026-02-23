@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
+// eslint-disable-next-line @typescript-eslint/no-require-transforms
+const withMDX = require("@next/mdx")();
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "picsum.photos", pathname: "/**" },
+    ],
+  },
 };
 
-export default nextConfig;
+export default withMDX(nextConfig);

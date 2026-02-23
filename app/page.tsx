@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/table";
 import { ToolCard } from "@/components/ToolCard";
 import { DonationButton } from "@/components/DonationButton";
+import { NewsletterForm } from "@/components/NewsletterForm";
 import { ProtectedCounter } from "@/components/ProtectedCounter";
 import { TOOLS } from "@/lib/tools";
 import { buildFAQSchema } from "@/lib/schema";
@@ -284,6 +285,19 @@ export default function Home() {
                 </AccordionItem>
               ))}
             </Accordion>
+          </div>
+        </section>
+
+        {/* Newsletter */}
+        <section className="container py-12">
+          <div className="mx-auto max-w-xl rounded-xl border border-border bg-card p-6 text-center shadow-sm">
+            <h2 className="text-xl font-bold">Stay updated</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Tips and product updates. No spam, unsubscribe anytime.
+            </p>
+            <div className="mt-4 flex justify-center">
+              <NewsletterForm />
+            </div>
           </div>
         </section>
 

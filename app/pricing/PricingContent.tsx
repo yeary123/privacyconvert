@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { StripeCheckoutButton } from "@/components/StripeCheckoutButton";
 import { useProStore } from "@/store/useProStore";
 
 const BUYMEACOFFEE_URL = "https://www.buymeacoffee.com/privacyconvert";
@@ -21,6 +22,8 @@ const REDEEM_CODE = "PRO2026";
 
 export function PricingContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [, startTransition] = useTransition();
   const { isPro, setPro, hydrate } = useProStore();
   const [code, setCode] = useState("");
   const [redeemMessage, setRedeemMessage] = useState<"success" | "invalid" | null>(null);
@@ -28,6 +31,27 @@ export function PricingContent() {
   useEffect(() => {
     hydrate();
   }, [hydrate]);
+
+  useEffect(() => {
+    const sessionId = searchParams.get("session_id");
+    if (!sessionId || isPro) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/stripe/verify-session?session_id=${encodeURIComponent(sessionId)}`);
+        const data = await res.json();
+        if (cancelled) return;
+        if (data.ok) {
+          setPro(true);
+          startTransition(() => router.replace("/pricing"));
+          router.refresh();
+        }
+      } catch {
+        // ignore
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [searchParams, setPro, router, isPro]);
 
   const activateProAndRefresh = () => {
     setPro(true);
@@ -91,18 +115,21 @@ export function PricingContent() {
         </Table>
       </div>
 
-      {/* Pro plans */}
+      {/* Pro plans: Stripe (test + live) + Buy Me a Coffee */}
       <div className="grid gap-6 md:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>Monthly</CardTitle>
             <p className="text-2xl font-bold">$4.9<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
           </CardHeader>
-          <CardContent>
-            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block">
-              <Button className="w-full">Buy Me a Coffee</Button>
+          <CardContent className="space-y-2">
+            <StripeCheckoutButton plan="monthly" className="w-full">
+              Subscribe (Stripe)
+            </StripeCheckoutButton>
+            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-muted-foreground hover:underline">
+              Or Buy Me a Coffee
             </a>
-            <p className="mt-2 text-xs text-muted-foreground">One-time or monthly. Get Pro perks after support.</p>
+            <p className="text-xs text-muted-foreground">Pro perks after payment (Stripe or BMC).</p>
           </CardContent>
         </Card>
         <Card className="border-primary">
@@ -111,11 +138,14 @@ export function PricingContent() {
             <p className="text-2xl font-bold">$49<span className="text-sm font-normal text-muted-foreground">/yr</span></p>
             <p className="text-sm text-muted-foreground">Save ~17%</p>
           </CardHeader>
-          <CardContent>
-            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block">
-              <Button className="w-full" variant="default">Subscribe (Stripe)</Button>
+          <CardContent className="space-y-2">
+            <StripeCheckoutButton plan="yearly" className="w-full" variant="default">
+              Subscribe (Stripe)
+            </StripeCheckoutButton>
+            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-muted-foreground hover:underline">
+              Or Buy Me a Coffee
             </a>
-            <p className="mt-2 text-xs text-muted-foreground">Unlock batch, history, P2P.</p>
+            <p className="text-xs text-muted-foreground">Unlock batch, history, P2P.</p>
           </CardContent>
         </Card>
         <Card>
@@ -124,11 +154,14 @@ export function PricingContent() {
             <p className="text-2xl font-bold">$99</p>
             <p className="text-sm text-muted-foreground">One-time</p>
           </CardHeader>
-          <CardContent>
-            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block">
-              <Button className="w-full" variant="outline">Lifetime Pro</Button>
+          <CardContent className="space-y-2">
+            <StripeCheckoutButton plan="lifetime" className="w-full" variant="outline">
+              Lifetime Pro
+            </StripeCheckoutButton>
+            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-muted-foreground hover:underline">
+              Or Buy Me a Coffee
             </a>
-            <p className="mt-2 text-xs text-muted-foreground">One-time payment, forever Pro.</p>
+            <p className="text-xs text-muted-foreground">One-time payment, forever Pro.</p>
           </CardContent>
         </Card>
       </div>

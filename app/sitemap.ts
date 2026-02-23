@@ -1,15 +1,8 @@
 import type { MetadataRoute } from "next";
 import { TOOLS } from "@/lib/tools";
+import { getBlogSlugs } from "@/lib/blog";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
-
-const BLOG_SLUGS = [
-  "why-local-conversion",
-  "avif-vs-png",
-  "wav-to-mp3-guide",
-  "no-upload-2026",
-  "webp-to-png-privacy",
-];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
@@ -29,7 +22,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const blogPages: MetadataRoute.Sitemap = BLOG_SLUGS.map((slug) => ({
+  const blogSlugs = getBlogSlugs();
+  const blogPages: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
     url: `${BASE}/blog/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,

@@ -1,65 +1,135 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { getBlogSlugs, getPostBySlug, getPrevNextSlugs } from "@/lib/blog";
 
-const POSTS: Record<string, { title: string; date: string; content: string }> = {
-  "why-local-conversion": {
-    title: "Why Convert Files Locally?",
-    date: "2026-01-15",
-    content: "Privacy and speed: why we run conversion in your browser. No upload, zero risk. (Full article placeholder — MDX coming soon.)",
-  },
-  "avif-vs-png": {
-    title: "AVIF vs PNG: When to Convert",
-    date: "2026-01-10",
-    content: "When to use AVIF, when to use PNG, and how to convert without uploading. 2026. (Full article placeholder.)",
-  },
-  "wav-to-mp3-guide": {
-    title: "WAV to MP3: Quality and Size",
-    date: "2026-01-05",
-    content: "Quick guide to converting WAV to MP3 locally with good quality. No upload. (Full article placeholder.)",
-  },
-  "no-upload-2026": {
-    title: "No Upload Converters in 2026",
-    date: "2026-01-01",
-    content: "Why no-upload, client-side conversion matters for privacy and how to choose tools. 2026. (Full article placeholder.)",
-  },
-  "webp-to-png-privacy": {
-    title: "WebP to PNG: Keep It Local",
-    date: "2025-12-28",
-    content: "Convert WebP to PNG in your browser. No upload, no server. 2026. (Full article placeholder.)",
-  },
-};
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return Object.keys(POSTS).map((slug) => ({ slug }));
+  return getBlogSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = POSTS[slug];
+  const post = getPostBySlug(slug);
   if (!post) return { title: "Post Not Found" };
+  const title = (post.frontmatter.title as string) ?? slug;
+  const description =
+    (post.frontmatter.description as string) ??
+    (post.frontmatter.excerpt as string) ??
+    `${title}. No upload, local conversion. PrivacyConvert blog 2026.`;
   return {
-    title: `${post.title} | Blog | PrivacyConvert 2026`,
-    description: `${post.title}. No upload, local conversion. PrivacyConvert blog 2026.`,
+    title: `${title} | Blog | PrivacyConvert 2026`,
+    description,
   };
+}
+
+function BlogPostingJsonLd({
+  title,
+  date,
+  description,
+  slug,
+}: {
+  title: string;
+  date: string;
+  description: string;
+  slug: string;
+}) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    datePublished: date || undefined,
+    description,
+    url: `${BASE_URL}/blog/${slug}`,
+    publisher: {
+      "@type": "Organization",
+      name: "PrivacyConvert",
+      url: BASE_URL,
+    },
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
 }
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = POSTS[slug];
+  const post = getPostBySlug(slug);
   if (!post) notFound();
+
+  const title = (post.frontmatter.title as string) ?? slug;
+  const date = (post.frontmatter.date as string) ?? "";
+  const description =
+    (post.frontmatter.description as string) ??
+    (post.frontmatter.excerpt as string) ??
+    "";
+  const readingTime = (post.frontmatter.readingTime as string) ?? "";
+
+  const { prev, next } = getPrevNextSlugs(slug);
+
   return (
-    <div className="container py-12">
-      <Link href="/blog" className="text-sm text-muted-foreground hover:underline">
-        ← Blog
-      </Link>
-      <article className="mx-auto max-w-2xl pt-6">
-        <h1 className="text-3xl font-bold">{post.title}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">{post.date}</p>
-        <div className="mt-8 text-muted-foreground">{post.content}</div>
-      </article>
-    </div>
+    <>
+      <BlogPostingJsonLd
+        title={title}
+        date={date}
+        description={description}
+        slug={slug}
+      />
+      <div className="container py-10">
+        <Link
+          href="/blog"
+          className="text-sm text-muted-foreground hover:underline"
+        >
+          ← Blog
+        </Link>
+        <article className="mx-auto max-w-2xl pt-6">
+          <header className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+            {date && <time dateTime={date}>{date}</time>}
+            {readingTime && (
+              <>
+                <span aria-hidden>·</span>
+                <span>{readingTime}</span>
+              </>
+            )}
+          </header>
+          <div className="prose prose-neutral dark:prose-invert max-w-none">
+            <MDXRemote source={post.content} options={{ parseFrontmatter: true }} />
+          </div>
+          <footer className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t pt-8">
+            <div className="flex gap-4">
+              {prev && (
+                <Link
+                  href={`/blog/${prev.slug}`}
+                  className="text-sm font-medium text-muted-foreground hover:underline"
+                >
+                  ← {prev.title}
+                </Link>
+              )}
+              {next && (
+                <Link
+                  href={`/blog/${next.slug}`}
+                  className="text-sm font-medium text-muted-foreground hover:underline"
+                >
+                  {next.title} →
+                </Link>
+              )}
+            </div>
+            <Link
+              href="/pricing"
+              className="text-sm font-medium text-primary hover:underline"
+            >
+              Upgrade to Pro
+            </Link>
+          </footer>
+        </article>
+      </div>
+    </>
   );
 }

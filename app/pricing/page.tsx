@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PricingContent } from "./PricingContent";
 
 export const metadata: Metadata = {
@@ -15,7 +16,9 @@ export default function PricingPage() {
       <p className="mb-10 text-muted-foreground">
         Free forever for single-file conversion. Upgrade to Pro for unlimited batch and more.
       </p>
-      <PricingContent />
+      <Suspense fallback={<div className="h-24 animate-pulse rounded-lg bg-muted" />}>
+        <PricingContent />
+      </Suspense>
     </div>
   );
 }

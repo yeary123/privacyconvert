@@ -1,73 +1,80 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getPosts } from "@/lib/blog";
+import { NewsletterForm } from "@/components/NewsletterForm";
+import { BlogPostList } from "@/components/BlogPostList";
 
 export const metadata: Metadata = {
-  title: "Blog - No Upload File Conversion & Privacy | PrivacyConvert 2026",
-  description: "Tips and updates about local file conversion, no upload, and privacy. 2026.",
-  keywords: ["no upload", "local convert", "privacy", "file converter", "2026"],
+  title: "PrivacyConvert Blog – No Upload 2026 本地文件转换指南",
+  description:
+    "No upload 2026 本地文件转换指南：client side、browser local、completely local 转换技巧，privacy first file converter 对比（vs Convertio、VERT.sh、localconvert）。",
+  keywords: [
+    "no upload 2026",
+    "privacy first file converter",
+    "client side",
+    "browser local",
+    "completely local",
+    "local convert",
+    "file converter",
+    "blog",
+  ],
 };
 
-const POSTS = [
-  {
-    slug: "why-local-conversion",
-    title: "Why Convert Files Locally?",
-    excerpt: "Privacy and speed: why we run conversion in your browser. No upload, zero risk.",
-    date: "2026-01-15",
-  },
-  {
-    slug: "avif-vs-png",
-    title: "AVIF vs PNG: When to Convert",
-    excerpt: "When to use AVIF, when to use PNG, and how to convert without uploading. 2026.",
-    date: "2026-01-10",
-  },
-  {
-    slug: "wav-to-mp3-guide",
-    title: "WAV to MP3: Quality and Size",
-    excerpt: "Quick guide to converting WAV to MP3 locally with good quality. No upload.",
-    date: "2026-01-05",
-  },
-  {
-    slug: "no-upload-2026",
-    title: "No Upload Converters in 2026",
-    excerpt: "Why no-upload, client-side conversion matters for privacy and how to choose tools.",
-    date: "2026-01-01",
-  },
-  {
-    slug: "webp-to-png-privacy",
-    title: "WebP to PNG: Keep It Local",
-    excerpt: "Convert WebP to PNG in your browser. No upload, no server. 2026.",
-    date: "2025-12-28",
-  },
-];
+const SIDEBAR_POPULAR_COUNT = 5;
 
 export default function BlogPage() {
+  const posts = getPosts();
+  const popular = posts.slice(0, SIDEBAR_POPULAR_COUNT);
+
   return (
-    <div className="container py-12">
-      <h1 className="mb-2 text-3xl font-bold">Blog</h1>
-      <p className="mb-10 text-muted-foreground">
-        Tips and updates about local conversion and privacy.
-      </p>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {POSTS.map((post) => (
-          <Card key={post.slug} className="transition-colors hover:bg-muted/50">
-            <CardHeader>
-              <CardTitle className="text-lg">
-                <Link href={`/blog/${post.slug}`} className="hover:underline">
-                  {post.title}
-                </Link>
-              </CardTitle>
-              <p className="text-xs text-muted-foreground">{post.date}</p>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">{post.excerpt}</p>
-            </CardContent>
-          </Card>
-        ))}
+    <div className="container py-10">
+      <div className="mx-auto max-w-6xl">
+        <header className="mb-10 text-center">
+          <h1 className="mb-3 text-4xl font-bold tracking-tight md:text-5xl">
+            PrivacyConvert Blog
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            No Upload 2026 本地文件转换指南 — client side、browser local、privacy first file converter 技巧与对比
+          </p>
+        </header>
+
+        <div className="grid gap-10 lg:grid-cols-[1fr_280px]">
+          <div>
+            {posts.length > 0 ? (
+              <BlogPostList posts={posts} />
+            ) : (
+              <p className="py-12 text-center text-muted-foreground">
+                No posts yet.
+              </p>
+            )}
+          </div>
+
+          <aside className="space-y-8 lg:sticky lg:top-6 lg:self-start">
+            <div className="rounded-lg border bg-card p-4">
+              <h3 className="mb-3 font-semibold">热门文章</h3>
+              <ul className="space-y-2">
+                {popular.map((p) => (
+                  <li key={p.slug}>
+                    <Link
+                      href={`/blog/${p.slug}`}
+                      className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+                    >
+                      {p.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-lg border bg-card p-4">
+              <h3 className="mb-3 font-semibold">订阅更新</h3>
+              <p className="mb-3 text-sm text-muted-foreground">
+                No upload 2026、privacy first 转换技巧与产品更新，直接发到你的邮箱。
+              </p>
+              <NewsletterForm />
+            </div>
+          </aside>
+        </div>
       </div>
-      <p className="mt-8 text-center text-sm text-muted-foreground">
-        More articles coming soon. Placeholder content for 2026.
-      </p>
     </div>
   );
 }
