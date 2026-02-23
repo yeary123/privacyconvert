@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Sign in",
-  description: "Sign in to PrivacyConvert with a magic link. No password needed.",
+  description: "Sign in to PrivacyConvert. No password needed.",
 };
 
 export default function LoginLayout({

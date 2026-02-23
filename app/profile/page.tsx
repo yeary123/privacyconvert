@@ -33,7 +33,7 @@ export default function ProfilePage() {
           </CardHeader>
           <CardContent>
             <Link href="/login">
-              <Button>Sign in with magic link</Button>
+              <Button>Sign in</Button>
             </Link>
           </CardContent>
         </Card>

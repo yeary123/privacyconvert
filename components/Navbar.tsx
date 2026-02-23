@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Shield, Moon, Sun } from "lucide-react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -16,7 +18,13 @@ const navLinks = [
   { href: "/blog", label: "Blog" },
 ];
 
+function isActivePath(pathname: string, href: string): boolean {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+}
+
 export function Navbar() {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -40,23 +48,26 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 md:flex">
-          {navLinks.map(({ href, label }) => (
-            <Link key={href} href={href}>
-              <Button variant="ghost" size="sm">
-                {label}
-              </Button>
-            </Link>
-          ))}
+          {navLinks.map(({ href, label }) => {
+            const active = isActivePath(pathname, href);
+            return (
+              <Link key={href} href={href}>
+                <Button variant={active ? "secondary" : "ghost"} size="sm" className={active ? "bg-muted" : undefined}>
+                  {label}
+                </Button>
+              </Link>
+            );
+          })}
           {isPro && (
             <Link href="/history">
-              <Button variant="ghost" size="sm">History</Button>
+              <Button variant={isActivePath(pathname, "/history") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/history") ? "bg-muted" : undefined}>History</Button>
             </Link>
           )}
           <Link href="/profile">
-              <Button variant="ghost" size="sm">Profile</Button>
-            </Link>
+            <Button variant={isActivePath(pathname, "/profile") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/profile") ? "bg-muted" : undefined}>Profile</Button>
+          </Link>
           <Link href="/login">
-            <Button variant="ghost" size="sm">Login</Button>
+            <Button variant={isActivePath(pathname, "/login") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/login") ? "bg-muted" : undefined}>Login</Button>
           </Link>
           <Link href="/pricing#pro">
             <Button size="sm">Pro</Button>
@@ -84,20 +95,23 @@ export function Navbar() {
       {mobileOpen && (
         <div className="border-t border-border bg-background md:hidden">
           <nav className="container flex flex-col gap-0 py-2">
-            {navLinks.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
-                onClick={() => setMobileOpen(false)}
-              >
-                {label}
-              </Link>
-            ))}
+            {navLinks.map(({ href, label }) => {
+              const active = isActivePath(pathname, href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={cn("rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent", active && "bg-muted")}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {label}
+                </Link>
+              );
+            })}
             {isPro && (
               <Link
                 href="/history"
-                className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+                className={cn("rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent", isActivePath(pathname, "/history") && "bg-muted")}
                 onClick={() => setMobileOpen(false)}
               >
                 History
@@ -105,14 +119,14 @@ export function Navbar() {
             )}
             <Link
               href="/profile"
-              className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+              className={cn("rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent", isActivePath(pathname, "/profile") && "bg-muted")}
               onClick={() => setMobileOpen(false)}
             >
               Profile
             </Link>
             <Link
               href="/login"
-              className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+              className={cn("rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent", isActivePath(pathname, "/login") && "bg-muted")}
               onClick={() => setMobileOpen(false)}
             >
               Login

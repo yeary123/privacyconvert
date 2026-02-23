@@ -34,7 +34,7 @@ export default function LoginPage() {
         return;
       }
       setSent(true);
-      toast.success("Magic link sent! Check your email.");
+      toast.success("Check your email for the sign-in link.");
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -52,7 +52,7 @@ export default function LoginPage() {
             </div>
             <CardTitle>Check your email</CardTitle>
             <CardDescription>
-              We sent a magic link to <strong className="text-foreground">{email.trim()}</strong>. Click the link to sign in.
+              We sent a sign-in link to <strong className="text-foreground">{email.trim()}</strong>. Click the link in the email to sign in.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
