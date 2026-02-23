@@ -51,6 +51,9 @@ export function Navbar() {
               <Button variant="ghost" size="sm">History</Button>
             </Link>
           )}
+          <Link href="/login">
+            <Button variant="ghost" size="sm">Login</Button>
+          </Link>
           <Link href="/pricing#pro">
             <Button size="sm">Pro</Button>
           </Link>
@@ -96,6 +99,13 @@ export function Navbar() {
                 History
               </Link>
             )}
+            <Link
+              href="/login"
+              className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+              onClick={() => setMobileOpen(false)}
+            >
+              Login
+            </Link>
             <Link
               href="/pricing#pro"
               className="mx-3 mt-2"
