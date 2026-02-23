@@ -28,12 +28,14 @@ export async function loadFFmpeg(
         coreURL: await toBlobURL(`${BASE_URL}/ffmpeg-core.js`, "text/javascript"),
         wasmURL: await toBlobURL(`${BASE_URL}/ffmpeg-core.wasm`, "application/wasm"),
       });
-    } finally {
       report(100);
       onProgress?.({ phase: "done" });
+      ffmpegInstance = ffmpeg;
+      return ffmpeg;
+    } catch (e) {
+      loadPromise = null;
+      throw e;
     }
-    ffmpegInstance = ffmpeg;
-    return ffmpeg;
   })();
 
   return loadPromise;

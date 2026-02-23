@@ -135,7 +135,7 @@ export function Mp4ToWebmConverter({ toolSlug = "mp4-to-webm" }: Props) {
           isDragActive ? "border-primary bg-primary/5" : "border-border bg-muted/30"
         } ${converting ? "pointer-events-none opacity-70" : ""}`}
       >
-        <input {...getInputProps()} />
+        <input {...getInputProps()} aria-label="Drop or select MP4 files" />
         <Video className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
           {converting ? "Converting..." : "Drop MP4 files here, or click to select"}

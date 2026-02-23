@@ -10,7 +10,8 @@ import {
 import { ConversionUI } from "@/components/ConversionUI";
 import { ProUnlockBanner } from "@/components/ProUnlockBanner";
 import { TOOLS } from "@/lib/tools";
-import { buildFAQSchema, buildHowToSchema } from "@/lib/schema";
+import { buildFAQSchema, buildHowToSchema, buildSoftwareApplicationSchema } from "@/lib/schema";
+import { getConvertSeoContent } from "@/lib/convertSeoContent";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -22,9 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const tool = TOOLS.find((t) => t.slug === slug);
   if (!tool) return { title: "Tool Not Found" };
+  const title = `${tool.name} No Upload – 100% Local Browser Converter 2026`;
+  const description = `${tool.description}. No upload 2026, privacy first. 100% local browser converter, zero privacy risk.`;
   return {
-    title: `${tool.name} - No Upload 2026, 100% Local | PrivacyConvert`,
-    description: `${tool.description}. No upload 2026, privacy first. Convert in browser, zero privacy risk.`,
+    title,
+    description,
+    openGraph: { title, description },
   };
 }
 
@@ -377,163 +381,46 @@ We do not collect, store, or analyze your documents. PDF to Images is a Pro feat
 `.trim();
 
 function ToolContent({ slug }: { slug: string }) {
-  if (slug === "avif-to-png") {
+  const seoContent = getConvertSeoContent(slug);
+  if (seoContent) {
+    const faqMap: Record<string, { q: string; a: string }[]> = {
+      "avif-to-png": AVIF_FAQ,
+      "wav-to-mp3": WAV_FAQ,
+      "webp-to-png": WEBP_FAQ,
+      "mp4-to-webm": MP4_FAQ,
+      "png-to-jpeg": PNG_FAQ,
+      "ogg-to-mp3": OGG_FAQ,
+      "gif-to-mp4": GIF_FAQ,
+      "pdf-to-images": PDF_FAQ,
+    };
+    const faq = faqMap[slug];
+    const faqTitle =
+      slug === "avif-to-png" ? "AVIF to PNG FAQ"
+      : slug === "wav-to-mp3" ? "WAV to MP3 FAQ"
+      : slug === "webp-to-png" ? "WebP to PNG FAQ"
+      : slug === "mp4-to-webm" ? "MP4 to WebM FAQ"
+      : slug === "png-to-jpeg" ? "PNG to JPEG FAQ"
+      : slug === "ogg-to-mp3" ? "OGG to MP3 FAQ"
+      : slug === "gif-to-mp4" ? "GIF to MP4 FAQ"
+      : "PDF to Images FAQ";
     return (
       <>
         <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-          {AVIF_SEO_CONTENT}
+          {seoContent}
         </div>
-        <div className="mt-8">
-          <h3 className="mb-4 font-semibold">AVIF to PNG FAQ</h3>
-          <Accordion type="single" collapsible>
-            {AVIF_FAQ.map((item, i) => (
-              <AccordionItem key={i} value={`avif-faq-${i}`}>
-                <AccordionTrigger>{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </>
-    );
-  }
-  if (slug === "wav-to-mp3") {
-    return (
-      <>
-        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-          {WAV_SEO_CONTENT}
-        </div>
-        <div className="mt-8">
-          <h3 className="mb-4 font-semibold">WAV to MP3 FAQ</h3>
-          <Accordion type="single" collapsible>
-            {WAV_FAQ.map((item, i) => (
-              <AccordionItem key={i} value={`wav-faq-${i}`}>
-                <AccordionTrigger>{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </>
-    );
-  }
-  if (slug === "webp-to-png") {
-    return (
-      <>
-        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-          {WEBP_SEO_CONTENT}
-        </div>
-        <div className="mt-8">
-          <h3 className="mb-4 font-semibold">WebP to PNG FAQ</h3>
-          <Accordion type="single" collapsible>
-            {WEBP_FAQ.map((item, i) => (
-              <AccordionItem key={i} value={`webp-faq-${i}`}>
-                <AccordionTrigger>{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </>
-    );
-  }
-  if (slug === "mp4-to-webm") {
-    return (
-      <>
-        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-          {MP4_SEO_CONTENT}
-        </div>
-        <div className="mt-8">
-          <h3 className="mb-4 font-semibold">MP4 to WebM FAQ</h3>
-          <Accordion type="single" collapsible>
-            {MP4_FAQ.map((item, i) => (
-              <AccordionItem key={i} value={`mp4-faq-${i}`}>
-                <AccordionTrigger>{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </>
-    );
-  }
-  if (slug === "png-to-jpeg") {
-    return (
-      <>
-        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-          {PNG_SEO_CONTENT}
-        </div>
-        <div className="mt-8">
-          <h3 className="mb-4 font-semibold">PNG to JPEG FAQ</h3>
-          <Accordion type="single" collapsible>
-            {PNG_FAQ.map((item, i) => (
-              <AccordionItem key={i} value={`png-faq-${i}`}>
-                <AccordionTrigger>{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </>
-    );
-  }
-  if (slug === "ogg-to-mp3") {
-    return (
-      <>
-        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-          {OGG_SEO_CONTENT}
-        </div>
-        <div className="mt-8">
-          <h3 className="mb-4 font-semibold">OGG to MP3 FAQ</h3>
-          <Accordion type="single" collapsible>
-            {OGG_FAQ.map((item, i) => (
-              <AccordionItem key={i} value={`ogg-faq-${i}`}>
-                <AccordionTrigger>{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </>
-    );
-  }
-  if (slug === "gif-to-mp4") {
-    return (
-      <>
-        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-          {GIF_SEO_CONTENT}
-        </div>
-        <div className="mt-8">
-          <h3 className="mb-4 font-semibold">GIF to MP4 FAQ</h3>
-          <Accordion type="single" collapsible>
-            {GIF_FAQ.map((item, i) => (
-              <AccordionItem key={i} value={`gif-faq-${i}`}>
-                <AccordionTrigger>{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </>
-    );
-  }
-  if (slug === "pdf-to-images") {
-    return (
-      <>
-        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-          {PDF_SEO_CONTENT}
-        </div>
-        <div className="mt-8">
-          <h3 className="mb-4 font-semibold">PDF to Images FAQ</h3>
-          <Accordion type="single" collapsible>
-            {PDF_FAQ.map((item, i) => (
-              <AccordionItem key={i} value={`pdf-faq-${i}`}>
-                <AccordionTrigger>{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        {faq && faq.length > 0 && (
+          <div className="mt-8">
+            <h3 className="mb-4 font-semibold">{faqTitle}</h3>
+            <Accordion type="single" collapsible>
+              {faq.map((item, i) => (
+                <AccordionItem key={i} value={`faq-${slug}-${i}`}>
+                  <AccordionTrigger>{item.q}</AccordionTrigger>
+                  <AccordionContent>{item.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        )}
       </>
     );
   }
@@ -619,6 +506,12 @@ export default async function ConvertPage({ params }: Props) {
         steps: steps.map((s) => ({ name: s.name, text: s.text })),
       })
     : null;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
+  const toolAppSchema = buildSoftwareApplicationSchema({
+    name: `${tool.name} - No Upload 2026`,
+    description: `${tool.description}. 100% local browser converter. No upload, privacy first.`,
+    url: `${baseUrl}/convert/${slug}`,
+  });
 
   return (
     <>
@@ -634,6 +527,10 @@ export default async function ConvertPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
         />
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolAppSchema) }}
+      />
       <div className="container py-8">
         <div className="mb-6">
           <Link href="/tools" className="text-sm text-muted-foreground hover:underline">
@@ -642,14 +539,14 @@ export default async function ConvertPage({ params }: Props) {
           <h1 className="mt-2 text-3xl font-bold">{tool.name}</h1>
           <p className="text-muted-foreground">{tool.description}</p>
         </div>
-        <div className="grid gap-8 lg:grid-cols-[1fr,400px]">
-          <aside className="min-w-0">
-            <ToolContent slug={slug} />
-          </aside>
-          <div className="lg:sticky lg:top-24 lg:self-start">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,420px),1fr]">
+          <div className="lg:sticky lg:top-24 lg:self-start order-2 lg:order-1">
             <ProUnlockBanner />
             <ConverterArea slug={slug} />
           </div>
+          <aside className="min-w-0 order-1 lg:order-2">
+            <ToolContent slug={slug} />
+          </aside>
         </div>
       </div>
     </>

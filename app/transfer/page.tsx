@@ -15,6 +15,8 @@ type PeerConnection = ReturnType<Awaited<ReturnType<typeof createPeer>>["connect
 
 export default function TransferPage() {
   const isPro = useProStore((s) => s.isPro);
+  const p2pEnabled = useProStore((s) => s.p2pEnabled);
+  const canUseP2P = isPro || p2pEnabled;
   const [mode, setMode] = useState<"share" | "receive">("share");
   const [peerId, setPeerId] = useState("");
   const [myId, setMyId] = useState("");
@@ -27,7 +29,7 @@ export default function TransferPage() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const startShare = useCallback(async () => {
-    if (!isPro) return;
+    if (!canUseP2P) return;
     setLoading(true);
     setStatus("Creating peer...");
     try {
@@ -56,10 +58,10 @@ export default function TransferPage() {
     } finally {
       setLoading(false);
     }
-  }, [isPro]);
+  }, [canUseP2P]);
 
   const startReceive = useCallback(async () => {
-    if (!isPro || !remoteId.trim()) return;
+    if (!canUseP2P || !remoteId.trim()) return;
     setLoading(true);
     setStatus("Connecting...");
     try {
@@ -83,7 +85,7 @@ export default function TransferPage() {
     } finally {
       setLoading(false);
     }
-  }, [isPro, remoteId]);
+  }, [canUseP2P, remoteId]);
 
   const sendFiles = useCallback(() => {
     if (!conn || selectedFiles.length === 0) return;
@@ -110,7 +112,7 @@ export default function TransferPage() {
     URL.revokeObjectURL(a.href);
   };
 
-  if (!isPro) {
+  if (!canUseP2P) {
     return (
       <div className="container py-12">
         <h1 className="mb-2 text-3xl font-bold">P2P File Transfer</h1>

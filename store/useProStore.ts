@@ -3,13 +3,15 @@ import { persist } from "zustand/middleware";
 
 const STORAGE_KEY = "privacyconvert_pro";
 const PROTECTED_COUNT_KEY = "privacyconvert_protected_count";
-const DEFAULT_PROTECTED_COUNT = 128000;
+const DEFAULT_PROTECTED_COUNT = 128456;
 
 export type ConversionHistoryItem = {
   tool: string;
   count: number;
   at: number;
 };
+
+export type BatchFileInfo = { name: string; size: number };
 
 export const useProStore = create<{
   isPro: boolean;
@@ -19,13 +21,16 @@ export const useProStore = create<{
   addHistory: (tool: string, count: number) => void;
   batchCount: number;
   setBatchCount: (n: number) => void;
+  batchFiles: BatchFileInfo[];
+  setBatchFiles: (files: BatchFileInfo[]) => void;
+  p2pEnabled: boolean;
   protectedCount: number;
   incrementProtected: (n: number) => void;
 }>()(
   persist(
     (set, get) => ({
       isPro: false,
-      setPro: (value) => set({ isPro: value }),
+      setPro: (value) => set({ isPro: value, p2pEnabled: value }),
       hydrate: () => {
         if (typeof window === "undefined") return;
         const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -39,7 +44,7 @@ export const useProStore = create<{
           } catch {
             // ignore
           }
-          set({ isPro, protectedCount });
+          set({ isPro, protectedCount, p2pEnabled: isPro });
         } catch {
           set({ isPro: !!raw });
         }
@@ -54,6 +59,9 @@ export const useProStore = create<{
         })),
       batchCount: 0,
       setBatchCount: (n) => set({ batchCount: n }),
+      batchFiles: [],
+      setBatchFiles: (files) => set({ batchFiles: files }),
+      p2pEnabled: false,
       protectedCount: DEFAULT_PROTECTED_COUNT,
       incrementProtected: (n) =>
         set((s) => {
@@ -74,6 +82,7 @@ export const useProStore = create<{
         isPro: s.isPro,
         history: s.history,
         batchCount: s.batchCount,
+        p2pEnabled: s.p2pEnabled,
       }),
     }
   )

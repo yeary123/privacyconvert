@@ -33,7 +33,7 @@ export function ConversionUI({ slug }: ConversionUIProps) {
     case "gif-to-mp4":
       return <GifToMp4Converter toolSlug={slug} />;
     case "pdf-to-images":
-      return <PdfToImagesConverter />;
+      return <PdfToImagesConverter toolSlug="pdf-to-images" />;
     default:
       return (
         <div className="rounded-xl border border-border bg-card p-8 text-center text-muted-foreground">

@@ -35,7 +35,7 @@ export function ProtectedCounter() {
     return () => clearInterval(timer);
   }, [mounted, storeCount]);
 
-  if (!mounted) return <span className="tabular-nums font-semibold text-primary">128,000+</span>;
+  if (!mounted) return <span className="tabular-nums font-semibold text-primary">128,456</span>;
   return (
     <span className="tabular-nums font-semibold text-primary">
       {displayCount.toLocaleString()}

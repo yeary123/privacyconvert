@@ -5,10 +5,12 @@ import { FileText, Lock } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { useProStore } from "@/store/useProStore";
 
+type Props = { toolSlug?: string };
+
 /**
  * PDF to Images is a Pro-only feature. Shows upgrade CTA for free users.
  */
-export function PdfToImagesConverter() {
+export function PdfToImagesConverter({ toolSlug = "pdf-to-images" }: Props) {
   const isPro = useProStore((s) => s.isPro);
 
   if (isPro) {

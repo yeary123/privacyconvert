@@ -135,7 +135,7 @@ export function WebpToPngConverter({ toolSlug = "webp-to-png" }: Props) {
           isDragActive ? "border-primary bg-primary/5" : "border-border bg-muted/30"
         } ${converting ? "pointer-events-none opacity-70" : ""}`}
       >
-        <input {...getInputProps()} />
+        <input {...getInputProps()} aria-label="Drop or select WebP files" />
         <FileImage className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
           {converting ? "Converting..." : "Drop WebP files here, or click to select"}
