@@ -18,7 +18,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ToolCard } from "@/components/ToolCard";
-import { DonationButton } from "@/components/DonationButton";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { ProtectedCounter } from "@/components/ProtectedCounter";
 import { TOOLS } from "@/lib/tools";
@@ -301,18 +300,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA + Donation */}
-        <section className="container py-16">
-          <div className="mx-auto max-w-2xl rounded-xl border border-border bg-card p-8 text-center shadow">
-            <h2 className="text-2xl font-bold">Support PrivacyConvert</h2>
-            <p className="mt-2 text-muted-foreground">
-              Donate or go Pro to unlock unlimited batch, larger files, and P2P. 100% optional.
-            </p>
-            <div className="mt-6 flex justify-center">
-              <DonationButton />
-            </div>
-          </div>
-        </section>
       </div>
     </>
   );
