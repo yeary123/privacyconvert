@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -14,12 +15,27 @@ import {
 } from "@/components/ui/table";
 import { useProStore } from "@/store/useProStore";
 
+const BUYMEACOFFEE_URL = "https://www.buymeacoffee.com/privacyconvert";
+const REDEEM_CODE = "PRO2026";
+
 export function PricingContent() {
   const { isPro, setPro, hydrate } = useProStore();
+  const [code, setCode] = useState("");
+  const [redeemMessage, setRedeemMessage] = useState<"success" | "invalid" | null>(null);
 
   useEffect(() => {
     hydrate();
   }, [hydrate]);
+
+  const handleRedeem = () => {
+    if (code.trim().toUpperCase() === REDEEM_CODE) {
+      setPro(true);
+      setRedeemMessage("success");
+      setCode("");
+    } else {
+      setRedeemMessage("invalid");
+    }
+  };
 
   return (
     <div className="space-y-12">
@@ -75,10 +91,10 @@ export function PricingContent() {
             <p className="text-2xl font-bold">$4.9<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
           </CardHeader>
           <CardContent>
-            <a href="https://www.buymeacoffee.com/privacyconvert" target="_blank" rel="noopener noreferrer" className="block">
-              <Button className="w-full">Buy Me a Coffee / Stripe</Button>
+            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block">
+              <Button className="w-full">Buy Me a Coffee</Button>
             </a>
-            <p className="mt-2 text-xs text-muted-foreground">Placeholder — connect Stripe or BuyMeACoffee</p>
+            <p className="mt-2 text-xs text-muted-foreground">One-time or monthly. Get Pro perks after support.</p>
           </CardContent>
         </Card>
         <Card className="border-primary">
@@ -88,10 +104,10 @@ export function PricingContent() {
             <p className="text-sm text-muted-foreground">Save ~17%</p>
           </CardHeader>
           <CardContent>
-            <a href="#">
-              <Button className="w-full" variant="default">Stripe (Pro)</Button>
+            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block">
+              <Button className="w-full" variant="default">Subscribe (Stripe)</Button>
             </a>
-            <p className="mt-2 text-xs text-muted-foreground">Placeholder</p>
+            <p className="mt-2 text-xs text-muted-foreground">Unlock batch, history, P2P.</p>
           </CardContent>
         </Card>
         <Card>
@@ -101,29 +117,47 @@ export function PricingContent() {
             <p className="text-sm text-muted-foreground">One-time</p>
           </CardHeader>
           <CardContent>
-            <a href="#">
-              <Button className="w-full" variant="outline">Stripe (Lifetime)</Button>
+            <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block">
+              <Button className="w-full" variant="outline">Lifetime Pro</Button>
             </a>
-            <p className="mt-2 text-xs text-muted-foreground">Placeholder</p>
+            <p className="mt-2 text-xs text-muted-foreground">One-time payment, forever Pro.</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* localStorage demo for Pro */}
-      <Card className="border-dashed">
+      {/* Pro: redeem code + simulate */}
+      <Card id="pro" className="border-dashed scroll-mt-24">
         <CardHeader>
-          <CardTitle className="text-base">Demo: Simulate Pro</CardTitle>
+          <CardTitle className="text-base">Activate Pro</CardTitle>
           <p className="text-sm text-muted-foreground">
-            For testing. Toggle Pro state in this browser (stored in localStorage). Tools will allow unlimited batch when Pro is on.
+            After donating via Buy Me a Coffee you may receive a redeem code. Or simulate Pro for testing (stored in this browser).
           </p>
         </CardHeader>
-        <CardContent>
-          <div className="flex items-center gap-4">
+        <CardContent className="space-y-4">
+          <div className="flex flex-wrap items-end gap-3">
+            <div className="flex-1 min-w-[160px]">
+              <label className="mb-1 block text-xs text-muted-foreground">Redeem code</label>
+              <Input
+                placeholder="e.g. PRO2026"
+                value={code}
+                onChange={(e) => { setCode(e.target.value); setRedeemMessage(null); }}
+                onKeyDown={(e) => e.key === "Enter" && handleRedeem()}
+              />
+            </div>
+            <Button onClick={handleRedeem} type="button">Redeem</Button>
+          </div>
+          {redeemMessage === "success" && (
+            <p className="text-sm text-green-600 dark:text-green-400">Pro activated in this browser.</p>
+          )}
+          {redeemMessage === "invalid" && (
+            <p className="text-sm text-destructive">Invalid code.</p>
+          )}
+          <div className="flex flex-wrap items-center gap-4 pt-2 border-t border-border">
             <Button onClick={() => setPro(!isPro)} variant={isPro ? "secondary" : "default"} type="button">
               {isPro ? "Turn off Pro (demo)" : "Turn on Pro (demo)"}
             </Button>
             <span className="text-sm text-muted-foreground">
-              {isPro ? "Pro is active in this browser." : "Pro is off."}
+              {isPro ? "Pro is active — batch & more unlocked." : "Pro is off."}
             </span>
           </div>
         </CardContent>

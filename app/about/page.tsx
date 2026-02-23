@@ -3,9 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DonationButton } from "@/components/DonationButton";
 
 export const metadata: Metadata = {
-  title: "About - PrivacyConvert | Our Story & Mission 2026",
+  title: "About - No Upload, Local Converter | PrivacyConvert 2026",
   description:
-    "Why we built a 100% local file converter. Privacy story, team, and thanks to donors.",
+    "Why we built a 100% local file converter. No upload, zero privacy risk. Our story and thanks to donors. 2026.",
+  keywords: ["about", "privacy", "no upload", "local converter", "2026"],
 };
 
 export default function AboutPage() {

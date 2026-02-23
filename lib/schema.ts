@@ -35,6 +35,27 @@ export function buildSoftwareApplicationSchema(options: {
   };
 }
 
+export function buildHowToSchema(options: {
+  name: string;
+  description: string;
+  steps: { name: string; text: string }[];
+  totalTime?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo" as const,
+    name: options.name,
+    description: options.description,
+    totalTime: options.totalTime ?? "PT2M",
+    step: options.steps.map((s, i) => ({
+      "@type": "HowToStep" as const,
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+    })),
+  };
+}
+
 export function schemaToScript(schema: object): string {
   return JSON.stringify(schema);
 }

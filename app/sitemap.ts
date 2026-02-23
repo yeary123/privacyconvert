@@ -3,6 +3,14 @@ import { TOOLS } from "@/lib/tools";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
 
+const BLOG_SLUGS = [
+  "why-local-conversion",
+  "avif-vs-png",
+  "wav-to-mp3-guide",
+  "no-upload-2026",
+  "webp-to-png-privacy",
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
@@ -10,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/pricing`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
+    { url: `${BASE}/transfer`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
   ];
 
   const toolPages: MetadataRoute.Sitemap = TOOLS.map((t) => ({
@@ -19,5 +28,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...toolPages];
+  const blogPages: MetadataRoute.Sitemap = BLOG_SLUGS.map((slug) => ({
+    url: `${BASE}/blog/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...staticPages, ...toolPages, ...blogPages];
 }

@@ -1,39 +1,105 @@
+"use client";
+
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { Menu, X, Shield, Moon, Sun } from "lucide-react";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/tools", label: "Tools" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+];
 
 export function Navbar() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const toggleTheme = () => setTheme(resolvedTheme === "dark" ? "light" : "dark");
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          PrivacyConvert
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-semibold text-foreground hover:opacity-90"
+        >
+          <Shield className="h-5 w-5 text-primary" aria-hidden />
+          <span>PrivacyConvert</span>
         </Link>
-        <nav className="flex items-center gap-1">
-          <Link href="/tools">
-            <Button variant="ghost" size="sm">
-              Tools
-            </Button>
-          </Link>
-          <Link href="/pricing">
-            <Button variant="ghost" size="sm">
-              Pricing
-            </Button>
-          </Link>
-          <Link href="/about">
-            <Button variant="ghost" size="sm">
-              About
-            </Button>
-          </Link>
-          <Link href="/blog">
-            <Button variant="ghost" size="sm">
-              Blog
-            </Button>
-          </Link>
-          <Link href="/pricing">
+
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-1 md:flex">
+          {navLinks.map(({ href, label }) => (
+            <Link key={href} href={href}>
+              <Button variant="ghost" size="sm">
+                {label}
+              </Button>
+            </Link>
+          ))}
+          <Link href="/pricing#pro">
             <Button size="sm">Pro</Button>
           </Link>
+          {mounted && (
+            <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
+              {resolvedTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </Button>
+          )}
         </nav>
+
+        {/* Mobile hamburger */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={() => setMobileOpen((o) => !o)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </Button>
       </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="border-t border-border bg-background md:hidden">
+          <nav className="container flex flex-col gap-0 py-2">
+            {navLinks.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+                onClick={() => setMobileOpen(false)}
+              >
+                {label}
+              </Link>
+            ))}
+            <Link
+              href="/pricing#pro"
+              className="mx-3 mt-2"
+              onClick={() => setMobileOpen(false)}
+            >
+              <Button size="sm" className="w-full">
+                Pro
+              </Button>
+            </Link>
+            {mounted && (
+              <button
+                type="button"
+                className="mx-3 mt-2 flex items-center justify-center gap-2 rounded-md border border-border px-3 py-2 text-sm"
+                onClick={() => { toggleTheme(); setMobileOpen(false); }}
+              >
+                {resolvedTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                {resolvedTheme === "dark" ? "Light" : "Dark"}
+              </button>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

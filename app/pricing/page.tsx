@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { PricingContent } from "./PricingContent";
 
 export const metadata: Metadata = {
-  title: "Pricing - Free & Pro | PrivacyConvert 2026",
+  title: "Pricing - Free & Pro | No Upload Converter | PrivacyConvert 2026",
   description:
-    "Free: 1 file at a time. Pro: unlimited batch, larger files, video acceleration, history, P2P. Monthly $4.9, Yearly $49, Lifetime $99.",
+    "Free: 1 file at a time, no upload. Pro: unlimited batch, larger files, history, P2P. Monthly $4.9, Yearly $49, Lifetime $99. 2026.",
+  keywords: ["pricing", "pro", "no upload", "file converter", "2026"],
 };
 
 export default function PricingPage() {

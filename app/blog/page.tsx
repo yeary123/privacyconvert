@@ -3,28 +3,41 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata: Metadata = {
-  title: "Blog - PrivacyConvert 2026",
-  description: "Tips and updates about local file conversion and privacy.",
+  title: "Blog - No Upload File Conversion & Privacy | PrivacyConvert 2026",
+  description: "Tips and updates about local file conversion, no upload, and privacy. 2026.",
+  keywords: ["no upload", "local convert", "privacy", "file converter", "2026"],
 };
 
 const POSTS = [
   {
     slug: "why-local-conversion",
     title: "Why Convert Files Locally?",
-    excerpt: "Privacy and speed: why we run conversion in your browser.",
+    excerpt: "Privacy and speed: why we run conversion in your browser. No upload, zero risk.",
     date: "2026-01-15",
   },
   {
     slug: "avif-vs-png",
     title: "AVIF vs PNG: When to Convert",
-    excerpt: "When to use AVIF, when to use PNG, and how to convert without uploading.",
+    excerpt: "When to use AVIF, when to use PNG, and how to convert without uploading. 2026.",
     date: "2026-01-10",
   },
   {
     slug: "wav-to-mp3-guide",
     title: "WAV to MP3: Quality and Size",
-    excerpt: "Quick guide to converting WAV to MP3 locally with good quality.",
+    excerpt: "Quick guide to converting WAV to MP3 locally with good quality. No upload.",
     date: "2026-01-05",
+  },
+  {
+    slug: "no-upload-2026",
+    title: "No Upload Converters in 2026",
+    excerpt: "Why no-upload, client-side conversion matters for privacy and how to choose tools.",
+    date: "2026-01-01",
+  },
+  {
+    slug: "webp-to-png-privacy",
+    title: "WebP to PNG: Keep It Local",
+    excerpt: "Convert WebP to PNG in your browser. No upload, no server. 2026.",
+    date: "2025-12-28",
   },
 ];
 

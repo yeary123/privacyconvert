@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Shield, Cpu, Calendar, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Accordion,
   AccordionContent,
@@ -20,7 +20,7 @@ import {
 import { ToolCard } from "@/components/ToolCard";
 import { DonationButton } from "@/components/DonationButton";
 import { TOOLS } from "@/lib/tools";
-import { buildSoftwareApplicationSchema } from "@/lib/schema";
+import { buildSoftwareApplicationSchema, buildFAQSchema } from "@/lib/schema";
 
 const SOFTWARE_SCHEMA = buildSoftwareApplicationSchema({
   name: "PrivacyConvert",
@@ -43,11 +43,11 @@ export const metadata: Metadata = {
 const FAQ_ITEMS = [
   {
     q: "Is my file uploaded to your server?",
-    a: "No. All conversion happens entirely in your browser using WebAssembly (FFmpeg.wasm). Your files never leave your device. We have no server that receives or stores your data.",
+    a: "No. All conversion happens entirely in your browser using WebAssembly (FFmpeg.wasm). Your files never leave your device. We have no server that receives or stores your data. No upload, zero privacy risk.",
   },
   {
     q: "What file formats do you support?",
-    a: "We support image (AVIF, WebP, PNG, JPEG), audio (WAV, MP3, OGG), and video (MP4, WebM, GIF). More formats are added regularly. Pro users get access to additional formats and batch processing.",
+    a: "We support image (AVIF, WebP, PNG, JPEG), audio (WAV, MP3, OGG), and video (MP4, WebM, GIF). More formats are added regularly. Pro users get access to additional formats and unlimited batch processing.",
   },
   {
     q: "How is PrivacyConvert different from Convertio or VERT.sh?",
@@ -59,22 +59,23 @@ const FAQ_ITEMS = [
   },
   {
     q: "Is there a file size limit?",
-    a: "Free users have a per-file limit suitable for most use cases. Pro users get higher limits and can process larger files. All processing still happens in your browser.",
+    a: "Free users have a per-file limit suitable for most use cases. Pro users get higher limits and can process larger files. All processing still happens in your browser; we never see your files.",
+  },
+  {
+    q: "Where does conversion actually run?",
+    a: "Conversion runs 100% in your browser. We load FFmpeg as WebAssembly (FFmpeg.wasm) once; your device does all the work. No data is sent to our servers.",
+  },
+  {
+    q: "What is Pro and what do I get?",
+    a: "Pro unlocks unlimited batch conversion, larger file support, conversion history, and P2P file transfer. Free tier stays fully usable for single-file conversion with no account.",
+  },
+  {
+    q: "Do you store or log my files?",
+    a: "No. We do not store, log, or have access to your files. Conversion is entirely client-side. We only use optional analytics for site usage, not file content.",
   },
 ];
 
-const FAQ_JSON_LD = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQ_ITEMS.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.a,
-    },
-  })),
-};
+const FAQ_JSON_LD = buildFAQSchema(FAQ_ITEMS);
 
 export default function Home() {
   return (
@@ -122,7 +123,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Tool cards grid - 8 tools */}
+        {/* Tool cards grid - 8 tools + P2P */}
         <section className="container py-16">
           <h2 className="mb-8 text-2xl font-bold">Popular Tools</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -135,6 +136,20 @@ export default function Home() {
                 category={tool.category}
               />
             ))}
+            <Link href="/transfer">
+              <Card className="h-full transition-colors hover:bg-muted/50 border-primary/30">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between text-lg">
+                    P2P Batch Transfer
+                    <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                  </CardTitle>
+                  <CardDescription>
+                    Send files directly between browsers. No server. Pro.
+                  </CardDescription>
+                  <span className="text-xs text-primary font-medium">Pro</span>
+                </CardHeader>
+              </Card>
+            </Link>
           </div>
           <div className="mt-6 text-center">
             <Link href="/tools">
