@@ -14,7 +14,7 @@ function getBatchLimit(isPro: boolean): number {
   return isPro ? 999 : BATCH_LIMIT_FREE;
 }
 
-export function WebpToPngConverter() {
+export function PngToJpegConverter() {
   const isPro = useProStore((s) => s.isPro);
   const batchLimit = getBatchLimit(isPro);
   const [loaded, setLoaded] = useState(false);
@@ -60,17 +60,17 @@ export function WebpToPngConverter() {
         const outputs: { name: string; blob: Blob }[] = [];
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
-          const inName = `input_${i}.webp`;
-          const outName = `output_${i}.png`;
+          const inName = `input_${i}.png`;
+          const outName = `output_${i}.jpg`;
           const data = await fetchFile(file);
           await ffmpeg.writeFile(inName, data);
-          await ffmpeg.exec(["-i", inName, outName]);
+          await ffmpeg.exec(["-i", inName, "-q:v", "2", outName]);
           const outData = await ffmpeg.readFile(outName);
           await ffmpeg.deleteFile(inName);
           await ffmpeg.deleteFile(outName);
           outputs.push({
-            name: file.name.replace(/\.webp$/i, ".png"),
-            blob: new Blob([outData as BlobPart], { type: "image/png" }),
+            name: file.name.replace(/\.png$/i, ".jpg"),
+            blob: new Blob([outData as BlobPart], { type: "image/jpeg" }),
           });
         }
         ffmpeg.off("progress", onProgress);
@@ -87,7 +87,7 @@ export function WebpToPngConverter() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { "image/webp": [".webp"] },
+    accept: { "image/png": [".png"] },
     maxFiles: batchLimit,
     disabled: !loaded || converting,
   });
@@ -131,7 +131,7 @@ export function WebpToPngConverter() {
         <input {...getInputProps()} />
         <FileImage className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? "Converting..." : "Drop WebP files here, or click to select"}
+          {converting ? "Converting..." : "Drop PNG files here, or click to select"}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           {isPro ? "Pro: unlimited batch." : `Free: max ${BATCH_LIMIT_FREE} file. Pro: unlimited.`}

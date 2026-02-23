@@ -79,6 +79,7 @@ export default function ToolsPage() {
             name={tool.name}
             description={tool.description}
             category={tool.category}
+            proOnly={tool.proOnly}
           />
         ))}
         <Link href="/transfer">

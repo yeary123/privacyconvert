@@ -19,15 +19,9 @@ import {
 } from "@/components/ui/table";
 import { ToolCard } from "@/components/ToolCard";
 import { DonationButton } from "@/components/DonationButton";
+import { ProtectedCounter } from "@/components/ProtectedCounter";
 import { TOOLS } from "@/lib/tools";
-import { buildSoftwareApplicationSchema, buildFAQSchema } from "@/lib/schema";
-
-const SOFTWARE_SCHEMA = buildSoftwareApplicationSchema({
-  name: "PrivacyConvert",
-  description: "100% local file converter. No upload, zero privacy risk. Convert images, audio, video in your browser. 2026.",
-  url: "https://privacyconvert.com",
-  applicationCategory: "UtilitiesApplication",
-});
+import { buildFAQSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "PrivacyConvert - 100% Local File Converter | No Upload, Zero Privacy Risk | 2026",
@@ -84,10 +78,6 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSON_LD) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(SOFTWARE_SCHEMA) }}
-      />
       <div className="flex flex-col">
         {/* Hero */}
         <section className="border-b border-border bg-muted/30 py-16 md:py-24">
@@ -120,6 +110,9 @@ export default function Home() {
                 <Calendar className="h-5 w-5 text-primary" /> 2026
               </span>
             </div>
+            <p className="mt-6 text-sm text-muted-foreground">
+              Already protected <ProtectedCounter /> files — no upload, no server.
+            </p>
           </div>
         </section>
 
@@ -134,6 +127,7 @@ export default function Home() {
                 name={tool.name}
                 description={tool.description}
                 category={tool.category}
+                proOnly={tool.proOnly}
               />
             ))}
             <Link href="/transfer">
@@ -251,6 +245,30 @@ export default function Home() {
                 Modern stack, fast UX, and SEO built for discoverability.
               </CardContent>
             </Card>
+          </div>
+        </section>
+
+        {/* Testimonials */}
+        <section className="container py-16">
+          <h2 className="mb-8 text-2xl font-bold">What Users Say</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {[
+              { name: "Alex K.", role: "Designer", text: "Finally a converter that doesn’t upload my assets. Use it for AVIF and WebP daily. No sign-up, no hassle.", rating: 5 },
+              { name: "Sam R.", role: "Podcaster", text: "WAV to MP3 in the browser with zero privacy risk. Exactly what I needed for local edits. 2026-ready.", rating: 5 },
+              { name: "Jordan T.", role: "Developer", text: "No upload means no liability. We recommend it for client work. Pro batch is a time-saver.", rating: 5 },
+              { name: "Morgan L.", role: "Content creator", text: "Compared Convertio and others — this one keeps everything on my machine. Simple and fast.", rating: 5 },
+              { name: "Casey W.", role: "Small business", text: "Free tier is enough for single files; upgraded to Pro for batch. No regrets. Privacy-first matters.", rating: 5 },
+            ].map((t, i) => (
+              <Card key={i}>
+                <CardHeader className="pb-2">
+                  <div className="flex items-center gap-2 text-sm font-medium">{t.name} <span className="text-muted-foreground">· {t.role}</span></div>
+                  <p className="text-xs text-amber-600 dark:text-amber-400">{"★".repeat(t.rating)}</p>
+                </CardHeader>
+                <CardContent className="pt-0 text-sm text-muted-foreground">
+                  &ldquo;{t.text}&rdquo;
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </section>
 

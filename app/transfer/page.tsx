@@ -128,7 +128,7 @@ export default function TransferPage() {
             </p>
           </CardHeader>
           <CardContent>
-            <Link href="/pricing#pro">
+            <Link href="/pricing">
               <Button>Unlock Pro</Button>
             </Link>
           </CardContent>

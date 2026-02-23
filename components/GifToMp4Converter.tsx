@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { fetchFile } from "@ffmpeg/util";
-import { Loader2, Download, FileImage } from "lucide-react";
+import { Loader2, Download, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { loadFFmpeg } from "@/lib/ffmpeg";
 import { useProStore } from "@/store/useProStore";
@@ -14,7 +14,7 @@ function getBatchLimit(isPro: boolean): number {
   return isPro ? 999 : BATCH_LIMIT_FREE;
 }
 
-export function WebpToPngConverter() {
+export function GifToMp4Converter() {
   const isPro = useProStore((s) => s.isPro);
   const batchLimit = getBatchLimit(isPro);
   const [loaded, setLoaded] = useState(false);
@@ -60,17 +60,17 @@ export function WebpToPngConverter() {
         const outputs: { name: string; blob: Blob }[] = [];
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
-          const inName = `input_${i}.webp`;
-          const outName = `output_${i}.png`;
+          const inName = `input_${i}.gif`;
+          const outName = `output_${i}.mp4`;
           const data = await fetchFile(file);
           await ffmpeg.writeFile(inName, data);
-          await ffmpeg.exec(["-i", inName, outName]);
+          await ffmpeg.exec(["-i", inName, "-movflags", "+faststart", "-pix_fmt", "yuv420p", outName]);
           const outData = await ffmpeg.readFile(outName);
           await ffmpeg.deleteFile(inName);
           await ffmpeg.deleteFile(outName);
           outputs.push({
-            name: file.name.replace(/\.webp$/i, ".png"),
-            blob: new Blob([outData as BlobPart], { type: "image/png" }),
+            name: file.name.replace(/\.gif$/i, ".mp4"),
+            blob: new Blob([outData as BlobPart], { type: "video/mp4" }),
           });
         }
         ffmpeg.off("progress", onProgress);
@@ -87,7 +87,7 @@ export function WebpToPngConverter() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { "image/webp": [".webp"] },
+    accept: { "image/gif": [".gif"] },
     maxFiles: batchLimit,
     disabled: !loaded || converting,
   });
@@ -129,9 +129,9 @@ export function WebpToPngConverter() {
         } ${converting ? "pointer-events-none opacity-70" : ""}`}
       >
         <input {...getInputProps()} />
-        <FileImage className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
+        <Video className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? "Converting..." : "Drop WebP files here, or click to select"}
+          {converting ? "Converting..." : "Drop GIF files here, or click to select"}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           {isPro ? "Pro: unlimited batch." : `Free: max ${BATCH_LIMIT_FREE} file. Pro: unlimited.`}

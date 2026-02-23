@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const WAV_FAQ = [
   {
     q: "Is WAV to MP3 conversion done locally?",
-    a: "Yes. Conversion runs in your browser with FFmpeg.wasm. Your audio never leaves your device. No upload, zero privacy risk.",
+    a: "Yes. Conversion runs in your browser with FFmpeg.wasm. Your audio never leaves your device. No upload, zero privacy risk. 2026.",
   },
   {
     q: "What MP3 quality is used?",
@@ -49,12 +49,24 @@ const WAV_FAQ = [
     q: "Why convert WAV to MP3?",
     a: "WAV is uncompressed and large; MP3 is compressed and widely supported. Converting saves space and keeps compatibility with players, phones, and car stereos.",
   },
+  {
+    q: "Privacy comparison with cloud converters?",
+    a: "Cloud converters upload your WAV to their servers. PrivacyConvert keeps everything in the browser — no upload, no account. 2026.",
+  },
+  {
+    q: "What browsers work?",
+    a: "Modern Chrome, Firefox, Edge, Safari with WebAssembly. FFmpeg loads once and is cached.",
+  },
+  {
+    q: "Is it free?",
+    a: "Yes. Single-file conversion is free. Pro adds batch and P2P; core conversion stays 100% local for everyone.",
+  },
 ];
 
 const AVIF_FAQ = [
   {
     q: "Is AVIF to PNG conversion done on my device?",
-    a: "Yes. PrivacyConvert runs FFmpeg entirely in your browser (WebAssembly). Your AVIF files never leave your computer. No upload, no server, zero privacy risk.",
+    a: "Yes. PrivacyConvert runs FFmpeg entirely in your browser (WebAssembly). Your AVIF files never leave your computer. No upload, no server, zero privacy risk. 2026.",
   },
   {
     q: "What is the max file size or batch limit?",
@@ -68,12 +80,28 @@ const AVIF_FAQ = [
     q: "Do you keep or store my files?",
     a: "No. We do not have access to your files. Conversion happens locally in your browser. We do not store, log, or transmit your data.",
   },
+  {
+    q: "How does this compare to cloud converters?",
+    a: "Cloud tools upload your AVIF to their servers. PrivacyConvert keeps everything local — same no-upload approach as VERT.sh and localconvert.com. 2026.",
+  },
+  {
+    q: "What browsers are supported?",
+    a: "Modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached for future use.",
+  },
+  {
+    q: "Is conversion really free?",
+    a: "Yes. Single-file conversion is free with no account. Pro adds batch and P2P transfer. Core conversion stays 100% local for everyone.",
+  },
+  {
+    q: "Can I convert multiple AVIF files at once?",
+    a: "Free users: one file at a time. Pro users: unlimited batch. All processing remains in your browser.",
+  },
 ];
 
 const WEBP_FAQ = [
   {
     q: "Is WebP to PNG conversion done locally?",
-    a: "Yes. FFmpeg runs in your browser via WebAssembly. Your WebP files never leave your device. No upload, zero privacy risk.",
+    a: "Yes. FFmpeg runs in your browser via WebAssembly. Your WebP files never leave your device. No upload, zero privacy risk. 2026.",
   },
   {
     q: "Why convert WebP to PNG?",
@@ -87,12 +115,28 @@ const WEBP_FAQ = [
     q: "Do you store my images?",
     a: "No. We have no access to your files. Conversion is entirely client-side.",
   },
+  {
+    q: "How does this compare to cloud tools?",
+    a: "Cloud converters upload your WebP. PrivacyConvert keeps everything client-side — no upload, same approach as our other tools. 2026.",
+  },
+  {
+    q: "What file sizes work best?",
+    a: "Device memory limits apply. We recommend images under 50MB for smooth in-browser conversion.",
+  },
+  {
+    q: "What browsers are supported?",
+    a: "Modern Chrome, Firefox, Edge, Safari with WebAssembly. FFmpeg loads once and is cached.",
+  },
+  {
+    q: "Is conversion free?",
+    a: "Yes. Single-file conversion is free. Pro adds batch; core conversion stays local for everyone.",
+  },
 ];
 
 const MP4_FAQ = [
   {
     q: "Is MP4 to WebM conversion done in my browser?",
-    a: "Yes. PrivacyConvert uses FFmpeg.wasm. Your video is processed locally; nothing is uploaded to our servers.",
+    a: "Yes. PrivacyConvert uses FFmpeg.wasm. Your video is processed locally; nothing is uploaded to our servers. No upload 2026.",
   },
   {
     q: "Why convert MP4 to WebM?",
@@ -106,6 +150,66 @@ const MP4_FAQ = [
     q: "Batch conversion and file size?",
     a: "Free: one file at a time. Pro: unlimited batch. Large files are limited by device memory; we recommend under 100MB for smooth conversion.",
   },
+  {
+    q: "Do you store or upload my video?",
+    a: "No. All conversion happens in your browser. We do not store, upload, or have access to your files. Privacy-first 2026.",
+  },
+  {
+    q: "How does this compare to cloud converters?",
+    a: "Cloud tools upload your MP4 to their servers. PrivacyConvert keeps everything local — same no-upload privacy as other client-side converters.",
+  },
+  {
+    q: "What browsers are supported?",
+    a: "Modern Chrome, Firefox, Edge, and Safari with WebAssembly support. FFmpeg loads once and is cached for future use.",
+  },
+  {
+    q: "Is this really free?",
+    a: "Yes. Single-file conversion is free with no account. Pro adds batch and P2P transfer. Core conversion stays 100% local for everyone.",
+  },
+];
+
+const PNG_FAQ = [
+  { q: "Is PNG to JPEG conversion done locally?", a: "Yes. FFmpeg runs in your browser via WebAssembly. Your images never leave your device. No upload, zero privacy risk. 2026." },
+  { q: "Why convert PNG to JPEG?", a: "PNG is lossless and often large; JPEG is smaller and universal for photos. Converting locally keeps sensitive images private." },
+  { q: "What JPEG quality is used?", a: "We use high quality (q:v 2 in FFmpeg). Output is suitable for web and sharing while staying smaller than PNG." },
+  { q: "Free vs Pro limits?", a: "Free: one file at a time. Pro: unlimited batch. All conversion remains 100% in your browser." },
+  { q: "Do you store my images?", a: "No. We have no access to your files. Conversion is entirely client-side; nothing is sent to our servers." },
+  { q: "Privacy comparison with other tools?", a: "Many online converters upload PNG/JPEG to the cloud. PrivacyConvert keeps everything local — no upload, no account required." },
+  { q: "What file sizes work best?", a: "Device memory limits apply. We recommend images under 50MB for smooth in-browser conversion." },
+  { q: "Can I convert multiple PNGs at once?", a: "Free users: one file. Pro users: unlimited batch. Same local conversion for everyone." },
+];
+
+const OGG_FAQ = [
+  { q: "Is OGG to MP3 conversion done locally?", a: "Yes. Conversion runs in your browser with FFmpeg.wasm. Your audio never leaves your device. No upload, zero privacy risk. 2026." },
+  { q: "What MP3 quality is used?", a: "We use libmp3lame quality 2 (~190 kbps VBR) for high-quality output. Same as our WAV to MP3 tool." },
+  { q: "Why convert OGG to MP3?", a: "OGG is open and efficient; MP3 is universally supported. Converting locally lets you use audio on any device without cloud upload." },
+  { q: "Free vs Pro?", a: "Free: one file at a time. Pro: unlimited batch. All conversion stays 100% in your browser." },
+  { q: "Do you store or upload my files?", a: "No. All processing happens in your browser. We do not store, log, or transmit your audio." },
+  { q: "Privacy vs cloud converters?", a: "Cloud tools upload OGG to their servers. PrivacyConvert keeps everything client-side — no upload, no account." },
+  { q: "What OGG formats are supported?", a: "Standard .ogg and .oga files. FFmpeg decodes Ogg Vorbis and outputs MP3 in your browser." },
+  { q: "Is it really free?", a: "Yes. Single-file conversion is free. Pro adds batch and extra features; core conversion remains local for everyone." },
+];
+
+const GIF_FAQ = [
+  { q: "Is GIF to MP4 conversion done in my browser?", a: "Yes. PrivacyConvert uses FFmpeg.wasm. Your GIF is processed locally; nothing is uploaded. No upload 2026." },
+  { q: "Why convert GIF to MP4?", a: "MP4 is much smaller than GIF for the same quality and plays everywhere. Converting locally keeps your clips private." },
+  { q: "What video codec is used?", a: "We use H.264 with faststart and yuv420p for broad compatibility. Conversion runs entirely in your browser." },
+  { q: "Batch and file size?", a: "Free: one file. Pro: unlimited batch. Large GIFs are limited by device memory; we recommend under 50MB for smooth conversion." },
+  { q: "Do you store my video?", a: "No. We do not have access to your files. Conversion happens in your browser only." },
+  { q: "Privacy comparison?", a: "Cloud converters upload your GIF. PrivacyConvert keeps everything client-side — same no-upload approach as our other tools." },
+  { q: "What browsers work?", a: "Modern Chrome, Firefox, Edge, Safari with WebAssembly. FFmpeg loads once and is cached." },
+  { q: "Free or paid?", a: "Single-file conversion is free. Pro adds batch and P2P; core conversion stays local for everyone." },
+];
+
+const PDF_FAQ = [
+  { q: "Is PDF to Images conversion local?", a: "PDF to Images (extract pages as images) is a Pro feature. When available, conversion will run 100% in your browser — no upload. 2026." },
+  { q: "Why extract PDF pages as images?", a: "Useful for thumbnails, slides, or editing in image tools. Doing it locally keeps confidential documents private." },
+  { q: "When will it be available?", a: "We are building it for Pro users first. All processing will run in-browser; no files sent to servers." },
+  { q: "Free vs Pro?", a: "PDF to Images is Pro-only. Other tools (AVIF, WAV, WebP, MP4, PNG, OGG, GIF) have free single-file conversion." },
+  { q: "Do you store PDFs?", a: "No. We never receive your files. When the tool ships, conversion will be entirely client-side." },
+  { q: "Privacy vs cloud PDF tools?", a: "Many PDF tools upload your file. PrivacyConvert will keep everything local — no upload, same as our other converters." },
+  { q: "What image format will be used?", a: "Planned: PNG or JPEG per page. Details will be announced when the feature launches." },
+  { q: "How do I get Pro?", a: "Visit the Pricing page. Pro unlocks batch conversion, P2P transfer, and PDF to Images when available." },
 ];
 
 const AVIF_SEO_CONTENT = `
@@ -166,6 +270,8 @@ We do not collect, store, or analyze your audio. Free users can convert one file
 How to use
 
 Load FFmpeg once (about 31 MB, cached by the browser). Then drag and drop one or more WAV files (or click to select). The tool converts them to MP3 and lets you download each result. No account required for free conversion. 2026.
+
+[步骤图占位：Load FFmpeg → 拖放 WAV → 转换 → 下载 MP3]
 `.trim();
 
 const WEBP_SEO_CONTENT = `
@@ -180,6 +286,8 @@ WebP offers good compression and quality; PNG is lossless and has universal supp
 How it works
 
 Load FFmpeg once in your browser, then drag and drop WebP files. The tool converts them to PNG and lets you download the results. All processing happens in the tab; we do not receive or store your images. Free users can convert one file at a time; Pro users get unlimited batch. Same local conversion for everyone — no upload, no privacy risk. 2026.
+
+[步骤图占位：Load FFmpeg → 拖放 WebP → 转换 → 下载 PNG]
 `.trim();
 
 const MP4_SEO_CONTENT = `
@@ -194,6 +302,98 @@ MP4 (H.264) is ubiquitous; WebM (VP9) is open and often smaller at similar quali
 How it works
 
 Load FFmpeg once in your browser, then drag and drop MP4 files. The tool converts them to WebM and lets you download the results. All processing happens in the tab; we do not receive or store your video. Free: one file at a time. Pro: unlimited batch. Same 100% local conversion for everyone. 2026.
+
+[步骤图占位：Load FFmpeg → 拖放 MP4 → 转换进度 → 下载 WebM]
+`.trim();
+
+const PNG_SEO_CONTENT = `
+PNG to JPEG Converter — No Upload, 100% Local (2026)
+
+Convert PNG images to JPEG in your browser with zero privacy risk. PrivacyConvert runs the conversion entirely on your device using FFmpeg compiled to WebAssembly. Your files are never uploaded to any server. This no-upload, local-first approach ensures complete privacy for screenshots, diagrams, and photos.
+
+Why convert PNG to JPEG locally?
+
+PNG is lossless and often large; JPEG is compressed and universally supported. Converting PNG to JPEG saves space and keeps compatibility with social media, email, and older apps. Doing it locally means your images never leave your computer — no cloud upload, no account, no privacy concerns. Many online converters require you to upload files to their servers; PrivacyConvert keeps everything in the browser. Privacy comparison: cloud tools like Convertio upload your PNG; we run FFmpeg in the tab and never see your data.
+
+How does local PNG to JPEG conversion work?
+
+When you use this tool, the site loads FFmpeg (open-source media toolkit) as WebAssembly in your browser. Your PNG file stays on your device. The conversion runs in a sandbox in the tab. The resulting JPEG is generated in memory and offered for download. No data is sent to our servers. We use high quality (q:v 2) so the output looks great while staying smaller than PNG.
+
+Privacy and limits
+
+We do not collect, store, or analyze your images. Free users can convert one file at a time; Pro users get unlimited batch conversion. Same 100% local conversion for everyone — Pro only relaxes limits and adds features like P2P transfer. 2026 no upload guarantee.
+
+How to use
+
+Load FFmpeg once (about 31 MB, cached by the browser). Then drag and drop one or more PNG files (or click to select). The tool converts them to JPEG and lets you download each result. No account required for free conversion.
+
+[步骤图占位：Load FFmpeg → 选择 PNG → 转换 → 下载 JPEG]
+`.trim();
+
+const OGG_SEO_CONTENT = `
+OGG to MP3 Converter — No Upload, 100% Local (2026)
+
+Convert OGG audio to MP3 in your browser with zero privacy risk. PrivacyConvert runs the conversion entirely on your device using FFmpeg compiled to WebAssembly. Your audio files are never uploaded to any server. This no-upload, local-first approach ensures complete privacy for your music and recordings.
+
+Why convert OGG to MP3 locally?
+
+OGG (Ogg Vorbis) is open and efficient; MP3 is the most widely supported format for players, phones, and cars. Converting OGG to MP3 lets you play files everywhere. Doing it locally means your audio never leaves your computer — no cloud upload, no account. Privacy comparison: many online converters upload your OGG to their servers; PrivacyConvert keeps everything in the browser. 2026 no upload.
+
+How does local OGG to MP3 conversion work?
+
+When you use this tool, the site loads FFmpeg as WebAssembly in your browser. Your OGG file stays on your device. The conversion runs in the tab. The resulting MP3 is generated in memory and offered for download. We use libmp3lame quality 2 (~190 kbps VBR) for high-quality output. No data is sent to our servers.
+
+Privacy and limits
+
+We do not collect, store, or analyze your audio. Free users can convert one file at a time; Pro users get unlimited batch. Same 100% local conversion for everyone. Upgrade via Pricing for batch and P2P. 2026.
+
+How to use
+
+Load FFmpeg once, then drag and drop OGG files (or click to select). The tool converts them to MP3 and lets you download each result. No account required for free conversion.
+
+[步骤图占位：Load FFmpeg → 拖放 OGG → 转换 → 下载 MP3]
+`.trim();
+
+const GIF_SEO_CONTENT = `
+GIF to MP4 Converter — No Upload, 100% Local (2026)
+
+Convert GIF animations to MP4 video in your browser with zero privacy risk. PrivacyConvert runs the conversion entirely on your device using FFmpeg (WebAssembly). Your GIF files are never uploaded. MP4 is much smaller than GIF at similar quality and plays everywhere — converting locally keeps your clips private.
+
+Why convert GIF to MP4 locally?
+
+GIF is large and limited to 256 colors; MP4 (H.264) is efficient and universal. Converting GIF to MP4 reduces file size and improves quality. Doing it locally means your animation never leaves your device — no cloud, no account. Privacy comparison: cloud converters upload your GIF; PrivacyConvert keeps everything client-side. No upload 2026.
+
+How does local GIF to MP4 conversion work?
+
+When you use this tool, the site loads FFmpeg as WebAssembly in your browser. Your GIF stays on your device. The conversion runs in the tab. We use H.264 with faststart and yuv420p for broad compatibility. The resulting MP4 is generated in memory and offered for download. No data is sent to our servers.
+
+Privacy and limits
+
+We do not collect, store, or analyze your video. Free: one file at a time. Pro: unlimited batch. Same 100% local conversion for everyone. 2026.
+
+How to use
+
+Load FFmpeg once, then drag and drop GIF files (or click to select). The tool converts them to MP4 and lets you download each result. No account required for free conversion.
+
+[步骤图占位：Load FFmpeg → 拖放 GIF → 转换 → 下载 MP4]
+`.trim();
+
+const PDF_SEO_CONTENT = `
+PDF to Images — No Upload, 100% Local (Pro, 2026)
+
+Extract PDF pages as images in your browser with zero privacy risk. PrivacyConvert will run extraction entirely on your device — no upload, no server. This tool is available for Pro users; when you use it, your PDF never leaves your computer. Privacy comparison: most PDF tools upload your file to the cloud; we keep everything client-side. 2026 no upload.
+
+Why extract PDF pages as images locally?
+
+Useful for thumbnails, slides, or editing in image editors. Doing it locally keeps confidential documents private. No cloud upload, no account required for Pro users.
+
+How it will work
+
+Load the converter once in your browser, then select your PDF. Pages are extracted as images (e.g. PNG or JPEG) in the tab. All processing happens on your device; we do not receive or store your PDF. Pro only; Free users can use our other image/audio/video tools with single-file conversion.
+
+Privacy and Pro
+
+We do not collect, store, or analyze your documents. PDF to Images is a Pro feature; other converters (AVIF, WAV, WebP, MP4, PNG, OGG, GIF) offer free single-file conversion. Same no-upload guarantee across all tools. 2026.
 `.trim();
 
 function ToolContent({ slug }: { slug: string }) {
@@ -277,6 +477,86 @@ function ToolContent({ slug }: { slug: string }) {
       </>
     );
   }
+  if (slug === "png-to-jpeg") {
+    return (
+      <>
+        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
+          {PNG_SEO_CONTENT}
+        </div>
+        <div className="mt-8">
+          <h3 className="mb-4 font-semibold">PNG to JPEG FAQ</h3>
+          <Accordion type="single" collapsible>
+            {PNG_FAQ.map((item, i) => (
+              <AccordionItem key={i} value={`png-faq-${i}`}>
+                <AccordionTrigger>{item.q}</AccordionTrigger>
+                <AccordionContent>{item.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </>
+    );
+  }
+  if (slug === "ogg-to-mp3") {
+    return (
+      <>
+        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
+          {OGG_SEO_CONTENT}
+        </div>
+        <div className="mt-8">
+          <h3 className="mb-4 font-semibold">OGG to MP3 FAQ</h3>
+          <Accordion type="single" collapsible>
+            {OGG_FAQ.map((item, i) => (
+              <AccordionItem key={i} value={`ogg-faq-${i}`}>
+                <AccordionTrigger>{item.q}</AccordionTrigger>
+                <AccordionContent>{item.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </>
+    );
+  }
+  if (slug === "gif-to-mp4") {
+    return (
+      <>
+        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
+          {GIF_SEO_CONTENT}
+        </div>
+        <div className="mt-8">
+          <h3 className="mb-4 font-semibold">GIF to MP4 FAQ</h3>
+          <Accordion type="single" collapsible>
+            {GIF_FAQ.map((item, i) => (
+              <AccordionItem key={i} value={`gif-faq-${i}`}>
+                <AccordionTrigger>{item.q}</AccordionTrigger>
+                <AccordionContent>{item.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </>
+    );
+  }
+  if (slug === "pdf-to-images") {
+    return (
+      <>
+        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
+          {PDF_SEO_CONTENT}
+        </div>
+        <div className="mt-8">
+          <h3 className="mb-4 font-semibold">PDF to Images FAQ</h3>
+          <Accordion type="single" collapsible>
+            {PDF_FAQ.map((item, i) => (
+              <AccordionItem key={i} value={`pdf-faq-${i}`}>
+                <AccordionTrigger>{item.q}</AccordionTrigger>
+                <AccordionContent>{item.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </>
+    );
+  }
   return (
     <p className="text-muted-foreground">
       This tool is coming soon. <Link href="/tools" className="underline">Browse all tools</Link>.
@@ -311,6 +591,28 @@ const HOWTO_STEPS = {
     { name: "Add MP4 files", text: "Drag and drop MP4 files or click to select. Free: 1 file; Pro: batch." },
     { name: "Convert and download", text: "Conversion runs locally (VP9/Opus). Download WebM. No upload." },
   ],
+  "png-to-jpeg": [
+    { name: "Load FFmpeg", text: "Click 'Load FFmpeg' to load the converter in your browser (one-time, ~31 MB, cached)." },
+    { name: "Add PNG files", text: "Drag and drop PNG files or click to select. Free: 1 file; Pro: unlimited batch." },
+    { name: "Convert", text: "Conversion runs locally. Progress is shown. No upload." },
+    { name: "Download", text: "Download each JPEG. Files never leave your device." },
+  ],
+  "ogg-to-mp3": [
+    { name: "Load FFmpeg", text: "Click 'Load FFmpeg' to load the converter in your browser." },
+    { name: "Add OGG files", text: "Drag and drop OGG files or click to select. Free: 1 file; Pro: batch." },
+    { name: "Convert and download", text: "Conversion runs locally. Download MP3. No upload." },
+  ],
+  "gif-to-mp4": [
+    { name: "Load FFmpeg", text: "Click 'Load FFmpeg' to load the converter in your browser." },
+    { name: "Add GIF files", text: "Drag and drop GIF files or click to select. Free: 1 file; Pro: batch." },
+    { name: "Convert and download", text: "Conversion runs locally (H.264). Download MP4. No upload." },
+  ],
+  "pdf-to-images": [
+    { name: "Pro feature", text: "PDF to Images is available for Pro users. Upgrade on the Pricing page." },
+    { name: "Load converter", text: "When available, load the converter once in your browser." },
+    { name: "Select PDF", text: "Select your PDF file. Pages will be extracted as images locally." },
+    { name: "Download", text: "Download each page as image. No upload. 2026." },
+  ],
 } as const;
 
 export default async function ConvertPage({ params }: Props) {
@@ -323,6 +625,10 @@ export default async function ConvertPage({ params }: Props) {
     : slug === "wav-to-mp3" ? WAV_FAQ
     : slug === "webp-to-png" ? WEBP_FAQ
     : slug === "mp4-to-webm" ? MP4_FAQ
+    : slug === "png-to-jpeg" ? PNG_FAQ
+    : slug === "ogg-to-mp3" ? OGG_FAQ
+    : slug === "gif-to-mp4" ? GIF_FAQ
+    : slug === "pdf-to-images" ? PDF_FAQ
     : null;
   const faqSchema = faqItems ? buildFAQSchema(faqItems) : null;
   const steps = HOWTO_STEPS[slug as keyof typeof HOWTO_STEPS];

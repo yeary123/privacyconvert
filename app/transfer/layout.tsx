@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "P2P File Transfer - No Upload, Pro | PrivacyConvert 2026",
+  title: "P2P Batch Transfer - No Upload, Pro | PrivacyConvert 2026",
   description:
-    "Send files directly between browsers with PeerJS. No server storage. Pro feature. 2026.",
+    "Send files directly between browsers. No upload, no server storage. PeerJS P2P. Pro feature. 2026.",
 };
 
 export default function TransferLayout({

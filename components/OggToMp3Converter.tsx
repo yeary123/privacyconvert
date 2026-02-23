@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { fetchFile } from "@ffmpeg/util";
-import { Loader2, Download, FileImage } from "lucide-react";
+import { Loader2, Download, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { loadFFmpeg } from "@/lib/ffmpeg";
 import { useProStore } from "@/store/useProStore";
@@ -14,7 +14,7 @@ function getBatchLimit(isPro: boolean): number {
   return isPro ? 999 : BATCH_LIMIT_FREE;
 }
 
-export function WebpToPngConverter() {
+export function OggToMp3Converter() {
   const isPro = useProStore((s) => s.isPro);
   const batchLimit = getBatchLimit(isPro);
   const [loaded, setLoaded] = useState(false);
@@ -60,17 +60,17 @@ export function WebpToPngConverter() {
         const outputs: { name: string; blob: Blob }[] = [];
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
-          const inName = `input_${i}.webp`;
-          const outName = `output_${i}.png`;
+          const inName = `input_${i}.ogg`;
+          const outName = `output_${i}.mp3`;
           const data = await fetchFile(file);
           await ffmpeg.writeFile(inName, data);
-          await ffmpeg.exec(["-i", inName, outName]);
+          await ffmpeg.exec(["-i", inName, "-codec:a", "libmp3lame", "-q:a", "2", outName]);
           const outData = await ffmpeg.readFile(outName);
           await ffmpeg.deleteFile(inName);
           await ffmpeg.deleteFile(outName);
           outputs.push({
-            name: file.name.replace(/\.webp$/i, ".png"),
-            blob: new Blob([outData as BlobPart], { type: "image/png" }),
+            name: file.name.replace(/\.ogg$/i, ".mp3"),
+            blob: new Blob([outData as BlobPart], { type: "audio/mpeg" }),
           });
         }
         ffmpeg.off("progress", onProgress);
@@ -87,7 +87,7 @@ export function WebpToPngConverter() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { "image/webp": [".webp"] },
+    accept: { "audio/ogg": [".ogg", ".oga"], "application/ogg": [".ogg"] },
     maxFiles: batchLimit,
     disabled: !loaded || converting,
   });
@@ -129,9 +129,9 @@ export function WebpToPngConverter() {
         } ${converting ? "pointer-events-none opacity-70" : ""}`}
       >
         <input {...getInputProps()} />
-        <FileImage className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
+        <Music className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? "Converting..." : "Drop WebP files here, or click to select"}
+          {converting ? "Converting..." : "Drop OGG files here, or click to select"}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           {isPro ? "Pro: unlimited batch." : `Free: max ${BATCH_LIMIT_FREE} file. Pro: unlimited.`}

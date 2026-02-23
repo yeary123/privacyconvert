@@ -1,8 +1,20 @@
 /**
- * JSON-LD Schema helpers for SEO (FAQ, SoftwareApplication).
+ * JSON-LD Schema helpers for SEO (FAQ, SoftwareApplication, HowTo, ItemList).
  */
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://privacyconvert.com";
+
 export type FAQItem = { q: string; a: string };
+
+/** Site-wide SoftwareApplication schema for layout. */
+export function getSiteSoftwareApplicationSchema() {
+  return buildSoftwareApplicationSchema({
+    name: "PrivacyConvert",
+    description: "100% local file converter. No upload, zero privacy risk. Convert images, audio, video in your browser. 2026.",
+    url: SITE_URL,
+    applicationCategory: "UtilitiesApplication",
+  });
+}
 
 export function buildFAQSchema(items: FAQItem[]) {
   return {
@@ -58,4 +70,33 @@ export function buildHowToSchema(options: {
 
 export function schemaToScript(schema: object): string {
   return JSON.stringify(schema);
+}
+
+/**
+ * ItemList schema for Tools page (list of converters).
+ */
+export function buildItemListSchema(options: {
+  name: string;
+  description: string;
+  url: string;
+  items: { name: string; url: string; description: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList" as const,
+    name: options.name,
+    description: options.description,
+    url: options.url,
+    numberOfItems: options.items.length,
+    itemListElement: options.items.map((item, i) => ({
+      "@type": "ListItem" as const,
+      position: i + 1,
+      item: {
+        "@type": "SoftwareApplication" as const,
+        name: item.name,
+        url: item.url,
+        description: item.description,
+      },
+    })),
+  };
 }

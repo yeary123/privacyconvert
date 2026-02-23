@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,6 +20,7 @@ const BUYMEACOFFEE_URL = "https://www.buymeacoffee.com/privacyconvert";
 const REDEEM_CODE = "PRO2026";
 
 export function PricingContent() {
+  const router = useRouter();
   const { isPro, setPro, hydrate } = useProStore();
   const [code, setCode] = useState("");
   const [redeemMessage, setRedeemMessage] = useState<"success" | "invalid" | null>(null);
@@ -27,11 +29,17 @@ export function PricingContent() {
     hydrate();
   }, [hydrate]);
 
+  const activateProAndRefresh = () => {
+    setPro(true);
+    router.refresh();
+  };
+
   const handleRedeem = () => {
     if (code.trim().toUpperCase() === REDEEM_CODE) {
       setPro(true);
       setRedeemMessage("success");
       setCode("");
+      router.refresh();
     } else {
       setRedeemMessage("invalid");
     }
@@ -153,7 +161,18 @@ export function PricingContent() {
             <p className="text-sm text-destructive">Invalid code.</p>
           )}
           <div className="flex flex-wrap items-center gap-4 pt-2 border-t border-border">
-            <Button onClick={() => setPro(!isPro)} variant={isPro ? "secondary" : "default"} type="button">
+            <Button
+              onClick={() => {
+                if (isPro) {
+                  setPro(false);
+                  router.refresh();
+                } else {
+                  activateProAndRefresh();
+                }
+              }}
+              variant={isPro ? "secondary" : "default"}
+              type="button"
+            >
               {isPro ? "Turn off Pro (demo)" : "Turn on Pro (demo)"}
             </Button>
             <span className="text-sm text-muted-foreground">
