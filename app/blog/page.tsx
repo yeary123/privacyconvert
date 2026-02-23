@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
 };
 
-const SIDEBAR_POPULAR_COUNT = 5;
+const SIDEBAR_POPULAR_COUNT = 6;
 
 export default function BlogPage() {
   const posts = getPosts();
@@ -38,7 +38,7 @@ export default function BlogPage() {
           </p>
         </header>
 
-        <div className="grid gap-10 lg:grid-cols-[1fr_280px]">
+        <div className="grid gap-10 lg:grid-cols-[1fr_300px]">
           <div>
             {posts.length > 0 ? (
               <BlogPostList posts={posts} />
@@ -49,28 +49,35 @@ export default function BlogPage() {
             )}
           </div>
 
-          <aside className="space-y-8 lg:sticky lg:top-6 lg:self-start">
-            <div className="rounded-lg border bg-card p-4">
-              <h3 className="mb-3 font-semibold">热门文章</h3>
-              <ul className="space-y-2">
+          <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
+            <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+              <h3 className="mb-1 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                Subscribe
+              </h3>
+              <p className="mb-4 text-sm text-muted-foreground">
+                No upload 2026、privacy first 转换技巧与产品更新，直接发到你的邮箱。
+              </p>
+              <NewsletterForm />
+            </div>
+            <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+              <h3 className="mb-3 font-semibold">Popular</h3>
+              <ul className="space-y-3">
                 {popular.map((p) => (
                   <li key={p.slug}>
                     <Link
                       href={`/blog/${p.slug}`}
-                      className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+                      className="block text-sm text-muted-foreground underline-offset-4 hover:underline"
                     >
                       {p.title}
                     </Link>
+                    {p.readingTime && (
+                      <span className="mt-0.5 block text-xs text-muted-foreground/80">
+                        {p.readingTime}
+                      </span>
+                    )}
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="rounded-lg border bg-card p-4">
-              <h3 className="mb-3 font-semibold">订阅更新</h3>
-              <p className="mb-3 text-sm text-muted-foreground">
-                No upload 2026、privacy first 转换技巧与产品更新，直接发到你的邮箱。
-              </p>
-              <NewsletterForm />
             </div>
           </aside>
         </div>

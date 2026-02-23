@@ -15,8 +15,10 @@ import { getConvertSeoContent } from "@/lib/convertSeoContent";
 
 type Props = { params: Promise<{ slug: string }> };
 
+// Static converter pages (app/convert/avif-to-png/page.tsx etc.) own these routes.
+// [slug] only handles unknown slugs (e.g. 404). Do not pre-generate the 8 static paths here.
 export async function generateStaticParams() {
-  return TOOLS.map((t) => ({ slug: t.slug }));
+  return [];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

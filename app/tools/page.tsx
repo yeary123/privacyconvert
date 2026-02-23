@@ -12,7 +12,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ToolCard } from "@/components/ToolCard";
 import { TOOLS } from "@/lib/tools";
 import { TOOLS_FAQ } from "@/lib/toolsFaq";
 import { cn } from "@/lib/utils";
@@ -80,21 +79,44 @@ export default function ToolsPage() {
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {filtered.map((tool) => (
-          <ToolCard
-            key={tool.slug}
-            slug={tool.slug}
-            name={tool.name}
-            description={tool.description}
-            category={tool.category}
-            proOnly={tool.proOnly}
-          />
+          <Link key={tool.slug} href={`/convert/${tool.slug}`} className="block h-full">
+            <Card
+              className={cn(
+                "h-full transition-colors hover:bg-muted/50",
+                tool.proOnly && "border-primary/50 bg-primary/5 ring-1 ring-primary/20"
+              )}
+            >
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  {tool.name}
+                  <span className="flex items-center gap-1">
+                    {tool.proOnly && (
+                      <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
+                        Pro
+                      </span>
+                    )}
+                    <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                  </span>
+                </CardTitle>
+                <CardDescription>{tool.description}</CardDescription>
+                {tool.category && (
+                  <span className="text-xs text-muted-foreground capitalize">{tool.category}</span>
+                )}
+              </CardHeader>
+            </Card>
+          </Link>
         ))}
-        <Link href="/transfer">
+        <Link href="/transfer" className="block h-full">
           <Card className="h-full transition-colors hover:bg-muted/50 border-primary/30">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 P2P Batch Transfer
-                <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                <span className="flex items-center gap-1">
+                  <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
+                    Pro
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                </span>
               </CardTitle>
               <CardDescription>
                 Send files directly between browsers. No server. Pro.

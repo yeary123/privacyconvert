@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { StripeCheckoutButton } from "@/components/StripeCheckoutButton";
+import { PayPalButtonsWrapper } from "@/components/PayPalButtons";
 import { useProStore } from "@/store/useProStore";
 
 const BUYMEACOFFEE_URL = "https://www.buymeacoffee.com/privacyconvert";
@@ -115,7 +116,7 @@ export function PricingContent() {
         </Table>
       </div>
 
-      {/* Pro plans: Stripe (test + live) + Buy Me a Coffee */}
+      {/* Pro plans: PayPal + Buy Me a Coffee */}
       <div className="grid gap-6 md:grid-cols-3">
         <Card>
           <CardHeader>
@@ -123,13 +124,11 @@ export function PricingContent() {
             <p className="text-2xl font-bold">$4.9<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
           </CardHeader>
           <CardContent className="space-y-2">
-            <StripeCheckoutButton plan="monthly" className="w-full">
-              Subscribe (Stripe)
-            </StripeCheckoutButton>
+            <PayPalButtonsWrapper plan="monthly" onSuccess={() => toast.success("Payment successful! Pro is now active.")} />
             <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-muted-foreground hover:underline">
               Or Buy Me a Coffee
             </a>
-            <p className="text-xs text-muted-foreground">Pro perks after payment (Stripe or BMC).</p>
+            <p className="text-xs text-muted-foreground">Pro perks after payment (PayPal or BMC).</p>
           </CardContent>
         </Card>
         <Card className="border-primary">
@@ -139,9 +138,7 @@ export function PricingContent() {
             <p className="text-sm text-muted-foreground">Save ~17%</p>
           </CardHeader>
           <CardContent className="space-y-2">
-            <StripeCheckoutButton plan="yearly" className="w-full" variant="default">
-              Subscribe (Stripe)
-            </StripeCheckoutButton>
+            <PayPalButtonsWrapper plan="yearly" onSuccess={() => toast.success("Payment successful! Pro is now active.")} />
             <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-muted-foreground hover:underline">
               Or Buy Me a Coffee
             </a>
@@ -155,9 +152,7 @@ export function PricingContent() {
             <p className="text-sm text-muted-foreground">One-time</p>
           </CardHeader>
           <CardContent className="space-y-2">
-            <StripeCheckoutButton plan="lifetime" className="w-full" variant="outline">
-              Lifetime Pro
-            </StripeCheckoutButton>
+            <PayPalButtonsWrapper plan="lifetime" onSuccess={() => toast.success("Payment successful! Pro is now active.")} />
             <a href={BUYMEACOFFEE_URL} target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-muted-foreground hover:underline">
               Or Buy Me a Coffee
             </a>
