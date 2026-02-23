@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
 /**
- * Email subscription. Connect to ConvertKit or Buttondown via /api/newsletter
- * when env vars are set (e.g. CONVERTKIT_API_KEY / BUTTONDOWN_API_KEY).
+ * Email subscription. Connect to Brevo, ConvertKit, or Buttondown via /api/newsletter
+ * when env vars are set (e.g. BREVO_API_KEY / CONVERTKIT_API_KEY / BUTTONDOWN_API_KEY).
  */
 export function NewsletterForm() {
   const [email, setEmail] = useState("");

@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * Newsletter signup. Placeholder: set CONVERTKIT_API_KEY + CONVERTKIT_FORM_ID
- * or BUTTONDOWN_API_KEY to forward to ConvertKit or Buttondown.
+ * Newsletter signup. Set one of:
+ * - BREVO_API_KEY (+ optional BREVO_LIST_ID)
+ * - CONVERTKIT_API_KEY + CONVERTKIT_FORM_ID
+ * - BUTTONDOWN_API_KEY
  */
 export async function POST(request: NextRequest) {
   try {
@@ -10,6 +12,30 @@ export async function POST(request: NextRequest) {
     const email = typeof body?.email === "string" ? body.email.trim() : "";
     if (!email) {
       return NextResponse.json({ error: "Email required" }, { status: 400 });
+    }
+
+    const brevoKey = process.env.BREVO_API_KEY;
+    if (brevoKey) {
+      const listIdStr = process.env.BREVO_LIST_ID;
+      const listIds = listIdStr ? [Number(listIdStr)] : [];
+      const res = await fetch("https://api.brevo.com/v3/contacts", {
+        method: "POST",
+        headers: {
+          "api-key": brevoKey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          listIds,
+          updateEnabled: true,
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        console.error("Brevo subscribe error:", err);
+        return NextResponse.json({ error: "Subscription failed" }, { status: 502 });
+      }
+      return NextResponse.json({ ok: true });
     }
 
     const convertKitKey = process.env.CONVERTKIT_API_KEY;

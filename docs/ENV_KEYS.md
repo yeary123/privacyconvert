@@ -40,16 +40,23 @@
 
 ## 四、邮件订阅（Newsletter）
 
-二选一即可。
+任选其一即可。
 
-**方案 A：ConvertKit**
+**方案 A：Brevo**（免费约 10 万联系人、300 封/天）
+
+| 变量名 | 说明 |
+|--------|------|
+| `BREVO_API_KEY` | Brevo API Key（SMTP & API → API Keys） |
+| `BREVO_LIST_ID` | 订阅列表 ID（Contacts → Lists，可选，建议建一个 Newsletter 列表后填） |
+
+**方案 B：ConvertKit**
 
 | 变量名 | 说明 |
 |--------|------|
 | `CONVERTKIT_API_KEY` | ConvertKit API Key |
 | `CONVERTKIT_FORM_ID` | 订阅表单 ID |
 
-**方案 B：Buttondown**
+**方案 C：Buttondown**
 
 | 变量名 | 说明 |
 |--------|------|
@@ -74,7 +81,7 @@
 | **站点** | `NEXT_PUBLIC_SITE_URL` | 站点 URL、分享、SEO |
 | **Supabase** | `NEXT_PUBLIC_SUPABASE_URL`、`NEXT_PUBLIC_SUPABASE_ANON_KEY`、`SUPABASE_SERVICE_ROLE_KEY` | 登录、用户、服务端 |
 | **PayPal** | `NEXT_PUBLIC_PAYPAL_CLIENT_ID`、`PAYPAL_CLIENT_ID`、`PAYPAL_SECRET`、`PAYPAL_WEBHOOK_ID`（可选）、`PAYPAL_SANDBOX`（可选）、`NEXT_PUBLIC_PAYPAL_PLAN_*`（仅订阅需要） | 支付与 Webhook |
-| **Newsletter** | `CONVERTKIT_API_KEY` + `CONVERTKIT_FORM_ID` 或 `BUTTONDOWN_API_KEY` | 邮件订阅 |
+| **Newsletter** | `BREVO_API_KEY`（+ `BREVO_LIST_ID`）或 ConvertKit/Buttondown | 邮件订阅 |
 | **Google** | `NEXT_PUBLIC_GA_ID` | GA4 统计 |
 
 ---
@@ -97,7 +104,9 @@ NEXT_PUBLIC_SITE_URL=https://www.privacyconvert.online
 # PAYPAL_WEBHOOK_ID=
 # PAYPAL_SANDBOX=true
 
-# Newsletter（二选一）
+# Newsletter（任选其一）
+# BREVO_API_KEY=
+# BREVO_LIST_ID=
 # CONVERTKIT_API_KEY=
 # CONVERTKIT_FORM_ID=
 # BUTTONDOWN_API_KEY=

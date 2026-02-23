@@ -1,10 +1,10 @@
 import Script from "next/script";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+// 写死 GA4 测量 ID，无需配置环境变量；不用 GA 时改为空字符串 ""
+const GA_ID = "G-XXXXXXXXXX";
 
 /**
- * Google Analytics (GA4). Set NEXT_PUBLIC_GA_ID to enable.
- * Used in layout for Search Console and analytics.
+ * Google Analytics (GA4). Used in layout for Search Console and analytics.
  */
 export function GoogleAnalytics() {
   if (!GA_ID) return null;
