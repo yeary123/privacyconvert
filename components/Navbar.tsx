@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Shield, Moon, Sun } from "lucide-react";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
 
 const navLinks = [
@@ -19,7 +20,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const isPro = useProStore((s) => s.isPro);
+  const isPro = useAuthStore((s) => s.isPro);
   const hydrate = useProStore((s) => s.hydrate);
   useEffect(() => setMounted(true), []);
   useEffect(() => { hydrate(); }, [hydrate]);
@@ -51,6 +52,9 @@ export function Navbar() {
               <Button variant="ghost" size="sm">History</Button>
             </Link>
           )}
+          <Link href="/profile">
+              <Button variant="ghost" size="sm">Profile</Button>
+            </Link>
           <Link href="/login">
             <Button variant="ghost" size="sm">Login</Button>
           </Link>
@@ -99,6 +103,13 @@ export function Navbar() {
                 History
               </Link>
             )}
+            <Link
+              href="/profile"
+              className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"
+              onClick={() => setMobileOpen(false)}
+            >
+              Profile
+            </Link>
             <Link
               href="/login"
               className="rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent"

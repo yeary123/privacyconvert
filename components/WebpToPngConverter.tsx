@@ -7,6 +7,7 @@ import { Loader2, FileImage } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConversionResult } from "@/components/ConversionResult";
 import { loadFFmpeg } from "@/lib/ffmpeg";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
 
 const BATCH_LIMIT_FREE = 1;
@@ -18,7 +19,7 @@ function getBatchLimit(isPro: boolean): number {
 type Props = { toolSlug?: string };
 
 export function WebpToPngConverter({ toolSlug = "webp-to-png" }: Props) {
-  const isPro = useProStore((s) => s.isPro);
+  const isPro = useAuthStore((s) => s.isPro);
   const addHistory = useProStore((s) => s.addHistory);
   const incrementProtected = useProStore((s) => s.incrementProtected);
   const batchLimit = getBatchLimit(isPro);

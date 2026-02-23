@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useProStore } from "@/store/useProStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { Button } from "@/components/ui/button";
 import { Crown } from "lucide-react";
 
 const REDEEM_CODE = "PRO2026";
 
 export function ProUnlockBanner() {
-  const isPro = useProStore((s) => s.isPro);
+  const isPro = useAuthStore((s) => s.isPro);
 
   if (isPro) {
     return (

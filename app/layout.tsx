@@ -5,6 +5,7 @@ import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { AuthInit } from "@/components/AuthInit";
 import { getSiteSoftwareApplicationSchema } from "@/lib/schema";
 import "./globals.css";
 
@@ -51,6 +52,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
         <GoogleAnalytics />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <AuthInit />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />

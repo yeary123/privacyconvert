@@ -15,16 +15,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PayPalBuyNowButton } from "@/components/PayPalBuyNowButton";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
 
-const BUYMEACOFFEE_URL = "https://www.buymeacoffee.com/privacyconvert";
 const REDEEM_CODE = "PRO2026";
 
 export function PricingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [, startTransition] = useTransition();
-  const { isPro, setPro, hydrate } = useProStore();
+  const { isPro, setDemoProOverride, fetchUser } = useAuthStore();
+  const hydrate = useProStore((s) => s.hydrate);
   const [code, setCode] = useState("");
   const [redeemMessage, setRedeemMessage] = useState<"success" | "invalid" | null>(null);
 
@@ -33,34 +33,18 @@ export function PricingContent() {
   }, [hydrate]);
 
   useEffect(() => {
-    const sessionId = searchParams.get("session_id");
-    if (!sessionId || isPro) return;
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch(`/api/stripe/verify-session?session_id=${encodeURIComponent(sessionId)}`);
-        const data = await res.json();
-        if (cancelled) return;
-        if (data.ok) {
-          setPro(true);
-          startTransition(() => router.replace("/pricing"));
-          router.refresh();
-        }
-      } catch {
-        // ignore
-      }
-    })();
-    return () => { cancelled = true; };
-  }, [searchParams, setPro, router, isPro]);
+    const success = searchParams.get("success");
+    if (success === "1") {
+      fetchUser();
+      startTransition(() => router.replace("/pricing"));
+    }
+  }, [searchParams, fetchUser, router]);
 
-  const activateProAndRefresh = () => {
-    setPro(true);
-    router.refresh();
-  };
+  const [, startTransition] = useTransition();
 
   const handleRedeem = () => {
     if (code.trim().toUpperCase() === REDEEM_CODE) {
-      setPro(true);
+      setDemoProOverride(true);
       setRedeemMessage("success");
       setCode("");
       router.refresh();
@@ -115,33 +99,24 @@ export function PricingContent() {
         </Table>
       </div>
 
-      {/* Lifetime Pro $9.9 + Buy Me a Coffee */}
+      {/* Free + $9.9 Lifetime only */}
       <div className="grid gap-6 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Free</CardTitle>
+            <p className="text-2xl font-bold">$0</p>
+            <p className="text-sm text-muted-foreground">1 file at a time, no upload. All conversions run in your browser.</p>
+          </CardHeader>
+        </Card>
         <Card className="border-primary">
           <CardHeader>
             <CardTitle>Lifetime Pro</CardTitle>
             <p className="text-2xl font-bold">$9.9</p>
-            <p className="text-sm text-muted-foreground">One-time payment, forever Pro.</p>
+            <p className="text-sm text-muted-foreground">One-time payment, forever Pro. Unlimited batch, history, P2P.</p>
           </CardHeader>
           <CardContent className="space-y-2">
             <PayPalBuyNowButton />
-            <p className="text-xs text-muted-foreground">PayPal Buy Now. After payment, Pro activates and you are redirected to the homepage.</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Donate</CardTitle>
-            <p className="text-sm text-muted-foreground">Support development via Buy Me a Coffee. You may receive a redeem code for Pro.</p>
-          </CardHeader>
-          <CardContent>
-            <a
-              href={BUYMEACOFFEE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md bg-amber-500 px-4 py-2 text-sm font-medium text-white hover:bg-amber-600"
-            >
-              Buy Me a Coffee
-            </a>
+            <p className="text-xs text-muted-foreground">PayPal Buy Now. After payment, Pro activates (you may need to sign in with the same email).</p>
           </CardContent>
         </Card>
       </div>
@@ -177,10 +152,11 @@ export function PricingContent() {
             <Button
               onClick={() => {
                 if (isPro) {
-                  setPro(false);
+                  setDemoProOverride(false);
                   router.refresh();
                 } else {
-                  activateProAndRefresh();
+                  setDemoProOverride(true);
+                  router.refresh();
                 }
               }}
               variant={isPro ? "secondary" : "default"}

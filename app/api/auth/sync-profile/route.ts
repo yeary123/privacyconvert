@@ -30,5 +30,25 @@ export async function POST(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  const email = user.email.trim().toLowerCase();
+  const { data: pending } = await supabaseAdmin
+    .from("paypal_pro_purchases")
+    .select("paypal_order_id, captured_at")
+    .eq("email", email)
+    .order("captured_at", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (pending) {
+    await supabaseAdmin.from("profiles").update({
+      is_pro: true,
+      pro_since: pending.captured_at,
+      paypal_order_id: pending.paypal_order_id,
+      updated_at: new Date().toISOString(),
+    }).eq("id", user.id);
+    await supabaseAdmin.from("paypal_pro_purchases").delete().eq("email", email);
+  }
+
   return NextResponse.json({ ok: true });
 }

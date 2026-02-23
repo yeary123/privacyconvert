@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { createPeer } from "@/lib/peer";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +15,7 @@ type PeerConnection = ReturnType<Awaited<ReturnType<typeof createPeer>>["connect
   : never;
 
 export default function TransferPage() {
-  const isPro = useProStore((s) => s.isPro);
+  const isPro = useAuthStore((s) => s.isPro);
   const p2pEnabled = useProStore((s) => s.p2pEnabled);
   const canUseP2P = isPro || p2pEnabled;
   const [mode, setMode] = useState<"share" | "receive">("share");

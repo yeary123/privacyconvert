@@ -13,9 +13,8 @@ export type ConversionHistoryItem = {
 
 export type BatchFileInfo = { name: string; size: number };
 
+// isPro comes from useAuthStore (Supabase profile). This store only holds local UI state.
 export const useProStore = create<{
-  isPro: boolean;
-  setPro: (value: boolean) => void;
   hydrate: () => void;
   history: ConversionHistoryItem[];
   addHistory: (tool: string, count: number) => void;
@@ -29,25 +28,16 @@ export const useProStore = create<{
 }>()(
   persist(
     (set, get) => ({
-      isPro: false,
-      setPro: (value) => set({ isPro: value, p2pEnabled: value }),
       hydrate: () => {
         if (typeof window === "undefined") return;
-        const raw = window.localStorage.getItem(STORAGE_KEY);
+        let protectedCount = get().protectedCount;
         try {
-          const data = raw ? JSON.parse(raw) : null;
-          const isPro = data?.state?.isPro === true;
-          let protectedCount = get().protectedCount;
-          try {
-            const pc = window.localStorage.getItem(PROTECTED_COUNT_KEY);
-            if (pc) protectedCount = Math.max(DEFAULT_PROTECTED_COUNT, parseInt(pc, 10) || protectedCount);
-          } catch {
-            // ignore
-          }
-          set({ isPro, protectedCount, p2pEnabled: isPro });
+          const pc = window.localStorage.getItem(PROTECTED_COUNT_KEY);
+          if (pc) protectedCount = Math.max(DEFAULT_PROTECTED_COUNT, parseInt(pc, 10) || protectedCount);
         } catch {
-          set({ isPro: !!raw });
+          // ignore
         }
+        set({ protectedCount });
       },
       history: [],
       addHistory: (tool, count) =>
@@ -79,7 +69,6 @@ export const useProStore = create<{
     {
       name: STORAGE_KEY,
       partialize: (s) => ({
-        isPro: s.isPro,
         history: s.history,
         batchCount: s.batchCount,
         p2pEnabled: s.p2pEnabled,

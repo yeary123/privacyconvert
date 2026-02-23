@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useProStore } from "@/store/useProStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? "";
@@ -19,21 +19,14 @@ interface PayPalButtonsWrapperProps {
 }
 
 function PayPalButtonsInner({ plan, onSuccess }: { plan: PayPalPlan; onSuccess?: () => void }) {
-  const setPro = useProStore((s) => s.setPro);
+  const fetchUser = useAuthStore((s) => s.fetchUser);
   const router = useRouter();
 
-  const handleApprove = useCallback(() => {
-    if (typeof window !== "undefined") {
-      try {
-        window.localStorage.setItem("isPro", "true");
-      } catch {
-        // ignore
-      }
-    }
-    setPro(true);
+  const handleApprove = useCallback(async () => {
+    await fetchUser();
     onSuccess?.();
     router.refresh();
-  }, [setPro, onSuccess, router]);
+  }, [fetchUser, onSuccess, router]);
 
   if (plan === "lifetime") {
     return (

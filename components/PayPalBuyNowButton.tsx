@@ -4,26 +4,19 @@ import { useCallback } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useProStore } from "@/store/useProStore";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? "";
 
 function PayPalBuyNowInner() {
-  const setPro = useProStore((s) => s.setPro);
+  const fetchUser = useAuthStore((s) => s.fetchUser);
   const router = useRouter();
 
-  const onApprove = useCallback(() => {
-    if (typeof window !== "undefined") {
-      try {
-        window.localStorage.setItem("isPro", "true");
-      } catch {
-        // ignore
-      }
-    }
-    setPro(true);
-    toast.success("Payment successful! Pro is now active.");
-    router.push("/");
-  }, [setPro, router]);
+  const onApprove = useCallback(async () => {
+    toast.success("恭喜！您已成为终身 Pro 用户");
+    await fetchUser();
+    router.push("/pricing?success=1");
+  }, [fetchUser, router]);
 
   return (
     <PayPalButtons

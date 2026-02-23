@@ -43,6 +43,9 @@ export default function AuthCallbackPage() {
           }
         }
         if (cancelled) return;
+        const { useAuthStore } = await import("@/store/useAuthStore");
+        await useAuthStore.getState().fetchUser();
+        if (cancelled) return;
         setStatus("ok");
         window.location.replace("/");
       } catch (e) {

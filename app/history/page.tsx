@@ -5,6 +5,7 @@ import Link from "next/link";
 import { History, Lock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
 import { TOOLS } from "@/lib/tools";
 
@@ -21,7 +22,8 @@ function toolName(slug: string) {
 }
 
 export default function HistoryPage() {
-  const { isPro, history, hydrate } = useProStore();
+  const isPro = useAuthStore((s) => s.isPro);
+  const { history, hydrate } = useProStore();
 
   useEffect(() => {
     hydrate();
