@@ -8,6 +8,7 @@ import {
   isHeicFile,
   DEFAULT_QUALITY,
 } from "@/lib/heicConversion";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const PROGRESS_INTERVAL_MS = 300;
 const PROGRESS_CAP = 85;
@@ -17,6 +18,7 @@ type ConvertedImage = { name: string; dataUrl: string };
 type Props = { toolSlug?: string };
 
 export function HeifToJpgConverter({ toolSlug = "heif-to-jpg" }: Props) {
+  const isPro = useAuthStore((s) => s.isPro);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [convertedImages, setConvertedImages] = useState<ConvertedImage[]>([]);
   const [isConverting, setIsConverting] = useState(false);
@@ -160,6 +162,9 @@ export function HeifToJpgConverter({ toolSlug = "heif-to-jpg" }: Props) {
             {selectedFile
               ? selectedFile.name
               : "Drop HEIC/HEIF here or click to select"}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch, history & P2P with Pro."}
           </p>
         </label>
         {selectedFile && !isConverting && (

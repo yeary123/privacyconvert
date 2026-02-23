@@ -142,7 +142,7 @@ export function OggToMp3Converter({ toolSlug = "ogg-to-mp3" }: Props) {
           {converting ? "Converting..." : "Drop OGG files here, or click to select"}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
-          {isPro ? "Pro: unlimited batch." : `Free: max ${BATCH_LIMIT_FREE} file. Pro: unlimited.`}
+          {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch, history & P2P with Pro."}
         </p>
       </div>
       {converting && (
