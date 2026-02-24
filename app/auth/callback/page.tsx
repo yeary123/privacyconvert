@@ -7,6 +7,28 @@ import { Shield, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 
+/** Parse hash fragment for access_token & refresh_token (Supabase magic link implicit flow). */
+function parseHashParams(hash: string): { access_token?: string; refresh_token?: string } {
+  if (!hash || !hash.startsWith("#")) return {};
+  const params = new URLSearchParams(hash.slice(1));
+  return {
+    access_token: params.get("access_token") ?? undefined,
+    refresh_token: params.get("refresh_token") ?? undefined,
+  };
+}
+
+async function finishSignIn(accessToken: string): Promise<void> {
+  const res = await fetch("/api/auth/sync-profile", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
+  });
+  if (!res.ok && res.status !== 404) {
+    console.warn("Profile sync failed:", await res.text());
+  }
+  const { useAuthStore } = await import("@/store/useAuthStore");
+  await useAuthStore.getState().fetchUser();
+}
+
 export default function AuthCallbackPage() {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<"loading" | "ok" | "error">("loading");
@@ -14,7 +36,11 @@ export default function AuthCallbackPage() {
 
   useEffect(() => {
     const code = searchParams.get("code");
-    if (!code) {
+    const hashParams = typeof window !== "undefined" ? parseHashParams(window.location.hash) : null;
+    const hasCode = Boolean(code);
+    const hasHashTokens = Boolean(hashParams?.access_token);
+
+    if (!hasCode && !hasHashTokens) {
       setStatus("error");
       setMessage("Missing auth code. Please try signing in again.");
       return;
@@ -24,27 +50,32 @@ export default function AuthCallbackPage() {
 
     (async () => {
       try {
-        const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-        if (cancelled) return;
-        if (error) {
-          setStatus("error");
-          setMessage(error.message || "Sign in failed.");
-          return;
-        }
-        setMessage("Setting up your account…");
-        const token = data.session?.access_token;
-        if (token) {
-          const res = await fetch("/api/auth/sync-profile", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-          });
-          if (!res.ok && res.status !== 404) {
-            console.warn("Profile sync failed:", await res.text());
+        if (code) {
+          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+          if (cancelled) return;
+          if (error) {
+            setStatus("error");
+            setMessage(error.message || "Sign in failed.");
+            return;
           }
+          setMessage("Setting up your account…");
+          const token = data.session?.access_token;
+          if (token) await finishSignIn(token);
+        } else if (hashParams?.access_token) {
+          setMessage("Setting up your account…");
+          const { error } = await supabase.auth.setSession({
+            access_token: hashParams.access_token,
+            refresh_token: hashParams.refresh_token ?? "",
+          });
+          if (cancelled) return;
+          if (error) {
+            setStatus("error");
+            setMessage(error.message || "Sign in failed.");
+            return;
+          }
+          await finishSignIn(hashParams.access_token);
         }
-        if (cancelled) return;
-        const { useAuthStore } = await import("@/store/useAuthStore");
-        await useAuthStore.getState().fetchUser();
+
         if (cancelled) return;
         setStatus("ok");
         window.location.replace("/");

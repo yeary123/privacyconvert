@@ -23,10 +23,16 @@ export default function LoginPage() {
     }
     setLoading(true);
     try {
+      const redirectBase =
+        typeof process !== "undefined" && process.env.NEXT_PUBLIC_SITE_URL
+          ? process.env.NEXT_PUBLIC_SITE_URL
+          : typeof window !== "undefined"
+            ? window.location.origin
+            : undefined;
       const { error } = await supabase.auth.signInWithOtp({
         email: trimmed,
         options: {
-          emailRedirectTo: typeof window !== "undefined" ? `${window.location.origin}/auth/callback` : undefined,
+          emailRedirectTo: redirectBase ? `${redirectBase.replace(/\/$/, "")}/auth/callback` : undefined,
         },
       });
       if (error) {
