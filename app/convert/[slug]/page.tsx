@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { ConversionUI } from "@/components/ConversionUI";
-import { ProUnlockBanner } from "@/components/ProUnlockBanner";
+import { ConvertPageLayout } from "@/components/ConvertPageLayout";
 import { TOOLS } from "@/lib/tools";
-import { buildFAQSchema, buildHowToSchema, buildSoftwareApplicationSchema } from "@/lib/schema";
 import { getConvertSeoContent } from "@/lib/convertSeoContent";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -382,60 +374,16 @@ Privacy and Pro
 We do not collect, store, or analyze your documents. PDF to Images is a Pro feature; other converters (AVIF, WAV, WebP, MP4, PNG, OGG, GIF) offer free single-file conversion. Same no-upload, privacy-first guarantee across all tools. 2026.
 `.trim();
 
-function ToolContent({ slug }: { slug: string }) {
-  const seoContent = getConvertSeoContent(slug);
-  if (seoContent) {
-    const faqMap: Record<string, { q: string; a: string }[]> = {
-      "avif-to-png": AVIF_FAQ,
-      "wav-to-mp3": WAV_FAQ,
-      "webp-to-png": WEBP_FAQ,
-      "mp4-to-webm": MP4_FAQ,
-      "png-to-jpeg": PNG_FAQ,
-      "ogg-to-mp3": OGG_FAQ,
-      "gif-to-mp4": GIF_FAQ,
-      "pdf-to-images": PDF_FAQ,
-    };
-    const faq = faqMap[slug];
-    const faqTitle =
-      slug === "avif-to-png" ? "AVIF to PNG FAQ"
-      : slug === "wav-to-mp3" ? "WAV to MP3 FAQ"
-      : slug === "webp-to-png" ? "WebP to PNG FAQ"
-      : slug === "mp4-to-webm" ? "MP4 to WebM FAQ"
-      : slug === "png-to-jpeg" ? "PNG to JPEG FAQ"
-      : slug === "ogg-to-mp3" ? "OGG to MP3 FAQ"
-      : slug === "gif-to-mp4" ? "GIF to MP4 FAQ"
-      : "PDF to Images FAQ";
-    return (
-      <>
-        <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
-          {seoContent}
-        </div>
-        {faq && faq.length > 0 && (
-          <div className="mt-8">
-            <h3 className="mb-4 font-semibold">{faqTitle}</h3>
-            <Accordion type="single" collapsible>
-              {faq.map((item, i) => (
-                <AccordionItem key={i} value={`faq-${slug}-${i}`}>
-                  <AccordionTrigger>{item.q}</AccordionTrigger>
-                  <AccordionContent>{item.a}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        )}
-      </>
-    );
-  }
-  return (
-    <p className="text-muted-foreground">
-      This tool is coming soon. <Link href="/tools" className="underline">Browse all tools</Link>.
-    </p>
-  );
-}
-
-function ConverterArea({ slug }: { slug: string }) {
-  return <ConversionUI slug={slug} />;
-}
+const FAQ_MAP: Record<string, { q: string; a: string }[]> = {
+  "avif-to-png": AVIF_FAQ,
+  "wav-to-mp3": WAV_FAQ,
+  "webp-to-png": WEBP_FAQ,
+  "mp4-to-webm": MP4_FAQ,
+  "png-to-jpeg": PNG_FAQ,
+  "ogg-to-mp3": OGG_FAQ,
+  "gif-to-mp4": GIF_FAQ,
+  "pdf-to-images": PDF_FAQ,
+};
 
 const HOWTO_STEPS = {
   "avif-to-png": [
@@ -489,68 +437,17 @@ export default async function ConvertPage({ params }: Props) {
   const tool = TOOLS.find((t) => t.slug === slug);
   if (!tool) notFound();
 
-  const faqItems =
-    slug === "avif-to-png" ? AVIF_FAQ
-    : slug === "wav-to-mp3" ? WAV_FAQ
-    : slug === "webp-to-png" ? WEBP_FAQ
-    : slug === "mp4-to-webm" ? MP4_FAQ
-    : slug === "png-to-jpeg" ? PNG_FAQ
-    : slug === "ogg-to-mp3" ? OGG_FAQ
-    : slug === "gif-to-mp4" ? GIF_FAQ
-    : slug === "pdf-to-images" ? PDF_FAQ
-    : null;
-  const faqSchema = faqItems ? buildFAQSchema(faqItems) : null;
+  const faqItems = FAQ_MAP[slug] ?? null;
   const steps = HOWTO_STEPS[slug as keyof typeof HOWTO_STEPS];
-  const howToSchema = steps
-    ? buildHowToSchema({
-        name: `${tool.name} - No Upload, 100% Local`,
-        description: tool.description,
-        steps: steps.map((s) => ({ name: s.name, text: s.text })),
-      })
-    : null;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
-  const toolAppSchema = buildSoftwareApplicationSchema({
-    name: `${tool.name} - No Upload 2026`,
-    description: `${tool.description}. 100% local browser converter. No upload, privacy first.`,
-    url: `${baseUrl}/convert/${slug}`,
-  });
+  const seoContent = getConvertSeoContent(slug);
 
   return (
-    <>
-      {faqSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-      )}
-      {howToSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
-        />
-      )}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(toolAppSchema) }}
-      />
-      <div className="container py-8">
-        <div className="mb-6">
-          <Link href="/tools" className="text-sm text-muted-foreground hover:underline">
-            ← All tools
-          </Link>
-          <h1 className="mt-2 text-3xl font-bold">{tool.name}</h1>
-          <p className="text-muted-foreground">{tool.description}</p>
-        </div>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,420px),1fr]">
-          <div className="lg:sticky lg:top-24 lg:self-start order-2 lg:order-1">
-            <ProUnlockBanner />
-            <ConverterArea slug={slug} />
-          </div>
-          <aside className="min-w-0 order-1 lg:order-2">
-            <ToolContent slug={slug} />
-          </aside>
-        </div>
-      </div>
-    </>
+    <ConvertPageLayout
+      tool={{ name: tool.name, description: tool.description, slug: tool.slug }}
+      converter={<ConversionUI slug={slug} />}
+      faq={faqItems ?? undefined}
+      howToSteps={steps ? steps.map((s) => ({ name: s.name, text: s.text })) : undefined}
+      seoContent={seoContent ?? undefined}
+    />
   );
 }
