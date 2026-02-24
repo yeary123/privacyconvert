@@ -4,7 +4,8 @@ import { useCallback, useRef, useState } from "react";
 import { Loader2, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConversionResult } from "@/components/ConversionResult";
-import { WAV_MP3_WORKER_CODE } from "@/lib/wavMp3WorkerCode";
+import { convert } from "@/lib/conversion";
+import type { ToolSlug } from "@/lib/tools";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
 
@@ -27,7 +28,7 @@ function isWavFile(file: File): boolean {
   );
 }
 
-type Props = { toolSlug?: string };
+type Props = { toolSlug?: ToolSlug };
 
 export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
   const isPro = useAuthStore((s) => s.isPro);
@@ -44,7 +45,6 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
 
   const dropZoneRef = useRef<HTMLDivElement>(null);
   const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const workerRef = useRef<Worker | null>(null);
 
   const clearProgressInterval = useCallback(() => {
     if (progressIntervalRef.current) {
@@ -66,38 +66,6 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
       });
     }, PROGRESS_INTERVAL_MS);
   }, [clearProgressInterval]);
-
-  const getOrCreateWorker = useCallback((): Worker => {
-    if (workerRef.current) return workerRef.current;
-    const blob = new Blob([WAV_MP3_WORKER_CODE], { type: "application/javascript" });
-    const url = URL.createObjectURL(blob);
-    workerRef.current = new Worker(url);
-    URL.revokeObjectURL(url);
-    return workerRef.current;
-  }, []);
-
-  const convertOneFile = useCallback(
-    (file: File): Promise<Blob> =>
-      new Promise((resolve, reject) => {
-        const worker = getOrCreateWorker();
-        const onMessage = (e: MessageEvent) => {
-          worker.removeEventListener("message", onMessage);
-          worker.removeEventListener("error", onError);
-          const { ok, blob, error: msg } = e.data ?? {};
-          if (ok && blob) resolve(blob);
-          else reject(new Error(msg || "Conversion failed"));
-        };
-        const onError = () => {
-          worker.removeEventListener("message", onMessage);
-          worker.removeEventListener("error", onError);
-          reject(new Error("Worker error"));
-        };
-        worker.addEventListener("message", onMessage);
-        worker.addEventListener("error", onError);
-        file.arrayBuffer().then((buf) => worker.postMessage(buf));
-      }),
-    [getOrCreateWorker]
-  );
 
   const handleFile = useCallback(
     (files: FileList | File[] | null) => {
@@ -133,9 +101,8 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
       const total = selectedFiles.length;
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
-        const blob = await convertOneFile(file);
-        const name = file.name.replace(/\.wav$/i, ".mp3");
-        outputs.push({ name, blob });
+        const { blob, suggestedName } = await convert(toolSlug, file);
+        outputs.push({ name: suggestedName, blob });
         setConversionProgress(Math.round(((i + 1) / total) * PROGRESS_CAP));
       }
       clearProgressInterval();
@@ -151,7 +118,6 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
     }
   }, [
     selectedFiles,
-    convertOneFile,
     startSimulatedProgress,
     clearProgressInterval,
     isPro,

@@ -4,8 +4,10 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FileImage } from "lucide-react";
 import { ConversionResult } from "@/components/ConversionResult";
-import { convertImageFile, DEFAULT_JPEG_QUALITY } from "@/lib/imageConversion";
+import { convert } from "@/lib/conversion";
+import type { ToolSlug } from "@/lib/tools";
 import type { ImageOutputMime } from "@/lib/imageConversion";
+import { DEFAULT_JPEG_QUALITY } from "@/lib/imageConversion";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
 
@@ -40,7 +42,7 @@ export type CanvasImageConverterConfig = {
   inputExtPattern: RegExp;
   /** Quality for JPEG (0–1). Ignored for PNG. */
   quality?: number;
-  toolSlug: string;
+  toolSlug: ToolSlug;
   ariaLabel: string;
   dropMessage: string;
 };
@@ -92,9 +94,8 @@ export function CanvasImageConverter({ config }: Props) {
         for (let i = 0; i < files.length; i++) {
           setCurrentFileIndex(i + 1);
           const file = files[i];
-          const blob = await convertImageFile(file, outputMime, quality);
-          const name = file.name.replace(inputExtPattern, outputExt);
-          outputs.push({ name, blob });
+          const { blob, suggestedName } = await convert(toolSlug, file);
+          outputs.push({ name: suggestedName, blob });
           setCurrentProgress(Math.round(((i + 1) / total) * 100));
         }
         setResults(outputs);
@@ -108,7 +109,7 @@ export function CanvasImageConverter({ config }: Props) {
         setCurrentFileIndex(0);
       }
     },
-    [batchLimit, outputMime, quality, inputExtPattern, outputExt, isPro, addHistory, incrementProtected, toolSlug]
+    [batchLimit, toolSlug, isPro, addHistory, incrementProtected]
   );
 
   const onDrop = useCallback(

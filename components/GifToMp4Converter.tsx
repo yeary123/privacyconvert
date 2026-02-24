@@ -2,11 +2,11 @@
 
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { fetchFile } from "@ffmpeg/util";
 import { Loader2, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConversionResult } from "@/components/ConversionResult";
-import { loadFFmpeg } from "@/lib/ffmpeg";
+import { convert, loadFFmpeg } from "@/lib/conversion";
+import type { ToolSlug } from "@/lib/tools";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
 
@@ -16,7 +16,7 @@ function getBatchLimit(isPro: boolean): number {
   return isPro ? 999 : BATCH_LIMIT_FREE;
 }
 
-type Props = { toolSlug?: string };
+type Props = { toolSlug?: ToolSlug };
 
 export function GifToMp4Converter({ toolSlug = "gif-to-mp4" }: Props) {
   const isPro = useAuthStore((s) => s.isPro);
@@ -59,27 +59,11 @@ export function GifToMp4Converter({ toolSlug = "gif-to-mp4" }: Props) {
       setResults([]);
       setProgress(0);
       try {
-        const ffmpeg = await loadFFmpeg();
-        if (!ffmpeg) throw new Error("FFmpeg not loaded");
-        const onProgress = (e: { progress?: number }) => setProgress(Math.round((e.progress ?? 0) * 100));
-        ffmpeg.on("progress", onProgress);
         const outputs: { name: string; blob: Blob }[] = [];
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          const inName = `input_${i}.gif`;
-          const outName = `output_${i}.mp4`;
-          const data = await fetchFile(file);
-          await ffmpeg.writeFile(inName, data);
-          await ffmpeg.exec(["-i", inName, "-movflags", "+faststart", "-pix_fmt", "yuv420p", outName]);
-          const outData = await ffmpeg.readFile(outName);
-          await ffmpeg.deleteFile(inName);
-          await ffmpeg.deleteFile(outName);
-          outputs.push({
-            name: file.name.replace(/\.gif$/i, ".mp4"),
-            blob: new Blob([outData as BlobPart], { type: "video/mp4" }),
-          });
+        for (const file of files) {
+          const result = await convert(toolSlug, file, { onProgress: setProgress });
+          outputs.push({ name: result.suggestedName, blob: result.blob });
         }
-        ffmpeg.off("progress", onProgress);
         setResults(outputs);
         if (outputs.length > 0) incrementProtected(outputs.length);
         if (isPro && outputs.length > 0) addHistory(toolSlug, outputs.length);

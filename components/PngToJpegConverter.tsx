@@ -1,6 +1,7 @@
 "use client";
 
 import { CanvasImageConverter } from "@/components/CanvasImageConverter";
+import type { ToolSlug } from "@/lib/tools";
 
 const CONFIG = {
   acceptMime: "image/png",
@@ -9,12 +10,12 @@ const CONFIG = {
   outputExt: ".jpg",
   inputExtPattern: /\.png$/i,
   quality: 0.92,
-  toolSlug: "png-to-jpeg",
+  toolSlug: "png-to-jpeg" as const,
   ariaLabel: "Drop or select PNG files",
   dropMessage: "Drop PNG files here, or click to select",
 };
 
-type Props = { toolSlug?: string };
+type Props = { toolSlug?: ToolSlug };
 
 export function PngToJpegConverter({ toolSlug = "png-to-jpeg" }: Props) {
   return <CanvasImageConverter config={{ ...CONFIG, toolSlug }} />;

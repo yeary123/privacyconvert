@@ -7,7 +7,7 @@ import {
   convertHeicToJpeg,
   isHeicFile,
   DEFAULT_QUALITY,
-} from "@/lib/heicConversion";
+} from "@/lib/conversion";
 import { useAuthStore } from "@/store/useAuthStore";
 
 const PROGRESS_INTERVAL_MS = 300;
