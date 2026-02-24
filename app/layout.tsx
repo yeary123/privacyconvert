@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { PwaRegister } from "@/components/PwaRegister";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -33,6 +34,15 @@ export const metadata: Metadata = {
     description: "100% browser-side conversion. No upload 2026, zero privacy risk.",
     type: "website",
   },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#171717" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+  appleWebApp: {
+    capable: true,
+    title: "PrivacyConvert",
+    statusBarStyle: "default",
+  },
 };
 
 export default function RootLayout({
@@ -51,6 +61,7 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
         <GoogleAnalytics />
+        <PwaRegister />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AuthInit />
           <Navbar />
