@@ -1,14 +1,10 @@
 "use client";
 
-import { AvifToPngConverter } from "@/components/AvifToPngConverter";
 import { HeifToJpgConverter } from "@/components/HeifToJpgConverter";
-import { WavToMp3Converter } from "@/components/WavToMp3Converter";
-import { WebpToPngConverter } from "@/components/WebpToPngConverter";
-import { Mp4ToWebmConverter } from "@/components/Mp4ToWebmConverter";
-import { PngToJpegConverter } from "@/components/PngToJpegConverter";
-import { OggToMp3Converter } from "@/components/OggToMp3Converter";
-import { GifToMp4Converter } from "@/components/GifToMp4Converter";
 import { PdfToImagesConverter } from "@/components/PdfToImagesConverter";
+import { GenericConverter } from "@/components/GenericConverter";
+import { hasConvertHandler } from "@/lib/conversion";
+import type { ToolSlug } from "@/lib/tools";
 
 type ConversionUIProps = { slug: string };
 
@@ -18,30 +14,18 @@ type ConversionUIProps = { slug: string };
  * Free: single file; Pro: batch + large files.
  */
 export function ConversionUI({ slug }: ConversionUIProps) {
-  switch (slug) {
-    case "avif-to-png":
-      return <AvifToPngConverter toolSlug={slug} />;
-    case "heif-to-jpg":
-      return <HeifToJpgConverter toolSlug={slug} />;
-    case "wav-to-mp3":
-      return <WavToMp3Converter toolSlug={slug} />;
-    case "webp-to-png":
-      return <WebpToPngConverter toolSlug={slug} />;
-    case "mp4-to-webm":
-      return <Mp4ToWebmConverter toolSlug={slug} />;
-    case "png-to-jpeg":
-      return <PngToJpegConverter toolSlug={slug} />;
-    case "ogg-to-mp3":
-      return <OggToMp3Converter toolSlug={slug} />;
-    case "gif-to-mp4":
-      return <GifToMp4Converter toolSlug={slug} />;
-    case "pdf-to-images":
-      return <PdfToImagesConverter toolSlug="pdf-to-images" />;
-    default:
-      return (
-        <div className="rounded-xl border border-border bg-card p-8 text-center text-muted-foreground">
-          This converter is not yet available. <a href="/tools" className="underline">Browse all tools</a>.
-        </div>
-      );
+  if (slug === "heif-to-jpg") {
+    return <HeifToJpgConverter toolSlug={slug} />;
   }
+  if (slug === "pdf-to-images") {
+    return <PdfToImagesConverter toolSlug="pdf-to-images" />;
+  }
+  if (hasConvertHandler(slug as ToolSlug)) {
+    return <GenericConverter toolSlug={slug as ToolSlug} />;
+  }
+  return (
+    <div className="rounded-xl border border-border bg-card p-8 text-center text-muted-foreground">
+      This converter is not yet available. <a href="/tools" className="underline">Browse all tools</a>.
+    </div>
+  );
 }

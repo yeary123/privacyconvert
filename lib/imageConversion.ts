@@ -3,7 +3,7 @@
  * No FFmpeg; no upload. Used for AVIF→PNG, WebP→PNG, PNG→JPEG.
  */
 
-export type ImageOutputMime = "image/png" | "image/jpeg";
+export type ImageOutputMime = "image/png" | "image/jpeg" | "image/webp";
 
 /**
  * Converts a single image file to the target format using Canvas.
@@ -33,7 +33,7 @@ export function convertImageFile(
       ctx.drawImage(img, 0, 0);
 
       const mime = targetMime;
-      const qualityOption = mime === "image/jpeg" ? quality : undefined;
+      const qualityOption = mime === "image/jpeg" || mime === "image/webp" ? quality : undefined;
 
       canvas.toBlob(
         (blob) => {

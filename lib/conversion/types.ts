@@ -24,6 +24,19 @@ export const FFMPEG_TOOL_SLUGS: ToolSlug[] = [
   "ogg-to-mp3",
   "mp4-to-webm",
   "gif-to-mp4",
+  "mp3-to-wav",
+  "flac-to-mp3",
+  "m4a-to-mp3",
+  "wav-to-ogg",
+  "aac-to-mp3",
+  "ogg-to-wav",
+  "mp3-to-ogg",
+  "webm-to-mp4",
+  "mov-to-mp4",
+  "mkv-to-mp4",
+  "avi-to-mp4",
+  "gif-to-webm",
+  "mp4-to-gif",
 ];
 
 export function needsFFmpeg(slug: ToolSlug): boolean {
