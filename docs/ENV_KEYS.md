@@ -4,11 +4,22 @@ Keys to configure in `.env.local` (or your hosting platform’s environment vari
 
 ---
 
+## 0. 域名说明
+
+| 环境 | 域名 | 说明 |
+|------|------|------|
+| **开发** | `https://privacyconvert-five.vercel.app/` | Vercel 部署，当前使用此域名。 |
+| **正式** | `https://www.privacyconvert.online` | 正式生产站。 |
+
+配置 `NEXT_PUBLIC_SITE_URL` 时：当前用开发站则设为开发域名；上线正式站时改为正式域名（用于邮件回调、sitemap、分享链接等）。
+
+---
+
 ## 1. Site basics
 
 | Variable | Description | Required | Default |
 |----------|-------------|----------|---------|
-| `NEXT_PUBLIC_SITE_URL` | Site root URL (sharing, sitemap, robots, SEO) | Recommended | `https://www.privacyconvert.online` |
+| `NEXT_PUBLIC_SITE_URL` | Site root URL (sharing, sitemap, robots, SEO, auth redirect) | Recommended | 正式站 `https://www.privacyconvert.online`；**当前用开发站时设为** `https://privacyconvert-five.vercel.app` |
 
 ---
 
@@ -89,8 +100,8 @@ If none are set, the subscribe API still returns success (placeholder behavior) 
 ## Example `.env.local` (reference only; do not commit real keys)
 
 ```bash
-# Site
-NEXT_PUBLIC_SITE_URL=https://www.privacyconvert.online
+# Site（当前用开发域名；正式上线时改为 https://www.privacyconvert.online）
+NEXT_PUBLIC_SITE_URL=https://privacyconvert-five.vercel.app
 
 # Supabase (as needed)
 # NEXT_PUBLIC_SUPABASE_URL=

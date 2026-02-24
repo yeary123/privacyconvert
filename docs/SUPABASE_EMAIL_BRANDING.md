@@ -63,9 +63,10 @@
 
 1. **Authentication** → **URL Configuration**。
 2. 在 **Redirect URLs** 中加入：
-   - 生产：`https://www.privacyconvert.online/auth/callback`（或你的实际站点根 URL + `/auth/callback`）。
-   - 本地开发：`http://localhost:3000/auth/callback`。
-3. **Site URL** 建议设为生产站根 URL，例如：`https://www.privacyconvert.online`。
+   - **开发（当前使用）**：`https://privacyconvert-five.vercel.app/auth/callback`
+   - **正式**：`https://www.privacyconvert.online/auth/callback`
+   - **本地**：`http://localhost:3000/auth/callback`
+3. **Site URL**：当前用开发站则设为 `https://privacyconvert-five.vercel.app`；正式上线时改为 `https://www.privacyconvert.online`。
 
 这样邮件里的确认/登录链接会跳转到你的站点 `/auth/callback`，由本项目的 callback 逻辑完成登录并进入已登录的网站。
 
@@ -76,7 +77,8 @@
 确保生产环境配置：
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://www.privacyconvert.online
+# 当前使用开发域名；正式上线时改为 https://www.privacyconvert.online
+NEXT_PUBLIC_SITE_URL=https://privacyconvert-five.vercel.app
 ```
 
 这样登录页请求 magic link 时会使用该 URL 作为 `emailRedirectTo` 的基础，邮件中的链接会指向生产站而非当前访问的域名。
