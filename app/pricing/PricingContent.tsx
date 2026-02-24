@@ -38,42 +38,36 @@ export function PricingContent() {
 
   return (
     <div className="space-y-12">
-      {/* Free vs Pro comparison */}
+      {/* Pro features */}
       <div className="overflow-x-auto rounded-xl border border-border">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[240px]">Feature</TableHead>
-              <TableHead className="text-center">Free</TableHead>
               <TableHead className="bg-primary/10 text-center font-semibold">Pro</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
               <TableCell>Batch conversion</TableCell>
-              <TableCell className="text-center">1 file at a time</TableCell>
               <TableCell className="bg-primary/5 text-center">Unlimited</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>File size limit</TableCell>
-              <TableCell className="text-center">Standard</TableCell>
               <TableCell className="bg-primary/5 text-center">Larger files</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Video conversion speed</TableCell>
-              <TableCell className="text-center">Standard</TableCell>
               <TableCell className="bg-primary/5 text-center">Accelerated (when available)</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Conversion history</TableCell>
-              <TableCell className="text-center">—</TableCell>
               <TableCell className="bg-primary/5 text-center">
                 <Check className="mx-auto h-4 w-4" />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>P2P advanced features</TableCell>
-              <TableCell className="text-center">—</TableCell>
               <TableCell className="bg-primary/5 text-center">
                 <Check className="mx-auto h-4 w-4" />
               </TableCell>
@@ -82,15 +76,8 @@ export function PricingContent() {
         </Table>
       </div>
 
-      {/* Free + $9.9 Lifetime only */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Free</CardTitle>
-            <p className="text-2xl font-bold">$0</p>
-            <p className="text-sm text-muted-foreground">1 file at a time, no upload. All conversions run in your browser.</p>
-          </CardHeader>
-        </Card>
+      {/* Lifetime Pro */}
+      <div className="max-w-md">
         <Card className="border-primary">
           <CardHeader>
             <CardTitle>Lifetime Pro</CardTitle>
