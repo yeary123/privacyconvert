@@ -115,7 +115,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Tool cards grid - 8 tools + P2P */}
+        {/* Tool cards grid */}
         <section className="container py-16">
           <h2 className="mb-8 text-2xl font-bold">Popular Tools</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -129,14 +129,6 @@ export default function Home() {
                 proOnly={tool.proOnly}
               />
             ))}
-            <ToolCard
-              href="/transfer"
-              slug="transfer"
-              name="P2P Batch Transfer"
-              description="Send files directly between browsers. No server. Pro."
-              category="Pro"
-              proOnly
-            />
           </div>
           <div className="mt-6 text-center">
             <Link href="/tools">

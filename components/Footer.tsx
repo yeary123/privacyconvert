@@ -7,7 +7,7 @@ const footerLinks = [
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
-  { href: "/transfer", label: "P2P Transfer" },
+  { href: "https://www.filetransfer.ink", label: "P2P File Transfer", external: true },
 ];
 
 export function Footer() {
@@ -31,15 +31,27 @@ export function Footer() {
           <div>
             <p className="mb-2 font-semibold">Links</p>
             <nav className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
-              {footerLinks.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  {label}
-                </Link>
-              ))}
+              {footerLinks.map(({ href, label, external }) =>
+                external ? (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    {label}
+                  </a>
+                ) : (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    {label}
+                  </Link>
+                )
+              )}
             </nav>
           </div>
         </div>

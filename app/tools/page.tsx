@@ -91,14 +91,6 @@ export default function ToolsPage() {
             proOnly={tool.proOnly}
           />
         ))}
-        <ToolCard
-          href="/transfer"
-          slug="transfer"
-          name="P2P Batch Transfer"
-          description="Send files directly between browsers. No server. Pro."
-          category="Pro"
-          proOnly
-        />
       </div>
       {filtered.length === 0 && (
         <p className="py-8 text-center text-muted-foreground">No tools match your search.</p>
