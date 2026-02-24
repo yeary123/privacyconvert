@@ -2,10 +2,9 @@
 
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Loader2, FileImage, Music, Video } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FileImage, Music, Video } from "lucide-react";
 import { ConversionResult } from "@/components/ConversionResult";
-import { convert, loadFFmpeg, hasConvertHandler, needsFFmpeg } from "@/lib/conversion";
+import { convert, loadFFmpeg, needsFFmpeg } from "@/lib/conversion";
 import { getAccept } from "@/lib/conversion/accept";
 import { TOOLS, type ToolSlug } from "@/lib/tools";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -34,7 +33,7 @@ export function GenericConverter({ toolSlug }: Props) {
   const useFFmpeg = needsFFmpeg(toolSlug);
   const [loaded, setLoaded] = useState(!useFFmpeg);
   const [loadProgress, setLoadProgress] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loadingFFmpeg, setLoadingFFmpeg] = useState(false);
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [results, setResults] = useState<{ name: string; blob: Blob }[]>([]);
@@ -42,24 +41,8 @@ export function GenericConverter({ toolSlug }: Props) {
 
   const accept = getAccept(toolSlug) ?? (tool?.category === "audio" ? { "audio/*": [".mp3", ".wav", ".ogg", ".flac", ".m4a", ".aac"] } : tool?.category === "video" ? { "video/*": [".mp4", ".webm", ".mov", ".mkv", ".avi", ".gif"] } : { "image/*": [".png", ".jpg", ".jpeg", ".webp", ".avif", ".bmp"] });
 
-  const onLoad = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      await loadFFmpeg((p) => {
-        if (p.phase === "loading") setLoadProgress(p.percent);
-        if (p.phase === "done") setLoaded(true);
-      });
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load FFmpeg");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      if (useFFmpeg && !loaded) return;
       const limit = batchLimit;
       const files = acceptedFiles.slice(0, limit);
       if (acceptedFiles.length > limit) {
@@ -70,6 +53,15 @@ export function GenericConverter({ toolSlug }: Props) {
       setResults([]);
       setProgress(0);
       try {
+        if (useFFmpeg && !loaded) {
+          setLoadingFFmpeg(true);
+          setLoadProgress(0);
+          await loadFFmpeg((p) => {
+            if (p.phase === "loading") setLoadProgress(p.percent);
+            if (p.phase === "done") setLoaded(true);
+          });
+          setLoadingFFmpeg(false);
+        }
         const outputs: { name: string; blob: Blob }[] = [];
         for (const file of files) {
           const result = await convert(toolSlug, file, { onProgress: setProgress });
@@ -82,6 +74,7 @@ export function GenericConverter({ toolSlug }: Props) {
         setError(e instanceof Error ? e.message : "Conversion failed");
       } finally {
         setConverting(false);
+        setLoadingFFmpeg(false);
         setProgress(0);
       }
     },
@@ -92,7 +85,7 @@ export function GenericConverter({ toolSlug }: Props) {
     onDrop,
     accept,
     maxFiles: batchLimit,
-    disabled: (useFFmpeg && !loaded) || converting,
+    disabled: converting,
   });
 
   const download = (name: string, blob: Blob) => {
@@ -106,26 +99,6 @@ export function GenericConverter({ toolSlug }: Props) {
   const Icon = tool?.category === "audio" ? Music : tool?.category === "video" ? Video : FileImage;
   const resultTypeVal = tool ? resultType(tool.category) : "image";
 
-  if (useFFmpeg && !loaded && !loading) {
-    return (
-      <div className="rounded-xl border border-border bg-card p-8 text-center">
-        <p className="text-muted-foreground">FFmpeg runs in your browser. Load it once to start.</p>
-        <Button onClick={onLoad} className="mt-4 min-h-[44px] min-w-[44px] sm:min-w-0" disabled={loading}>
-          Load FFmpeg (~31 MB)
-        </Button>
-      </div>
-    );
-  }
-
-  if (useFFmpeg && loading) {
-    return (
-      <div className="rounded-xl border border-border bg-card p-8 text-center">
-        <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
-        <p className="mt-2 text-muted-foreground">Loading FFmpeg... {loadProgress}%</p>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-4">
       <div
@@ -137,7 +110,7 @@ export function GenericConverter({ toolSlug }: Props) {
         <input {...getInputProps()} aria-label={`Drop or select files for ${tool?.name ?? toolSlug}`} />
         <Icon className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? "Converting..." : `Drop files here, or click to select`}
+          {converting ? (loadingFFmpeg ? "Loading converter…" : "Converting...") : `Drop files here, or click to select`}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch, history & P2P with Pro."}
@@ -148,10 +121,12 @@ export function GenericConverter({ toolSlug }: Props) {
           <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
             <div
               className="h-full bg-primary transition-all duration-300"
-              style={{ width: `${progress}%` }}
+              style={{ width: `${loadingFFmpeg ? loadProgress : progress}%` }}
             />
           </div>
-          <p className="mt-2 text-sm text-muted-foreground">{progress}%</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {loadingFFmpeg ? `Loading converter… ${loadProgress}%` : `${progress}%`}
+          </p>
         </div>
       )}
       {error && (

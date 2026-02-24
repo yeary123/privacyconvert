@@ -79,7 +79,7 @@ privacyconvert/
 ### 3.1 职责
 
 - 提供 **唯一转换入口**：`convert(slug, file, options?)`，返回 `{ blob, suggestedName }`。
-- 对需要 FFmpeg 的工具，提供 `loadFFmpeg(onProgress?)`、`getFFmpeg()`；UI 通过 `needsFFmpeg(slug)` 决定是否先显示「Load FFmpeg」。
+- 对需要 FFmpeg 的工具，提供 `loadFFmpeg(onProgress?)`、`getFFmpeg()`；UI 通过 `needsFFmpeg(slug)` 在用户点击开始转换时按需加载，并以 loading 状态展示。
 - HEIC 仍通过 `convertHeicToJpeg()` 使用（返回 `{ name, dataUrl }[]`），由 `lib/conversion` 从 `lib/heicConversion` 再导出，保持功能层入口统一。
 
 ### 3.2 主要 API
@@ -116,8 +116,9 @@ privacyconvert/
 
 - **ConversionUI**：根据 `slug` 渲染对应 `*Converter` 组件（如 `WavToMp3Converter`、`Mp4ToWebmConverter`），不包含任何转换逻辑。
 - **各 *Converter 组件**：  
+  - 进入页面即展示**直接可转换状态**（拖拽区/选文件），不区分是否依赖 FFmpeg。  
   - 文件选择（拖拽/点击）、批量数量限制（Free/Pro）。  
-  - 如需 FFmpeg：先「Load FFmpeg」，再开放 dropzone。  
+  - 如需 FFmpeg：在用户**点击开始转换**（选文件并触发转换）时再加载，加载过程以 **loading 状态**展示（如「Loading converter… X%」），加载完成后自动进入转换进度。  
   - 调用 `convert(slug, file, { onProgress })` 或 `convertHeicToJpeg()`，展示进度与结果。  
   - 使用 `ConversionResult` 展示结果列表与下载。  
 - **CanvasImageConverter**：被 AvifToPng、WebpToPng、PngToJpeg 复用，仅通过 config（含 `toolSlug`）调用 `convert(toolSlug, file)`，不包含格式逻辑。
@@ -133,7 +134,7 @@ privacyconvert/
 
 1. 用户打开 `/convert/{slug}` → 服务端/静态页渲染 → 客户端挂载 `<ConversionUI slug={slug} />`。
 2. ConversionUI 根据 `slug` 渲染对应 Converter 组件。
-3. 用户选择/拖入文件（或先点击 Load FFmpeg）。
+3. 用户选择/拖入文件并触发转换（若需 FFmpeg 则此时加载并显示 loading，再执行转换）。
 4. 组件对每个文件调用 `convert(slug, file, { onProgress })`（或 HEIC 调用 `convertHeicToJpeg()`）。
 5. 功能层在 `run.ts` 中按 `slug` 执行对应 handler，返回 `{ blob, suggestedName }`（或 HEIC 的 dataUrl 列表）。
 6. 组件将结果写入 state，用 `ConversionResult` 展示并触发下载。

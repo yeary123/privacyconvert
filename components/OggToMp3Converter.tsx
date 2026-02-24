@@ -2,8 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Loader2, Music } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Music } from "lucide-react";
 import { ConversionResult } from "@/components/ConversionResult";
 import { convert, loadFFmpeg } from "@/lib/conversion";
 import type { ToolSlug } from "@/lib/tools";
@@ -25,30 +24,14 @@ export function OggToMp3Converter({ toolSlug = "ogg-to-mp3" }: Props) {
   const batchLimit = getBatchLimit(isPro);
   const [loaded, setLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loadingFFmpeg, setLoadingFFmpeg] = useState(false);
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [results, setResults] = useState<{ name: string; blob: Blob }[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const onLoad = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      await loadFFmpeg((p) => {
-        if (p.phase === "loading") setLoadProgress(p.percent);
-        if (p.phase === "done") setLoaded(true);
-      });
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load FFmpeg");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      if (!loaded) return;
       const limit = batchLimit;
       const files = acceptedFiles.slice(0, limit);
       if (acceptedFiles.length > limit) {
@@ -59,6 +42,15 @@ export function OggToMp3Converter({ toolSlug = "ogg-to-mp3" }: Props) {
       setResults([]);
       setProgress(0);
       try {
+        if (!loaded) {
+          setLoadingFFmpeg(true);
+          setLoadProgress(0);
+          await loadFFmpeg((p) => {
+            if (p.phase === "loading") setLoadProgress(p.percent);
+            if (p.phase === "done") setLoaded(true);
+          });
+          setLoadingFFmpeg(false);
+        }
         const outputs: { name: string; blob: Blob }[] = [];
         for (const file of files) {
           const result = await convert(toolSlug, file, { onProgress: setProgress });
@@ -71,6 +63,7 @@ export function OggToMp3Converter({ toolSlug = "ogg-to-mp3" }: Props) {
         setError(e instanceof Error ? e.message : "Conversion failed");
       } finally {
         setConverting(false);
+        setLoadingFFmpeg(false);
         setProgress(0);
       }
     },
@@ -81,7 +74,7 @@ export function OggToMp3Converter({ toolSlug = "ogg-to-mp3" }: Props) {
     onDrop,
     accept: { "audio/ogg": [".ogg", ".oga"], "application/ogg": [".ogg"] },
     maxFiles: batchLimit,
-    disabled: !loaded || converting,
+    disabled: converting,
   });
 
   const download = (name: string, blob: Blob) => {
@@ -91,26 +84,6 @@ export function OggToMp3Converter({ toolSlug = "ogg-to-mp3" }: Props) {
     a.click();
     URL.revokeObjectURL(a.href);
   };
-
-  if (!loaded && !loading) {
-    return (
-      <div className="rounded-xl border border-border bg-card p-8 text-center">
-        <p className="text-muted-foreground">FFmpeg runs in your browser. Load it once to start.</p>
-        <Button onClick={onLoad} className="mt-4 min-h-[44px] min-w-[44px] sm:min-w-0" disabled={loading}>
-          Load FFmpeg (~31 MB)
-        </Button>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="rounded-xl border border-border bg-card p-8 text-center">
-        <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
-        <p className="mt-2 text-muted-foreground">Loading FFmpeg... {loadProgress}%</p>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-4">
@@ -123,7 +96,7 @@ export function OggToMp3Converter({ toolSlug = "ogg-to-mp3" }: Props) {
         <input {...getInputProps()} aria-label="Drop or select OGG files" />
         <Music className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? "Converting..." : "Drop OGG files here, or click to select"}
+          {converting ? (loadingFFmpeg ? "Loading converter…" : "Converting...") : "Drop OGG files here, or click to select"}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch, history & P2P with Pro."}
@@ -134,10 +107,12 @@ export function OggToMp3Converter({ toolSlug = "ogg-to-mp3" }: Props) {
           <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
             <div
               className="h-full bg-primary transition-all duration-300"
-              style={{ width: `${progress}%` }}
+              style={{ width: `${loadingFFmpeg ? loadProgress : progress}%` }}
             />
           </div>
-          <p className="mt-2 text-sm text-muted-foreground">{progress}%</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {loadingFFmpeg ? `Loading converter… ${loadProgress}%` : `${progress}%`}
+          </p>
         </div>
       )}
       {error && (
