@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Search, ArrowRight } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ToolCard } from "@/components/ToolCard";
 import { TOOLS } from "@/lib/tools";
 import { TOOLS_FAQ } from "@/lib/toolsFaq";
 import { cn } from "@/lib/utils";
@@ -81,52 +81,24 @@ export default function ToolsPage() {
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {filtered.map((tool) => (
-          <Link key={tool.slug} href={toolHref(tool.slug)} className="block h-full">
-            <Card
-              className={cn(
-                "h-full transition-colors hover:bg-muted/50",
-                tool.proOnly && "border-primary/50 bg-primary/5 ring-1 ring-primary/20"
-              )}
-            >
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  {tool.name}
-                  <span className="flex items-center gap-1">
-                    {tool.proOnly && (
-                      <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
-                        Pro
-                      </span>
-                    )}
-                    <ArrowRight className="h-4 w-4 text-muted-foreground" />
-                  </span>
-                </CardTitle>
-                <CardDescription>{tool.description}</CardDescription>
-                {tool.category && (
-                  <span className="text-xs text-muted-foreground capitalize">{tool.category}</span>
-                )}
-              </CardHeader>
-            </Card>
-          </Link>
+          <ToolCard
+            key={tool.slug}
+            href={toolHref(tool.slug)}
+            slug={tool.slug}
+            name={tool.name}
+            description={tool.description}
+            category={tool.category}
+            proOnly={tool.proOnly}
+          />
         ))}
-        <Link href="/transfer" className="block h-full">
-          <Card className="h-full transition-colors hover:bg-muted/50 border-primary/30">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                P2P Batch Transfer
-                <span className="flex items-center gap-1">
-                  <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
-                    Pro
-                  </span>
-                  <ArrowRight className="h-4 w-4 text-muted-foreground" />
-                </span>
-              </CardTitle>
-              <CardDescription>
-                Send files directly between browsers. No server. Pro.
-              </CardDescription>
-              <span className="text-xs text-primary font-medium">Pro</span>
-            </CardHeader>
-          </Card>
-        </Link>
+        <ToolCard
+          href="/transfer"
+          slug="transfer"
+          name="P2P Batch Transfer"
+          description="Send files directly between browsers. No server. Pro."
+          category="Pro"
+          proOnly
+        />
       </div>
       {filtered.length === 0 && (
         <p className="py-8 text-center text-muted-foreground">No tools match your search.</p>

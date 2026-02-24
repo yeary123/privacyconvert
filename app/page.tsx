@@ -129,20 +129,14 @@ export default function Home() {
                 proOnly={tool.proOnly}
               />
             ))}
-            <Link href="/transfer">
-              <Card className="h-full transition-colors hover:bg-muted/50 border-primary/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between text-lg">
-                    P2P Batch Transfer
-                    <ArrowRight className="h-4 w-4 text-muted-foreground" />
-                  </CardTitle>
-                  <CardDescription>
-                    Send files directly between browsers. No server. Pro.
-                  </CardDescription>
-                  <span className="text-xs text-primary font-medium">Pro</span>
-                </CardHeader>
-              </Card>
-            </Link>
+            <ToolCard
+              href="/transfer"
+              slug="transfer"
+              name="P2P Batch Transfer"
+              description="Send files directly between browsers. No server. Pro."
+              category="Pro"
+              proOnly
+            />
           </div>
           <div className="mt-6 text-center">
             <Link href="/tools">
