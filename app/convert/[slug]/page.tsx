@@ -203,6 +203,17 @@ const GIF_FAQ = [
   { q: "Free or paid?", a: "Single-file conversion is free. Pro adds batch and P2P; core conversion stays local for everyone." },
 ];
 
+const HEIF_FAQ = [
+  { q: "Is HEIF/HEIC to JPG conversion done locally?", a: "Yes. The conversion runs in your browser using a lightweight library loaded on demand. Your HEIC/HEIF files never leave your device. No upload, zero privacy risk. 2026." },
+  { q: "Why convert HEIC to JPG?", a: "HEIC is used by Apple devices and offers good compression; JPG is universally supported. Converting to JPG helps compatibility with Windows, Android, and older software. Doing it locally keeps your photos private." },
+  { q: "Do I need to load FFmpeg or anything first?", a: "No. The HEIC converter loads its library only when you click Convert, so the page stays fast. No large upfront download." },
+  { q: "Do you store or upload my images?", a: "No. We have no access to your files. Conversion is entirely client-side; nothing is sent to our servers." },
+  { q: "What if my HEIC has multiple images?", a: "Some HEIC files contain multiple images (e.g. Live Photo). The tool converts all and lets you download each as a separate JPG." },
+  { q: "How does this compare to cloud converters?", a: "Cloud tools upload your HEIC to their servers. PrivacyConvert keeps everything in your browser — same no-upload approach as VERT.sh and localconvert. 2026." },
+  { q: "What browsers are supported?", a: "Modern Chrome, Firefox, Edge, and Safari. The converter uses standard browser APIs and a small WASM decoder loaded on demand." },
+  { q: "Is conversion free?", a: "Yes. HEIF/HEIC to JPG conversion is free. No account required. All processing stays local." },
+];
+
 const PDF_FAQ = [
   { q: "Is PDF to Images conversion local?", a: "PDF to Images (extract pages as images) is a Pro feature. When available, conversion will run 100% in your browser — no upload. 2026." },
   { q: "Why extract PDF pages as images?", a: "Useful for thumbnails, slides, or editing in image tools. Doing it locally keeps confidential documents private." },
@@ -386,6 +397,7 @@ const FAQ_MAP: Record<string, { q: string; a: string }[]> = {
   "png-to-jpeg": PNG_FAQ,
   "ogg-to-mp3": OGG_FAQ,
   "gif-to-mp4": GIF_FAQ,
+  "heif-to-jpg": HEIF_FAQ,
   "pdf-to-images": PDF_FAQ,
 };
 
@@ -427,6 +439,11 @@ const HOWTO_STEPS = {
     { name: "Load FFmpeg", text: "Click 'Load FFmpeg' to load the converter in your browser." },
     { name: "Add GIF files", text: "Drag and drop GIF files or click to select. Free: 1 file; Pro: batch." },
     { name: "Convert and download", text: "Conversion runs locally (H.264). Download MP4. No upload." },
+  ],
+  "heif-to-jpg": [
+    { name: "Select or drop file", text: "Drag and drop a HEIC/HEIF file or click to select. Only one file at a time; the converter validates the format." },
+    { name: "Click Convert to JPG", text: "The conversion library loads on demand (no upfront download). Conversion runs entirely in your browser." },
+    { name: "Preview and download", text: "Preview the result and download JPG(s). Multi-image HEIC files produce multiple JPGs. Files never leave your device." },
   ],
   "pdf-to-images": [
     { name: "Pro feature", text: "PDF to Images is available for Pro users. Upgrade on the Pricing page." },

@@ -6,7 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ProUnlockBanner } from "@/components/ProUnlockBanner";
-import { buildFAQSchema, buildHowToSchema, buildSoftwareApplicationSchema } from "@/lib/schema";
+import { buildArticleSchema, buildFAQSchema, buildHowToSchema, buildSoftwareApplicationSchema } from "@/lib/schema";
 
 export type ConvertPageLayoutTool = {
   name: string;
@@ -59,10 +59,26 @@ export function ConvertPageLayout({
     url: `${BASE_URL}/convert/${tool.slug}`,
   });
 
+  const articleSchema =
+    seoContent?.trim() ?
+    buildArticleSchema({
+      name: `${tool.name} – No Upload, 100% Local Tutorial 2026`,
+      description: tool.description,
+      url: `${BASE_URL}/convert/${tool.slug}`,
+      articleBody: seoContent.trim(),
+    })
+    : null;
+
   const sectionTitle = (faqTitle ?? `${tool.name} FAQ`).trim();
 
   return (
     <>
+      {articleSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
+      )}
       {faqSchema && (
         <script
           type="application/ld+json"

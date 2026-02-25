@@ -73,6 +73,29 @@ export function schemaToScript(schema: object): string {
 }
 
 /**
+ * Article schema for convert-page long-form tutorial (SEO, rich results).
+ */
+export function buildArticleSchema(options: {
+  name: string;
+  description: string;
+  url: string;
+  articleBody: string;
+  datePublished?: string;
+  dateModified?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article" as const,
+    name: options.name,
+    description: options.description,
+    url: options.url,
+    articleBody: options.articleBody,
+    datePublished: options.datePublished ?? "2026-01-01",
+    dateModified: options.dateModified ?? "2026-01-01",
+  };
+}
+
+/**
  * ItemList schema for Tools page (list of converters).
  */
 export function buildItemListSchema(options: {
