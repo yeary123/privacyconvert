@@ -1,96 +1,83 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Link from "next/link";
-import { Download, FileText, Loader2, Lock } from "lucide-react";
+import { Download, FileImage, Loader2, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button";
 import { useAuthStore } from "@/store/useAuthStore";
-import { convertPdfToImages } from "@/lib/pdfConversion";
+import { convertImagesToPdf } from "@/lib/pdfConversion";
 
 type Props = { toolSlug?: string };
 
-type ResultItem = { name: string; blob: Blob };
-
-export function PdfToImagesConverter({ toolSlug = "pdf-to-images" }: Props) {
+export function ImagesToPdfConverter({ toolSlug = "images-to-pdf" }: Props) {
   const isPro = useAuthStore((s) => s.isPro);
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadPhase, setLoadPhase] = useState<"idle" | "library" | "convert">("idle");
-  const [results, setResults] = useState<ResultItem[]>([]);
+  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
+
+  const accept = "image/*,.png,.jpg,.jpeg,.webp,.gif,.bmp";
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setDragOver(false);
-    const f = e.dataTransfer.files[0];
-    if (!f || f.type !== "application/pdf") {
-      setError("Please select a PDF file.");
+    const list = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith("image/"));
+    if (list.length === 0) {
+      setError("Please select image files.");
       return;
     }
     setError(null);
-    setFile(f);
-    setResults([]);
-  }, []);
+    setFiles((prev) => (isPro ? [...prev, ...list] : list.slice(0, 1)));
+    setPdfBlob(null);
+  }, [isPro]);
 
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
-    if (!f) return;
-    if (f.type !== "application/pdf") {
-      setError("Please select a PDF file.");
-      return;
-    }
+    const list = Array.from(e.target.files ?? []).filter((f) => f.type.startsWith("image/"));
+    if (list.length === 0) return;
     setError(null);
-    setFile(f);
-    setResults([]);
+    setFiles((prev) => (isPro ? [...prev, ...list] : list.slice(0, 1)));
+    setPdfBlob(null);
     e.target.value = "";
-  }, []);
+  }, [isPro]);
 
   const handleConvert = useCallback(async () => {
-    if (!file || !isPro) return;
+    if (files.length === 0 || !isPro) return;
     setLoading(true);
     setError(null);
-    setResults([]);
+    setPdfBlob(null);
     setLoadPhase("library");
     try {
       setLoadPhase("convert");
-      const items = await convertPdfToImages(file);
-      setResults(items.map(({ name, blob }) => ({ name, blob })));
+      const blob = await convertImagesToPdf(files);
+      setPdfBlob(blob);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Conversion failed");
     } finally {
       setLoading(false);
       setLoadPhase("idle");
     }
-  }, [file, isPro]);
+  }, [files, isPro]);
 
-  const handleDownload = useCallback((item: ResultItem) => {
-    const url = URL.createObjectURL(item.blob);
+  const handleDownload = useCallback(() => {
+    if (!pdfBlob) return;
+    const url = URL.createObjectURL(pdfBlob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = item.name;
+    a.download = "images.pdf";
     a.click();
     URL.revokeObjectURL(url);
-  }, []);
-
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  useEffect(() => {
-    if (results[0]) {
-      const url = URL.createObjectURL(results[0].blob);
-      setPreviewUrl(url);
-      return () => URL.revokeObjectURL(url);
-    }
-    setPreviewUrl(null);
-  }, [results]);
+  }, [pdfBlob]);
 
   if (!isPro) {
     return (
       <div className="rounded-xl border border-border bg-card p-8 text-center">
         <Lock className="mx-auto h-10 w-10 text-primary" />
-        <p className="mt-2 font-medium">PDF to Images — Pro only</p>
+        <p className="mt-2 font-medium">Images to PDF — Pro only</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Unlock batch PDF page extraction and more with Pro. All conversion stays 100% in your browser.
+          Unlock combining multiple images into one PDF with Pro. All conversion stays 100% in your browser.
         </p>
         <Link href="/pricing" className={buttonVariants({ className: "mt-4 inline-block" })}>
           Upgrade to Pro
@@ -111,23 +98,24 @@ export function PdfToImagesConverter({ toolSlug = "pdf-to-images" }: Props) {
       >
         <input
           type="file"
-          accept=".pdf,application/pdf"
+          accept={accept}
+          multiple
           onChange={handleFileSelect}
           disabled={loading}
           className="hidden"
-          id="pdf-file-input"
-          aria-label="Select PDF file"
+          id="images-pdf-input"
+          aria-label="Select images"
         />
-        <label htmlFor="pdf-file-input" className="cursor-pointer flex flex-col items-center w-full">
-          <FileText className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
+        <label htmlFor="images-pdf-input" className="cursor-pointer flex flex-col items-center w-full">
+          <FileImage className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
           <p className="mt-2 text-sm text-muted-foreground">
-            {file ? file.name : "Drop PDF here or click to select"}
+            {files.length > 0 ? `${files.length} image(s) selected` : "Drop images here or click to select"}
           </p>
         </label>
-        {file && !loading && (
+        {files.length > 0 && !loading && (
           <div className="mt-3 flex gap-2 flex-wrap justify-center">
-            <Button type="button" onClick={handleConvert}>Extract pages to images</Button>
-            <Button type="button" variant="outline" onClick={() => { setFile(null); setResults([]); setError(null); }}>Clear</Button>
+            <Button type="button" onClick={handleConvert}>Combine into PDF</Button>
+            <Button type="button" variant="outline" onClick={() => { setFiles([]); setPdfBlob(null); setError(null); }}>Clear</Button>
           </div>
         )}
       </div>
@@ -150,22 +138,13 @@ export function PdfToImagesConverter({ toolSlug = "pdf-to-images" }: Props) {
         </div>
       )}
 
-      {results.length > 0 && (
+      {pdfBlob && (
         <div className="space-y-4">
-          <p className="text-sm font-medium">Preview &amp; Download</p>
-          <div className="rounded-lg border border-border bg-muted/30 overflow-hidden">
-            {previewUrl && (
-              <img src={previewUrl} alt="First page" className="max-h-48 w-full object-contain bg-background" />
-            )}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {results.map((item) => (
-              <Button key={item.name} variant="outline" size="sm" onClick={() => handleDownload(item)}>
-                <Download className="h-4 w-4" />
-                {item.name}
-              </Button>
-            ))}
-          </div>
+          <p className="text-sm font-medium">PDF ready</p>
+          <Button onClick={handleDownload}>
+            <Download className="h-4 w-4" />
+            Download PDF
+          </Button>
         </div>
       )}
     </div>

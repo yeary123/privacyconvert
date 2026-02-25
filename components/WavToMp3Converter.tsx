@@ -13,6 +13,9 @@ const BATCH_LIMIT_FREE = 1;
 const PROGRESS_INTERVAL_MS = 300;
 const PROGRESS_CAP = 90;
 
+const MP3_KBPS_OPTIONS = [96, 128, 192, 256, 320] as const;
+const DEFAULT_MP3_KBPS = 128;
+
 function getBatchLimit(isPro: boolean): number {
   return isPro ? 20 : BATCH_LIMIT_FREE;
 }
@@ -42,6 +45,7 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [conversionProgress, setConversionProgress] = useState(0);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [mp3Kbps, setMp3Kbps] = useState<number>(DEFAULT_MP3_KBPS);
 
   const dropZoneRef = useRef<HTMLDivElement>(null);
   const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -101,7 +105,7 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
       const total = selectedFiles.length;
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
-        const { blob, suggestedName } = await convert(toolSlug, file);
+        const { blob, suggestedName } = await convert(toolSlug, file, { mp3Kbps });
         outputs.push({ name: suggestedName, blob });
         setConversionProgress(Math.round(((i + 1) / total) * PROGRESS_CAP));
       }
@@ -124,6 +128,7 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
     addHistory,
     incrementProtected,
     toolSlug,
+    mp3Kbps,
   ]);
 
   const handleDrop = useCallback(
@@ -202,6 +207,22 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
             {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch, history & P2P with Pro."}
           </p>
         </label>
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+          <span className="text-sm text-muted-foreground">MP3 bitrate:</span>
+          <select
+            value={mp3Kbps}
+            onChange={(e) => setMp3Kbps(Number(e.target.value))}
+            disabled={isConverting}
+            className="rounded-md border border-input bg-background px-3 py-1.5 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50"
+            aria-label="MP3 bitrate in kbps"
+          >
+            {MP3_KBPS_OPTIONS.map((k) => (
+              <option key={k} value={k}>
+                {k} kbps
+              </option>
+            ))}
+          </select>
+        </div>
         {selectedFiles.length > 0 && !isConverting && (
           <Button
             type="button"

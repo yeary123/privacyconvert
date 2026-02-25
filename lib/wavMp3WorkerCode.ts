@@ -13,7 +13,10 @@ export const WAV_MP3_WORKER_CODE = `
   var maxSamples = 1152;
 
   self.onmessage = function(e) {
-    var arrayBuffer = e.data;
+    var payload = e.data;
+    var arrayBuffer = payload && payload.arrayBuffer != null ? payload.arrayBuffer : payload;
+    var kbps = (payload && typeof payload.kbps === 'number' && [96, 128, 192, 256, 320].indexOf(payload.kbps) >= 0)
+      ? payload.kbps : 128;
     try {
       var wav = lamejs.WavHeader.readHeader(new DataView(arrayBuffer));
       if (!wav) {
@@ -33,7 +36,7 @@ export const WAV_MP3_WORKER_CODE = `
           samplesRight[i] = dataView[i * 2 + 1];
         }
       }
-      var mp3Encoder = new lamejs.Mp3Encoder(wav.channels, wav.sampleRate, 128);
+      var mp3Encoder = new lamejs.Mp3Encoder(wav.channels, wav.sampleRate, kbps);
       var mp3Data = [];
       var remaining = samplesLeft.length;
       for (var i = 0; remaining >= maxSamples; i += maxSamples) {

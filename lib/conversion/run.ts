@@ -10,6 +10,8 @@ import type { ConversionHandler, ConversionOptions } from "./types";
 import { loadFFmpeg, getFFmpeg } from "@/lib/ffmpeg";
 import { convertImageFile, DEFAULT_JPEG_QUALITY } from "@/lib/imageConversion";
 import { WAV_MP3_WORKER_CODE } from "@/lib/wavMp3WorkerCode";
+import { decodeAudioFileToWav } from "@/lib/webAudioToWav";
+import { tryMp4ToWebM } from "@/lib/mediabunnyConversion";
 
 async function withFFmpeg(
   options: ConversionOptions,
@@ -137,7 +139,43 @@ function ffmpegVideoToGifHandler(inExt: string, inputPattern: RegExp): Conversio
   };
 }
 
-function wavToMp3Handler(file: File, _options: ConversionOptions): Promise<{ blob: Blob; suggestedName: string }> {
+/** Lightweight *-to-wav using Web Audio API (no FFmpeg). */
+function webAudioToWavHandler(inputPattern: RegExp): ConversionHandler {
+  return async (file, _options) => {
+    const blob = await decodeAudioFileToWav(file);
+    return {
+      blob,
+      suggestedName: file.name.replace(inputPattern, ".wav"),
+    };
+  };
+}
+
+/** Try Web Audio API first for *-to-wav; fall back to FFmpeg if decode fails (e.g. unsupported in browser). */
+function webAudioFirstThenFFmpeg(
+  inputPattern: RegExp,
+  ffmpegFallback: ConversionHandler
+): ConversionHandler {
+  return async (file, options) => {
+    try {
+      const blob = await decodeAudioFileToWav(file);
+      return {
+        blob,
+        suggestedName: file.name.replace(inputPattern, ".wav"),
+      };
+    } catch {
+      return ffmpegFallback(file, options);
+    }
+  };
+}
+
+const ALLOWED_MP3_KBPS = [96, 128, 192, 256, 320] as const;
+
+function wavToMp3Handler(file: File, options: ConversionOptions): Promise<{ blob: Blob; suggestedName: string }> {
+  const kbps =
+    options.mp3Kbps != null && ALLOWED_MP3_KBPS.includes(options.mp3Kbps as (typeof ALLOWED_MP3_KBPS)[number])
+      ? options.mp3Kbps
+      : 128;
+
   return new Promise((resolve, reject) => {
     const blob = new Blob([WAV_MP3_WORKER_CODE], { type: "application/javascript" });
     const url = URL.createObjectURL(blob);
@@ -163,7 +201,7 @@ function wavToMp3Handler(file: File, _options: ConversionOptions): Promise<{ blo
     };
     worker.addEventListener("message", onMessage);
     worker.addEventListener("error", onError);
-    file.arrayBuffer().then((buf) => worker.postMessage(buf));
+    file.arrayBuffer().then((buf) => worker.postMessage({ arrayBuffer: buf, kbps }));
   });
 }
 
@@ -252,6 +290,54 @@ const handlers: Partial<Record<ToolSlug, ConversionHandler>> = {
     const blob = await convertImageFile(file, "image/webp", DEFAULT_JPEG_QUALITY);
     return { blob, suggestedName: file.name.replace(/\.gif$/i, ".webp") };
   },
+  "ico-to-png": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/png");
+    return { blob, suggestedName: file.name.replace(/\.ico$/i, ".png") };
+  },
+  "ico-to-jpeg": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/jpeg", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.ico$/i, ".jpg") };
+  },
+  "ico-to-webp": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/webp", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.ico$/i, ".webp") };
+  },
+  "tiff-to-png": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/png");
+    return { blob, suggestedName: file.name.replace(/\.tiff?$/i, ".png") };
+  },
+  "tiff-to-jpeg": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/jpeg", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.tiff?$/i, ".jpg") };
+  },
+  "tiff-to-webp": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/webp", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.tiff?$/i, ".webp") };
+  },
+  "apng-to-png": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/png");
+    return { blob, suggestedName: file.name.replace(/\.(apng|png)$/i, ".png") };
+  },
+  "apng-to-jpeg": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/jpeg", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.(apng|png)$/i, ".jpg") };
+  },
+  "apng-to-webp": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/webp", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.(apng|png)$/i, ".webp") };
+  },
+  "svg-to-png": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/png");
+    return { blob, suggestedName: file.name.replace(/\.svgz?$/i, ".png") };
+  },
+  "svg-to-jpeg": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/jpeg", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.svgz?$/i, ".jpg") };
+  },
+  "svg-to-webp": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/webp", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.svgz?$/i, ".webp") };
+  },
   "wav-to-mp3": wavToMp3Handler,
   "ogg-to-mp3": async (file, options) => {
     let result: { blob: Blob; suggestedName: string } | null = null;
@@ -274,6 +360,8 @@ const handlers: Partial<Record<ToolSlug, ConversionHandler>> = {
     return result;
   },
   "mp4-to-webm": async (file, options) => {
+    const light = await tryMp4ToWebM(file, options.onProgress);
+    if (light) return light;
     let result: { blob: Blob; suggestedName: string } | null = null;
     const id = Math.random().toString(36).slice(2, 10);
     await withFFmpeg(options, async (ffmpeg) => {
@@ -314,12 +402,12 @@ const handlers: Partial<Record<ToolSlug, ConversionHandler>> = {
     return result;
   },
   // Audio (FFmpeg)
-  "mp3-to-wav": ffmpegAudioHandler("mp3", "wav", "audio/wav", ".wav", /\.mp3$/i),
+  "mp3-to-wav": webAudioToWavHandler(/\.mp3$/i),
   "flac-to-mp3": ffmpegAudioHandler("flac", "mp3", "audio/mpeg", ".mp3", /\.flac$/i),
   "m4a-to-mp3": ffmpegAudioHandler("m4a", "mp3", "audio/mpeg", ".mp3", /\.m4a$/i),
   "wav-to-ogg": ffmpegAudioHandler("wav", "ogg", "audio/ogg", ".ogg", /\.wav$/i),
   "aac-to-mp3": ffmpegAudioHandler("aac", "mp3", "audio/mpeg", ".mp3", /\.aac$/i),
-  "ogg-to-wav": ffmpegAudioHandler("ogg", "wav", "audio/wav", ".wav", /\.ogg$/i),
+  "ogg-to-wav": webAudioToWavHandler(/\.ogg$/i),
   "mp3-to-ogg": ffmpegAudioHandler("mp3", "ogg", "audio/ogg", ".ogg", /\.mp3$/i),
   "wav-to-flac": ffmpegAudioHandler("wav", "flac", "audio/flac", ".flac", /\.wav$/i),
   "wav-to-m4a": ffmpegAudioHandler("wav", "m4a", "audio/mp4", ".m4a", /\.wav$/i),
@@ -339,28 +427,28 @@ const handlers: Partial<Record<ToolSlug, ConversionHandler>> = {
   "ogg-to-opus": ffmpegAudioHandler("ogg", "opus", "audio/opus", ".opus", /\.ogg$/i),
   "ogg-to-wma": ffmpegAudioHandler("ogg", "wma", "audio/x-ms-wma", ".wma", /\.ogg$/i),
   "ogg-to-aiff": ffmpegAudioHandler("ogg", "aiff", "audio/aiff", ".aiff", /\.ogg$/i),
-  "flac-to-wav": ffmpegAudioHandler("flac", "wav", "audio/wav", ".wav", /\.flac$/i),
+  "flac-to-wav": webAudioFirstThenFFmpeg(/\.flac$/i, ffmpegAudioHandler("flac", "wav", "audio/wav", ".wav", /\.flac$/i)),
   "flac-to-ogg": ffmpegAudioHandler("flac", "ogg", "audio/ogg", ".ogg", /\.flac$/i),
   "flac-to-m4a": ffmpegAudioHandler("flac", "m4a", "audio/mp4", ".m4a", /\.flac$/i),
   "flac-to-aac": ffmpegAudioHandler("flac", "aac", "audio/aac", ".aac", /\.flac$/i),
   "flac-to-opus": ffmpegAudioHandler("flac", "opus", "audio/opus", ".opus", /\.flac$/i),
   "flac-to-wma": ffmpegAudioHandler("flac", "wma", "audio/x-ms-wma", ".wma", /\.flac$/i),
   "flac-to-aiff": ffmpegAudioHandler("flac", "aiff", "audio/aiff", ".aiff", /\.flac$/i),
-  "m4a-to-wav": ffmpegAudioHandler("m4a", "wav", "audio/wav", ".wav", /\.m4a$/i),
+  "m4a-to-wav": webAudioToWavHandler(/\.m4a$/i),
   "m4a-to-ogg": ffmpegAudioHandler("m4a", "ogg", "audio/ogg", ".ogg", /\.m4a$/i),
   "m4a-to-flac": ffmpegAudioHandler("m4a", "flac", "audio/flac", ".flac", /\.m4a$/i),
   "m4a-to-aac": ffmpegAudioHandler("m4a", "aac", "audio/aac", ".aac", /\.m4a$/i),
   "m4a-to-opus": ffmpegAudioHandler("m4a", "opus", "audio/opus", ".opus", /\.m4a$/i),
   "m4a-to-wma": ffmpegAudioHandler("m4a", "wma", "audio/x-ms-wma", ".wma", /\.m4a$/i),
   "m4a-to-aiff": ffmpegAudioHandler("m4a", "aiff", "audio/aiff", ".aiff", /\.m4a$/i),
-  "aac-to-wav": ffmpegAudioHandler("aac", "wav", "audio/wav", ".wav", /\.aac$/i),
+  "aac-to-wav": webAudioToWavHandler(/\.aac$/i),
   "aac-to-ogg": ffmpegAudioHandler("aac", "ogg", "audio/ogg", ".ogg", /\.aac$/i),
   "aac-to-flac": ffmpegAudioHandler("aac", "flac", "audio/flac", ".flac", /\.aac$/i),
   "aac-to-m4a": ffmpegAudioHandler("aac", "m4a", "audio/mp4", ".m4a", /\.aac$/i),
   "aac-to-opus": ffmpegAudioHandler("aac", "opus", "audio/opus", ".opus", /\.aac$/i),
   "aac-to-wma": ffmpegAudioHandler("aac", "wma", "audio/x-ms-wma", ".wma", /\.aac$/i),
   "aac-to-aiff": ffmpegAudioHandler("aac", "aiff", "audio/aiff", ".aiff", /\.aac$/i),
-  "opus-to-wav": ffmpegAudioHandler("opus", "wav", "audio/wav", ".wav", /\.opus$/i),
+  "opus-to-wav": webAudioFirstThenFFmpeg(/\.opus$/i, ffmpegAudioHandler("opus", "wav", "audio/wav", ".wav", /\.opus$/i)),
   "opus-to-mp3": ffmpegAudioHandler("opus", "mp3", "audio/mpeg", ".mp3", /\.opus$/i),
   "opus-to-ogg": ffmpegAudioHandler("opus", "ogg", "audio/ogg", ".ogg", /\.opus$/i),
   "opus-to-flac": ffmpegAudioHandler("opus", "flac", "audio/flac", ".flac", /\.opus$/i),

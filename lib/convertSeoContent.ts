@@ -30,21 +30,25 @@ Free users can convert one AVIF file at a time. Pro users get unlimited batch co
 `.trim();
 
 const WAV_BASE = `
-WAV to MP3 Converter — No Upload, 100% Local Browser Converter 2026
+WAV to MP3 Converter — No Upload, 100% Local, Choose Bitrate 96–320 kbps (2026)
 
-Convert WAV audio to MP3 in your browser with zero privacy risk. PrivacyConvert runs the conversion entirely on your device using FFmpeg compiled to WebAssembly. Your audio files are never uploaded to any server. This no upload 2026, privacy-first approach ensures complete privacy for your recordings, podcasts, and music. Unlike Convertio and other cloud converters that upload your files to their servers, we keep everything in the browser — the same philosophy as VERT.sh and local client-side tools.
+Convert WAV audio to MP3 in your browser with zero privacy risk. Choose your MP3 bitrate: 96, 128, 192, 256, or 320 kbps. PrivacyConvert runs the conversion entirely on your device using a Web Worker and a LAME-based encoder (no FFmpeg required for WAV to MP3). Your audio files are never uploaded to any server. This no upload 2026, privacy-first approach ensures complete privacy for your recordings, podcasts, and music. Unlike Convertio and other cloud converters that upload your files to their servers, we keep everything in the browser — the same philosophy as VERT.sh and local client-side tools.
 
 Why convert WAV to MP3 locally?
 
 WAV is uncompressed and produces large files; MP3 is compressed and widely supported by phones, cars, and players. Converting WAV to MP3 saves storage and keeps compatibility everywhere. Doing it locally means your recordings never leave your computer — no cloud upload, no account, no privacy concerns. Many online converters require you to upload files to their servers; PrivacyConvert keeps everything in the browser. Privacy first: your audio is never sent to us or any third party. Vs Convertio: they upload WAV to their servers; we do not. Vs VERT.sh and localconvert: same no-upload approach; we add a clear Free vs Pro model and more tools in one place for 2026.
 
+What bitrate should I choose? 128 vs 192 vs 320 kbps
+
+You can select 96, 128, 192, 256, or 320 kbps (CBR). 128 kbps is the default for compatibility and smaller files; 192 kbps is a good balance; 256 or 320 kbps for highest quality or music. All encoding runs in your browser. Other tools on our site (e.g. OGG to MP3) use FFmpeg with VBR when you need those formats.
+
 How does local WAV to MP3 conversion work?
 
-When you use this tool, the site loads FFmpeg (open-source media toolkit) as WebAssembly in your browser. Your WAV file stays on your device. The conversion runs in a sandbox in the tab. The resulting MP3 is generated in memory and offered for download. No data is sent to our servers. We use high-quality MP3 encoding (libmp3lame, quality 2, ~190 kbps VBR) so the output sounds great while staying smaller than WAV. No upload 2026: the entire pipeline is client-side. Real-world privacy: you can confirm in DevTools that no request carries your audio; only FFmpeg core is fetched once.
+When you use this tool, you choose your bitrate (96–320 kbps), then select or drop WAV files and click Convert. The encoding runs in a Web Worker (LAME-based encoder; no large FFmpeg download). Your WAV file stays on your device. The resulting MP3 is generated in memory and offered for download. No data is sent to our servers. No upload 2026: the entire pipeline is client-side. Real-world privacy: you can confirm in DevTools that no request carries your audio.
 
 Step-by-step: How to convert WAV to MP3 (no upload 2026)
 
-Step 1: Click “Load FFmpeg” on this page. About 31 MB is loaded once and cached. Step 2: Drag and drop WAV file(s) or click to select. Free: one file; Pro: unlimited batch. Step 3: Conversion runs locally. Progress bar shows status. Step 4: Download each MP3. No upload at any stage. Privacy and limits: We do not collect, store, or analyze your audio. Free users can convert one file at a time; Pro users get unlimited batch. Same 100% local conversion for everyone. Comparison with Convertio and VERT.sh: Convertio uploads your WAV to their servers; VERT.sh and PrivacyConvert both run conversion in the browser. We offer a clear Free vs Pro model and more tools in one place for 2026. Browsers: Chrome, Firefox, Edge, Safari with WebAssembly. No upload 2026, privacy first.
+Step 1: Choose MP3 bitrate (96, 128, 192, 256, or 320 kbps). Step 2: Drag and drop WAV file(s) or click to select. Free: one file; Pro: unlimited batch. Step 3: Conversion runs locally in a Web Worker. Progress bar shows status. Step 4: Download each MP3. No upload at any stage. Privacy and limits: We do not collect, store, or analyze your audio. Free users can convert one file at a time; Pro users get unlimited batch. Same 100% local conversion for everyone. Comparison with Convertio and VERT.sh: Convertio uploads your WAV to their servers; VERT.sh and PrivacyConvert both run conversion in the browser. We offer a clear Free vs Pro model and more tools in one place for 2026. Browsers: Chrome, Firefox, Edge, Safari with WebAssembly. No upload 2026, privacy first.
 `.trim();
 
 const WEBP_BASE = `

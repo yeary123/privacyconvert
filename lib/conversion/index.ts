@@ -7,8 +7,11 @@ export type { ConversionOptions, ConversionResult, ConversionHandler } from "./t
 export { needsFFmpeg, FFMPEG_TOOL_SLUGS } from "./types";
 export { convert, hasConvertHandler, loadFFmpeg, getFFmpeg } from "./run";
 export {
+  convertHeicTo,
   convertHeicToJpeg,
   isHeicFile,
   heicToJpgFileName,
+  heicOutputFileName,
   DEFAULT_QUALITY,
 } from "@/lib/heicConversion";
+export type { HeicOutputType } from "@/lib/heicConversion";

@@ -4,6 +4,8 @@ import type { ToolSlug } from "@/lib/tools";
 export interface ConversionOptions {
   /** Progress callback (0–100). Used by FFmpeg-based and other tools that report progress. */
   onProgress?: (percent: number) => void;
+  /** MP3 bitrate in kbps for WAV→MP3 (lamejs). Allowed: 96, 128, 192, 256, 320. Default 128. */
+  mp3Kbps?: number;
 }
 
 /** Result of converting a single file to a single blob (used by most tools). */
@@ -21,13 +23,13 @@ export type ConversionHandler = (
 
 /** Slugs that use FFmpeg; UI should show "Load FFmpeg" before enabling convert. */
 export const FFMPEG_TOOL_SLUGS: ToolSlug[] = [
-  "ogg-to-mp3", "mp3-to-wav", "flac-to-mp3", "m4a-to-mp3", "wav-to-ogg", "aac-to-mp3", "ogg-to-wav", "mp3-to-ogg",
+  "ogg-to-mp3", "flac-to-mp3", "m4a-to-mp3", "wav-to-ogg", "aac-to-mp3", "mp3-to-ogg",
   "wav-to-flac", "wav-to-m4a", "wav-to-aac", "wav-to-opus", "wav-to-wma", "wav-to-aiff",
   "mp3-to-flac", "mp3-to-m4a", "mp3-to-aac", "mp3-to-opus", "mp3-to-wma", "mp3-to-aiff",
   "ogg-to-flac", "ogg-to-m4a", "ogg-to-aac", "ogg-to-opus", "ogg-to-wma", "ogg-to-aiff",
   "flac-to-wav", "flac-to-ogg", "flac-to-m4a", "flac-to-aac", "flac-to-opus", "flac-to-wma", "flac-to-aiff",
-  "m4a-to-wav", "m4a-to-ogg", "m4a-to-flac", "m4a-to-aac", "m4a-to-opus", "m4a-to-wma", "m4a-to-aiff",
-  "aac-to-wav", "aac-to-ogg", "aac-to-flac", "aac-to-m4a", "aac-to-opus", "aac-to-wma", "aac-to-aiff",
+  "m4a-to-ogg", "m4a-to-flac", "m4a-to-aac", "m4a-to-opus", "m4a-to-wma", "m4a-to-aiff",
+  "aac-to-ogg", "aac-to-flac", "aac-to-m4a", "aac-to-opus", "aac-to-wma", "aac-to-aiff",
   "opus-to-wav", "opus-to-mp3", "opus-to-ogg", "opus-to-flac", "opus-to-m4a", "opus-to-aac", "opus-to-wma", "opus-to-aiff",
   "wma-to-wav", "wma-to-mp3", "wma-to-ogg", "wma-to-flac", "wma-to-m4a", "wma-to-aac", "wma-to-opus", "wma-to-aiff",
   "aiff-to-wav", "aiff-to-mp3", "aiff-to-ogg", "aiff-to-flac", "aiff-to-m4a", "aiff-to-aac", "aiff-to-opus", "aiff-to-wma",

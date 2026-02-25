@@ -4,10 +4,11 @@ import { useCallback, useRef, useState } from "react";
 import { Download, FileImage, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  convertHeicToJpeg,
+  convertHeicTo,
   isHeicFile,
   DEFAULT_QUALITY,
 } from "@/lib/conversion";
+import type { HeicOutputType } from "@/lib/heicConversion";
 import { useAuthStore } from "@/store/useAuthStore";
 
 const PROGRESS_INTERVAL_MS = 300;
@@ -17,8 +18,21 @@ type ConvertedImage = { name: string; dataUrl: string };
 
 type Props = { toolSlug?: string };
 
+const SLUG_TO_TYPE: Record<string, HeicOutputType> = {
+  "heif-to-jpg": "image/jpeg",
+  "heif-to-png": "image/png",
+  "heif-to-gif": "image/gif",
+};
+const SLUG_TO_LABEL: Record<string, string> = {
+  "heif-to-jpg": "JPG",
+  "heif-to-png": "PNG",
+  "heif-to-gif": "GIF",
+};
+
 export function HeifToJpgConverter({ toolSlug = "heif-to-jpg" }: Props) {
   const isPro = useAuthStore((s) => s.isPro);
+  const toType = SLUG_TO_TYPE[toolSlug] ?? "image/jpeg";
+  const outputLabel = SLUG_TO_LABEL[toolSlug] ?? "JPG";
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [convertedImages, setConvertedImages] = useState<ConvertedImage[]>([]);
   const [isConverting, setIsConverting] = useState(false);
@@ -102,9 +116,10 @@ export function HeifToJpgConverter({ toolSlug = "heif-to-jpg" }: Props) {
     startSimulatedProgress();
 
     try {
-      const items = await convertHeicToJpeg(
+      const items = await convertHeicTo(
         selectedFile,
         selectedFile.name,
+        toType,
         DEFAULT_QUALITY
       );
       clearProgressInterval();
@@ -117,7 +132,7 @@ export function HeifToJpgConverter({ toolSlug = "heif-to-jpg" }: Props) {
     } finally {
       setIsConverting(false);
     }
-  }, [selectedFile, startSimulatedProgress, clearProgressInterval]);
+  }, [selectedFile, toType, startSimulatedProgress, clearProgressInterval]);
 
   const handleDownload = useCallback((name: string, dataUrl: string) => {
     const link = document.createElement("a");
@@ -174,7 +189,7 @@ export function HeifToJpgConverter({ toolSlug = "heif-to-jpg" }: Props) {
               onClick={handleConvert}
               className="min-h-[44px] min-w-[44px] sm:min-w-0"
             >
-              Convert to JPG
+              Convert to {outputLabel}
             </Button>
             <Button
               type="button"

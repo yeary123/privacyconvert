@@ -29,11 +29,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const WAV_FAQ = [
   {
     q: "Is WAV to MP3 conversion done locally?",
-    a: "Yes. Conversion runs in your browser with FFmpeg.wasm. Your audio never leaves your device. No upload, zero privacy risk. 2026.",
+    a: "Yes. Encoding runs in a Web Worker in your browser (LAME-based encoder). Your audio never leaves your device. No upload, zero privacy risk. 2026.",
   },
   {
-    q: "What MP3 quality is used?",
-    a: "We use FFmpeg's libmp3lame with quality 2 (high quality, ~190 kbps VBR). You can re-convert with other tools if you need different bitrates.",
+    q: "What MP3 quality or bitrate can I choose?",
+    a: "You can choose 96, 128, 192, 256, or 320 kbps (CBR). 128 kbps is default for compatibility; 192–320 kbps for higher quality or music. Other formats (e.g. OGG to MP3) use FFmpeg with VBR.",
+  },
+  {
+    q: "What bitrate should I choose for WAV to MP3?",
+    a: "Use 128 kbps for speech or small files; 192 kbps for a good balance; 256 or 320 kbps for music or archival. Higher bitrate means larger MP3 files.",
   },
   {
     q: "Can I convert multiple WAV files at once?",
@@ -393,9 +397,9 @@ const HOWTO_STEPS = {
     { name: "Download", text: "Download each PNG from the results. Files never leave your device." },
   ],
   "wav-to-mp3": [
-    { name: "Load FFmpeg", text: "Click 'Load FFmpeg' to load the converter in your browser (one-time, ~31 MB, cached)." },
+    { name: "Choose MP3 bitrate", text: "Select 96, 128, 192, 256, or 320 kbps. Default 128 kbps; use 192–320 for higher quality." },
     { name: "Add WAV files", text: "Drag and drop WAV files or click to select. Free: 1 file; Pro: unlimited batch." },
-    { name: "Convert", text: "Conversion runs locally. High-quality MP3 (VBR) is produced. No upload." },
+    { name: "Convert", text: "Encoding runs in a Web Worker (LAME). No FFmpeg load; conversion is local. No upload." },
     { name: "Download", text: "Download each MP3. Your audio never leaves your device." },
   ],
   "webp-to-png": [
