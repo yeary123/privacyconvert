@@ -21,6 +21,7 @@ const CATEGORIES = [
   { id: "image", label: "Image" },
   { id: "audio", label: "Audio" },
   { id: "video", label: "Video" },
+  { id: "document", label: "Document" },
 ] as const;
 
 export default function ToolsPage() {

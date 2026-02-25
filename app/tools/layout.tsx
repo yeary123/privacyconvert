@@ -5,9 +5,9 @@ import { buildItemListSchema, buildFAQSchema } from "@/lib/schema";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
 
-const TOOLS_TITLE = "All Tools – No Upload, 100% Local | 200+ Formats | PrivacyConvert 2026";
+const TOOLS_TITLE = "All Tools No Upload – 100% Local Browser Converter 2026";
 const TOOLS_DESCRIPTION =
-  "No upload, 100% local. Privacy-first. Browse 200+ format tools—images, audio, video. Your files never leave your device. 2026. Free & Pro.";
+  "No upload, 100% local in browser. Privacy-first. 200+ formats—images, audio, video, document. Your files never leave your device. 2026. Free & Pro.";
 
 export const metadata: Metadata = {
   title: TOOLS_TITLE,
