@@ -8,6 +8,19 @@ import { MergePdfsConverter } from "@/components/MergePdfsConverter";
 import { SplitPdfConverter } from "@/components/SplitPdfConverter";
 import { DocxToHtmlConverter } from "@/components/DocxToHtmlConverter";
 import { TextToDocxConverter } from "@/components/TextToDocxConverter";
+import { EpubToMobiConverter } from "@/components/EpubToMobiConverter";
+import { PdfToDocxConverter } from "@/components/PdfToDocxConverter";
+import { PdfToEpubConverter } from "@/components/PdfToEpubConverter";
+import { LengthConverter } from "@/components/LengthConverter";
+import { WeightConverter } from "@/components/WeightConverter";
+import { TemperatureConverter } from "@/components/TemperatureConverter";
+import { CurrencyConverter } from "@/components/CurrencyConverter";
+import { DataStorageConverter } from "@/components/DataStorageConverter";
+import { TimeConverter } from "@/components/TimeConverter";
+import { CookingUnitsConverter } from "@/components/CookingUnitsConverter";
+import { AreaConverter } from "@/components/AreaConverter";
+import { VolumeConverter } from "@/components/VolumeConverter";
+import { SpeedConverter } from "@/components/SpeedConverter";
 import { GenericConverter } from "@/components/GenericConverter";
 import { hasConvertHandler } from "@/lib/conversion";
 import type { ToolSlug } from "@/lib/tools";
@@ -43,6 +56,45 @@ export function ConversionUI({ slug }: ConversionUIProps) {
   }
   if (slug === "text-to-docx") {
     return <TextToDocxConverter toolSlug="text-to-docx" />;
+  }
+  if (slug === "epub-to-mobi") {
+    return <EpubToMobiConverter toolSlug="epub-to-mobi" />;
+  }
+  if (slug === "pdf-to-docx") {
+    return <PdfToDocxConverter toolSlug="pdf-to-docx" />;
+  }
+  if (slug === "pdf-to-epub") {
+    return <PdfToEpubConverter toolSlug="pdf-to-epub" />;
+  }
+  if (slug === "length-converter") {
+    return <LengthConverter />;
+  }
+  if (slug === "weight-converter") {
+    return <WeightConverter />;
+  }
+  if (slug === "temperature-converter") {
+    return <TemperatureConverter />;
+  }
+  if (slug === "currency-converter") {
+    return <CurrencyConverter />;
+  }
+  if (slug === "data-storage-converter") {
+    return <DataStorageConverter />;
+  }
+  if (slug === "time-converter") {
+    return <TimeConverter />;
+  }
+  if (slug === "cooking-units-converter") {
+    return <CookingUnitsConverter />;
+  }
+  if (slug === "area-converter") {
+    return <AreaConverter />;
+  }
+  if (slug === "volume-converter") {
+    return <VolumeConverter />;
+  }
+  if (slug === "speed-converter") {
+    return <SpeedConverter />;
   }
   if (hasConvertHandler(slug as ToolSlug)) {
     return <GenericConverter toolSlug={slug as ToolSlug} />;

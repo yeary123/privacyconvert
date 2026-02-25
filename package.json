@@ -24,6 +24,7 @@
     "heic2any": "^0.0.4",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.0",
+    "jszip": "^3.10.1",
     "lamejs": "^1.2.1",
     "lucide-react": "^0.575.0",
     "mammoth": "^1.11.0",

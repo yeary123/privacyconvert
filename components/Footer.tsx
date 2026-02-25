@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { NewsletterForm } from "@/components/NewsletterForm";
 
-const footerLinks = [
+const footerLinks: { href: string; label: string; external?: boolean }[] = [
   { href: "/", label: "Home" },
   { href: "/tools", label: "Tools" },
   { href: "/pricing", label: "Pricing" },
@@ -31,7 +31,7 @@ export function Footer() {
             <p className="mb-2 font-semibold">Links</p>
             <nav className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
               {footerLinks.map(({ href, label, external }) =>
-                external ? (
+                external === true ? (
                   <a
                     key={href}
                     href={href}

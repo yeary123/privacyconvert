@@ -389,6 +389,97 @@ Privacy and Pro
 We do not collect, store, or analyze your documents. PDF to Images is a Pro feature; other converters (AVIF, WAV, WebP, MP4, PNG, OGG, GIF) offer free single-file conversion. Same no-upload, privacy-first guarantee across all tools. 2026.
 `.trim();
 
+const PDF_DOCX_FAQ = [
+  { q: "Is PDF to DOCX done locally?", a: "Yes. Text is extracted and the DOCX is built 100% in your browser. No upload, no server. 2026." },
+  { q: "Do you store my PDF?", a: "No. We never receive your file. Conversion runs entirely in your browser. Privacy first." },
+  { q: "How does it compare to Convertio?", a: "Cloud tools upload your PDF. We keep everything local — no upload, same as 200+ format tools on PrivacyConvert." },
+  { q: "What about layout and images?", a: "This tool extracts text and builds a simple DOCX. Complex layout or images may need desktop software for best results." },
+  { q: "Is it free?", a: "Yes. No account required. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Modern Chrome, Firefox, Edge, Safari. Uses pdfjs-dist and docx in the browser." },
+  { q: "Can I convert multiple PDFs?", a: "One file at a time. Pro unlocks batch on other tools. This converter stays local for everyone." },
+  { q: "Why privacy first?", a: "Your documents never leave your device. No upload 2026, part of 200+ format tools. Vs Convertio we never see your files." },
+];
+const PDF_EPUB_FAQ = [
+  { q: "Is PDF to EPUB done locally?", a: "Yes. Text is extracted and EPUB is built 100% in your browser. No upload, no server. 2026." },
+  { q: "Do you store my PDF?", a: "No. We never receive your file. Conversion runs entirely in your browser." },
+  { q: "What quality is the EPUB?", a: "We extract text per page and build a valid EPUB. For complex PDFs, layout is simplified. 100% local." },
+  { q: "How does it compare to cloud converters?", a: "Cloud tools upload your PDF. We keep everything local — no upload, privacy first. 200+ formats." },
+  { q: "Is it free?", a: "Yes. No account required. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Modern Chrome, Firefox, Edge, Safari. Uses pdfjs-dist and JSZip in the browser." },
+  { q: "Can I convert multiple PDFs?", a: "One file at a time. All processing stays in your browser." },
+  { q: "Why use this vs Convertio?", a: "Convertio uploads your PDF. We run in the browser — no upload, privacy first. Part of 200+ format tools." },
+];
+const LENGTH_FAQ = [
+  { q: "Is the length converter local?", a: "Yes. All conversions run 100% in your browser. No upload, no server. No upload 2026." },
+  { q: "What units are supported?", a: "Meter, kilometer, centimeter, millimeter, foot, inch, mile, yard, nautical mile. All update in real time." },
+  { q: "Do you store my input?", a: "No. Nothing is sent to any server. Privacy first converter, 100% local browser. 2026." },
+  { q: "How does this compare to Convertio?", a: "We are a privacy first converter; unit tools run entirely in the browser. Part of 200+ format tools. Vs Convertio: no upload." },
+  { q: "Can I copy or download results?", a: "Yes. Use Copy to clipboard or Download as text. All data stays on your device." },
+  { q: "Is it free?", a: "Yes. No account. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Any modern browser. No special plugins. 100% local browser." },
+  { q: "Why 200+ formats?", a: "PrivacyConvert offers 200+ format tools including document, image, audio, video, and units. All privacy first, no upload." },
+];
+const WEIGHT_FAQ = [
+  { q: "Is the weight converter local?", a: "Yes. All conversions run 100% in your browser. No upload, no server. No upload 2026." },
+  { q: "What units are supported?", a: "Kilogram, gram, pound, ounce, 市斤 (jin), milligram, metric ton, stone. Real-time conversion." },
+  { q: "Do you store my input?", a: "No. Nothing is sent to any server. Privacy first, 100% local browser." },
+  { q: "How does this compare to Convertio?", a: "Privacy first converter; unit tools run in the browser. Part of 200+ format tools. Vs Convertio: no upload." },
+  { q: "Can I copy or download results?", a: "Yes. Copy or download as text. All data stays on your device." },
+  { q: "Is it free?", a: "Yes. No account. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Any modern browser. 100% local browser." },
+  { q: "Why use PrivacyConvert?", a: "No upload 2026, privacy first converter, 200+ formats. Your data never leaves your device." },
+];
+const TEMP_FAQ = [
+  { q: "Is the temperature converter local?", a: "Yes. Celsius, Fahrenheit, and Kelvin convert 100% in your browser. No upload, no server. 2026." },
+  { q: "What units are supported?", a: "Celsius (°C), Fahrenheit (°F), and Kelvin (K). Real-time bidirectional conversion." },
+  { q: "Do you store my input?", a: "No. Nothing is sent to any server. Privacy first, 100% local browser." },
+  { q: "How does this compare to Convertio?", a: "We are a privacy first converter; unit tools run in the browser. Part of 200+ formats. Vs Convertio: no upload." },
+  { q: "Can I copy or download results?", a: "Yes. Copy or download as text. All data stays on your device." },
+  { q: "Is it free?", a: "Yes. No account. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Any modern browser. 100% local." },
+  { q: "Why 100% local?", a: "No upload 2026, privacy first. Your conversions never leave your device. 200+ format tools." },
+];
+const CURRENCY_FAQ = [
+  { q: "Is the currency converter local?", a: "Rates are fetched from a free public API (Frankfurter); conversion math runs in your browser. We do not upload your amounts." },
+  { q: "What currencies are supported?", a: "USD, EUR, GBP, CNY, JPY, CHF, CAD, AUD, INR, KRW. More can be added." },
+  { q: "Do you store my amount?", a: "We do not send your amount to our servers. Only the browser fetches public exchange rates; conversion is local." },
+  { q: "How does this compare to Convertio?", a: "We focus on privacy; rates come from a public API, conversion is local. Part of 200+ format tools. No upload of your data." },
+  { q: "Are rates real-time?", a: "Rates are fetched when you change the base currency. Frankfurter provides daily rates. 100% local conversion after fetch." },
+  { q: "Is it free?", a: "Yes. No account. Free API for rates; conversion in browser. 2026." },
+  { q: "What browsers work?", a: "Any modern browser. Requires network for rate fetch; conversion itself is local." },
+  { q: "Why privacy first?", a: "We don't receive your amounts. Rates are public; math is in your browser. No upload 2026." },
+];
+const DATA_STORAGE_FAQ = [
+  { q: "Is the data storage converter local?", a: "Yes. Bytes, KB, MB, GB, TB, bits — all 100% in your browser. No upload, no server. 2026." },
+  { q: "What units are supported?", a: "Byte, bit, kilobyte, megabyte, gigabyte, terabyte, petabyte, KiB, MiB, GiB. Real-time conversion." },
+  { q: "Do you store my input?", a: "No. Nothing is sent to any server. Privacy first, 100% local browser." },
+  { q: "How does this compare to Convertio?", a: "Privacy first converter; unit tools run in the browser. Part of 200+ format tools. Vs Convertio: no upload." },
+  { q: "Can I copy or download results?", a: "Yes. Copy or download as text. All data stays on your device." },
+  { q: "Is it free?", a: "Yes. No account. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Any modern browser. 100% local." },
+  { q: "Why use this?", a: "No upload 2026, privacy first. 200+ formats. Your data never leaves your device." },
+];
+const TIME_FAQ = [
+  { q: "Is the time converter local?", a: "Yes. Unix timestamp, seconds, minutes, hours, days, weeks, and ISO date — 100% in your browser. No upload. 2026." },
+  { q: "What can I convert?", a: "Enter seconds or Unix timestamp; get equivalent in minutes, hours, days, weeks and ISO 8601 date. Real-time." },
+  { q: "Do you store my input?", a: "No. Nothing is sent to any server. Privacy first, 100% local browser." },
+  { q: "How does this compare to Convertio?", a: "We are a privacy first converter; unit tools run in the browser. Part of 200+ formats. Vs Convertio: no upload." },
+  { q: "Can I copy or download results?", a: "Yes. Copy or download as text. All data stays on your device." },
+  { q: "Is it free?", a: "Yes. No account. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Any modern browser. 100% local." },
+  { q: "Why 100% local?", a: "No upload 2026, privacy first. 200+ format tools. Your data never leaves your device." },
+];
+const COOKING_FAQ = [
+  { q: "Is the cooking units converter local?", a: "Yes. Cups, ml, tsp, tbsp, fl oz, grams — 100% in your browser. No upload, no server. 2026." },
+  { q: "What units are supported?", a: "Milliliter, liter, US cup, tablespoon, teaspoon, fluid ounce, gram (water/sugar), ounce. Real-time conversion." },
+  { q: "Do you store my input?", a: "No. Nothing is sent to any server. Privacy first, 100% local browser." },
+  { q: "How does this compare to Convertio?", a: "Privacy first converter; unit tools run in the browser. Part of 200+ format tools. Vs Convertio: no upload." },
+  { q: "Can I copy or download results?", a: "Yes. Copy or download as text. All data stays on your device." },
+  { q: "Is it free?", a: "Yes. No account. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Any modern browser. 100% local." },
+  { q: "Why use PrivacyConvert?", a: "No upload 2026, privacy first. 200+ formats. Your data never leaves your device." },
+];
+
 const FAQ_MAP: Record<string, { q: string; a: string }[]> = {
   "avif-to-png": AVIF_FAQ,
   "wav-to-mp3": WAV_FAQ,
@@ -399,6 +490,16 @@ const FAQ_MAP: Record<string, { q: string; a: string }[]> = {
   "gif-to-mp4": GIF_FAQ,
   "heif-to-jpg": HEIF_FAQ,
   "pdf-to-images": PDF_FAQ,
+  "epub-to-mobi": [],
+  "pdf-to-docx": PDF_DOCX_FAQ,
+  "pdf-to-epub": PDF_EPUB_FAQ,
+  "length-converter": LENGTH_FAQ,
+  "weight-converter": WEIGHT_FAQ,
+  "temperature-converter": TEMP_FAQ,
+  "currency-converter": CURRENCY_FAQ,
+  "data-storage-converter": DATA_STORAGE_FAQ,
+  "time-converter": TIME_FAQ,
+  "cooking-units-converter": COOKING_FAQ,
 };
 
 const HOWTO_STEPS = {
@@ -450,6 +551,51 @@ const HOWTO_STEPS = {
     { name: "Load converter", text: "When available, load the converter once in your browser." },
     { name: "Select PDF", text: "Select your PDF file. Pages will be extracted as images locally." },
     { name: "Download", text: "Download each page as image. No upload. 2026." },
+  ],
+  "pdf-to-docx": [
+    { name: "Select PDF", text: "Drag and drop your PDF or click to select. File stays on your device." },
+    { name: "Convert", text: "Text is extracted and DOCX is built 100% in your browser. No upload." },
+    { name: "Download", text: "Download the DOCX file. Your PDF never left your device. 2026." },
+  ],
+  "pdf-to-epub": [
+    { name: "Select PDF", text: "Drag and drop your PDF or click to select. File stays on your device." },
+    { name: "Convert", text: "Text is extracted and EPUB is built 100% in your browser. No upload." },
+    { name: "Download", text: "Download the EPUB file. Your PDF never left your device. 2026." },
+  ],
+  "length-converter": [
+    { name: "Enter value", text: "Enter a number and select the unit (meter, foot, mile, etc.)." },
+    { name: "View results", text: "All equivalent lengths update in real time. 100% local, no upload." },
+    { name: "Copy or download", text: "Copy results to clipboard or download as text. No upload 2026." },
+  ],
+  "weight-converter": [
+    { name: "Enter value", text: "Enter a number and select the unit (kg, lb, oz, 市斤, etc.)." },
+    { name: "View results", text: "All equivalent weights update in real time. 100% local, no upload." },
+    { name: "Copy or download", text: "Copy or download results. No upload 2026." },
+  ],
+  "temperature-converter": [
+    { name: "Enter value", text: "Enter a number and select Celsius, Fahrenheit, or Kelvin." },
+    { name: "View results", text: "All three units update in real time. 100% local, no upload." },
+    { name: "Copy or download", text: "Copy or download results. No upload 2026." },
+  ],
+  "currency-converter": [
+    { name: "Enter amount", text: "Enter amount and select from/to currencies. Rates fetched from free API." },
+    { name: "View result", text: "Conversion uses rates then computed locally. We do not send your amount." },
+    { name: "Copy or download", text: "Copy or download result. Privacy first, 2026." },
+  ],
+  "data-storage-converter": [
+    { name: "Enter value", text: "Enter a number and select unit (byte, KB, MB, GB, bit, etc.)." },
+    { name: "View results", text: "All equivalent storage sizes update in real time. 100% local, no upload." },
+    { name: "Copy or download", text: "Copy or download results. No upload 2026." },
+  ],
+  "time-converter": [
+    { name: "Enter value", text: "Enter seconds or Unix timestamp. Select input type." },
+    { name: "View results", text: "Get seconds, minutes, hours, days, weeks and ISO date. 100% local, no upload." },
+    { name: "Copy or download", text: "Copy or download results. No upload 2026." },
+  ],
+  "cooking-units-converter": [
+    { name: "Enter value", text: "Enter a number and select unit (cup, ml, tsp, tbsp, etc.)." },
+    { name: "View results", text: "All equivalent cooking units update in real time. 100% local, no upload." },
+    { name: "Copy or download", text: "Copy or download results. No upload 2026." },
   ],
 } as const;
 

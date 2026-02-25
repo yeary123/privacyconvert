@@ -222,6 +222,19 @@ export const TOOLS = [
   { slug: "split-pdf", name: "Split PDF", description: "Split PDF into one file per page", category: "document", proOnly: false },
   { slug: "docx-to-html", name: "DOCX to HTML", description: "Convert Word document to HTML", category: "document", proOnly: false },
   { slug: "text-to-docx", name: "Text to DOCX", description: "Create Word document from title and paragraphs", category: "document", proOnly: false },
+  { slug: "epub-to-mobi", name: "EPUB to MOBI / AZW3", description: "Extract EPUB to HTML for Calibre (MOBI/AZW3), 100% local", category: "document", proOnly: false },
+  { slug: "pdf-to-docx", name: "PDF to Word (DOCX)", description: "Convert PDF to DOCX in browser, no upload", category: "document", proOnly: false },
+  { slug: "pdf-to-epub", name: "PDF to EPUB", description: "Convert PDF to EPUB e-book in browser", category: "document", proOnly: false },
+  { slug: "length-converter", name: "Length Converter", description: "Convert meters, feet, miles, km, inches — 100% local", category: "units", proOnly: false },
+  { slug: "weight-converter", name: "Weight Converter", description: "Convert kg, lb, oz, grams — 100% local", category: "units", proOnly: false },
+  { slug: "temperature-converter", name: "Temperature Converter", description: "Convert Celsius, Fahrenheit, Kelvin — 100% local", category: "units", proOnly: false },
+  { slug: "currency-converter", name: "Currency Converter", description: "Convert USD, EUR, CNY, JPY with live rates", category: "units", proOnly: false },
+  { slug: "data-storage-converter", name: "Data Storage Converter", description: "Convert bytes, KB, MB, GB, TB — 100% local", category: "data", proOnly: false },
+  { slug: "time-converter", name: "Time Converter", description: "Unix timestamp, date, seconds to hours/days — 100% local", category: "units", proOnly: false },
+  { slug: "cooking-units-converter", name: "Cooking Units Converter", description: "Convert cups, ml, tsp, tbsp, oz — 100% local", category: "units", proOnly: false },
+  { slug: "area-converter", name: "Area Converter", description: "Convert sq m, sq ft, acres, hectares, sq miles — 100% local", category: "units", proOnly: false },
+  { slug: "volume-converter", name: "Volume Converter", description: "Convert liters, gallons, pints, cubic feet — 100% local", category: "units", proOnly: false },
+  { slug: "speed-converter", name: "Speed Converter", description: "Convert km/h, mph, knots, m/s, Mach — 100% local", category: "units", proOnly: false },
 ] as const;
 
 export type ToolSlug = (typeof TOOLS)[number]["slug"];

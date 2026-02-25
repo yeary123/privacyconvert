@@ -244,6 +244,40 @@ Technical note
 When the tool runs, it uses in-browser PDF rendering and image encoding. The work runs entirely on your device. No upload at any point: PDF to Images no upload 2026 is the design. PrivacyConvert is a privacy first file converter; we never receive your files. 100% local browser, no server, no upload. Pro feature; Free users can use our other image, audio, and video tools with single-file conversion.
 `.trim();
 
+const EPUB_BASE = `
+EPUB to MOBI / AZW3 Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert your EPUB e-books toward MOBI or AZW3 (Kindle) with zero privacy risk. PrivacyConvert is a privacy first converter: we run the extraction entirely on your device. Your EPUB file is never uploaded to any server. This no upload 2026, 100% local browser approach keeps your books on your device. MOBI and AZW3 are Amazon Kindle formats; producing them with full fidelity typically requires Calibre (free desktop software). Here we extract your EPUB content 100% locally into a single HTML file that you can open in Calibre and convert to MOBI or AZW3 in one click. Your file never leaves your computer. Unlike Convertio and other cloud e-book converters that upload your EPUB to their servers, we parse the EPUB in your browser using JavaScript — the same no-upload philosophy as VERT.sh and localconvert. Compare vs Convertio, vs cloud e-book tools; we run in the browser, no upload 2026. PrivacyConvert offers 200+ formats across image, audio, video, and document; EPUB extraction is one of them, and it stays 100% local.
+
+Why use a local EPUB to MOBI / AZW3 workflow?
+
+EPUB is the standard e-book format for most readers and libraries. Kindle devices and the Kindle app often prefer MOBI or AZW3. Converting EPUB to MOBI or AZW3 lets you read the same book on Kindle. Doing it locally means your books — including purchased or private content — never leave your computer. Many cloud converters require you to upload your EPUB to their servers; PrivacyConvert keeps everything in the browser. A privacy first converter never receives your EPUB or the extracted content. Vs Convertio: they upload your file; we do not. Vs any cloud e-book tool: we add a clear, 100% local workflow and 200+ format tools in one place for 2026.
+
+How does local EPUB extraction work?
+
+When you use PrivacyConvert's EPUB to MOBI / AZW3 tool, you drop an EPUB file (or click to select). The tool loads JSZip and parses the EPUB structure entirely in your browser. The EPUB is a ZIP archive containing an OPF package file and XHTML chapters. We read the spine order, extract each chapter's body content, and concatenate them into one HTML document. The resulting HTML is generated in memory and offered for download. No data is sent to our servers. This is the same no upload approach used by other privacy-focused converters. Real-world privacy: you can verify in browser DevTools that no request sends your EPUB; only the initial page load may fetch static assets. 100% local browser. No upload 2026.
+
+Step-by-step: How to get from EPUB to MOBI or AZW3 (no upload 2026)
+
+Step 1: Open this page. No account or sign-up required. Step 2: Drag and drop your EPUB file onto the dropzone, or click to select. The file stays on your device. Step 3: The tool extracts the book content (title, chapters) in your browser and builds a single HTML file. Progress is shown. No upload. Step 4: Download the extracted HTML file. Step 5: Open Calibre (free, from calibre-ebook.com). Add the downloaded HTML as a book, then use "Convert books" to choose output format MOBI or AZW3. Your EPUB and HTML never left your device; only the final conversion to MOBI/AZW3 happens in Calibre on your computer. Privacy first converter: we never see your files. No upload 2026.
+
+Privacy and security
+
+We do not collect, store, or analyze your e-books. We do not use tracking pixels or third-party scripts on the conversion page for the extraction itself. Your EPUB and the extracted HTML exist only in your browser session. If you want to support development and get perks like batch conversion on other tools, you can upgrade to Pro — but this EPUB extraction remains local and private for everyone. When you compare PrivacyConvert vs Convertio, vs cloud e-book tools: Convertio and similar services store files temporarily on their servers; we run entirely client-side. We are a privacy first converter and differentiate with a transparent Free vs Pro model and 200+ formats in one place for 2026.
+
+Limits and browser support
+
+Free users can process one EPUB at a time. All extraction still happens in your browser; we never receive your files. Supported browsers: modern Chrome, Firefox, Edge, and Safari. For very large EPUBs (hundreds of chapters), extraction may take a few seconds; that is normal for in-browser processing. No upload at any point: EPUB to MOBI / AZW3 workflow no upload 2026 is the design.
+
+When to use this tool
+
+Use this tool when you have EPUB e-books and want to read them on Kindle (MOBI/AZW3) without uploading to a cloud service. Use it when you care about privacy and want a 100% local browser solution. Use it when you prefer to run the final MOBI/AZW3 conversion in Calibre on your own machine. Doing it with a privacy first converter means your books never leave your device. EPUB to MOBI no upload 2026 is possible with in-browser parsing and extraction; we make it simple and free. Compare vs Convertio (which uploads), vs VERT.sh and vs localconvert (which run in the browser like us). 200+ formats: we aim to be your single place for local conversion in 2026.
+
+Technical note
+
+This tool uses JSZip to unzip the EPUB and parses the OPF (package) file to discover the spine and manifest. Chapter XHTML files are read and their body content concatenated into one HTML document. The work runs entirely on your device. No upload at any point. PrivacyConvert is a privacy first converter; we never receive your files. 100% local browser, no server, no upload. For full MOBI/AZW3 encoding (fonts, metadata, etc.), Calibre remains the recommended free desktop tool; we provide the privacy-preserving first step — extract content locally — so you can then convert to MOBI or AZW3 on your own machine.
+`.trim();
+
 export function getConvertSeoContent(slug: string): string {
   switch (slug) {
     case "avif-to-png":
@@ -264,7 +298,99 @@ export function getConvertSeoContent(slug: string): string {
       return PDF_BASE;
     case "heif-to-jpg":
       return HEIF_BASE;
+    case "epub-to-mobi":
+      return EPUB_BASE;
+    case "pdf-to-docx":
+      return PDF_DOCX_BASE;
+    case "pdf-to-epub":
+      return PDF_EPUB_BASE;
+    case "length-converter":
+      return LENGTH_BASE;
+    case "weight-converter":
+      return WEIGHT_BASE;
+    case "temperature-converter":
+      return TEMP_BASE;
+    case "currency-converter":
+      return CURRENCY_BASE;
+    case "data-storage-converter":
+      return DATA_STORAGE_BASE;
+    case "time-converter":
+      return TIME_BASE;
+    case "cooking-units-converter":
+      return COOKING_BASE;
     default:
       return "";
   }
 }
+
+const PDF_DOCX_BASE = `
+PDF to Word (DOCX) Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert PDF to DOCX in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: we extract text from your PDF and build a Word document entirely on your device. Your PDF file is never uploaded to any server. This no upload 2026, 100% local browser approach keeps your documents on your device. Unlike Convertio and other cloud PDF converters that upload your file to their servers, we run pdfjs-dist and the docx library in your browser — the same no-upload philosophy as VERT.sh and localconvert. Compare vs Convertio, vs cloud PDF tools; we run in the browser, no upload 2026. PrivacyConvert offers 200+ formats; PDF to DOCX is one of them, and it stays 100% local.
+
+Why convert PDF to DOCX locally? PDF is fixed layout; DOCX is editable. Converting to DOCX lets you edit text, reuse content, or adapt for reports. Doing it locally means confidential documents never leave your computer. A privacy first converter never receives your PDF or DOCX. Vs Convertio: they upload your file; we do not. How does local conversion work? When you use this tool, you drop a PDF. The site loads pdfjs-dist and extracts text from each page, then builds a DOCX using the docx package. All processing happens in your browser. The resulting DOCX is generated in memory and offered for download. No data is sent to our servers. 100% local browser. No upload 2026. Step-by-step: Select PDF, Convert (extract text + build DOCX), Download. We do not collect, store, or analyze your documents. Free; no account required. Supported browsers: Chrome, Firefox, Edge, Safari. For complex layout or images, desktop tools may give finer control; we provide a simple, private text-based conversion. No upload 2026, privacy first converter, 200+ format tools. Your files never leave your device.
+`.trim();
+
+const PDF_EPUB_BASE = `
+PDF to EPUB Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert PDF to EPUB e-book in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: we extract text from your PDF and build a valid EPUB (ZIP with OPF and XHTML chapters) entirely on your device. Your PDF file is never uploaded. This no upload 2026, 100% local browser approach keeps your documents on your device. Unlike Convertio and cloud PDF tools that upload your file, we run pdfjs-dist and JSZip in your browser. Compare vs Convertio; we run in the browser, no upload 2026. PrivacyConvert offers 200+ formats; PDF to EPUB stays 100% local.
+
+Why convert PDF to EPUB locally? EPUB is the standard e-book format for readers and libraries. Converting PDF to EPUB improves reading experience on e-readers. Doing it locally means your documents never leave your computer. A privacy first converter never receives your PDF or EPUB. How does local conversion work? You drop a PDF. We extract text per page and build an EPUB package (mimetype, container.xml, content.opf, chapter XHTML files). All processing happens in your browser. The resulting EPUB is generated in memory and offered for download. No data is sent to our servers. 100% local browser. No upload 2026. Step-by-step: Select PDF, Convert, Download EPUB. We do not collect or store your documents. Free; no account required. Supported browsers: Chrome, Firefox, Edge, Safari. No upload 2026, privacy first converter, 200+ format tools.
+`.trim();
+
+const LENGTH_BASE = `
+Length Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert length units in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversions run 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool supports meter, kilometer, centimeter, millimeter, foot, inch, mile, yard, nautical mile. Enter a value and select unit; all equivalent lengths update in real time. Unlike cloud calculators that may log your input, we run entirely in the browser. Compare vs Convertio and other tools; we are part of 200+ format tools, all privacy first. No upload 2026.
+
+Why use a local length converter? Converting meters to feet, miles to km, or inches to cm is common for travel, construction, or education. Doing it locally means your data never leaves your device. A privacy first converter never receives your numbers. How does it work? Enter a value and choose the unit. Conversions are computed in JavaScript in your tab. You can copy results or download as text. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account required. Any modern browser. No upload 2026, privacy first, 200+ format tools. Your data never leaves your device.
+`.trim();
+
+const WEIGHT_BASE = `
+Weight Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert weight and mass units in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversions run 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool supports kilogram, gram, pound, ounce, 市斤 (jin), milligram, metric ton, stone. Enter a value and select unit; all equivalent weights update in real time. Unlike cloud tools, we run entirely in the browser. Part of 200+ format tools. No upload 2026.
+
+Why use a local weight converter? Converting kg to lb, oz to grams, or 市斤 to kg is common for cooking, shipping, or health. Doing it locally means your data never leaves your device. A privacy first converter never receives your numbers. How does it work? Enter a value and choose the unit. Conversions are computed in your tab. Copy or download results. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools.
+`.trim();
+
+const TEMP_BASE = `
+Temperature Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert Celsius, Fahrenheit, and Kelvin in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversions run 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool supports Celsius (°C), Fahrenheit (°F), and Kelvin (K). Enter a value and select unit; all three update in real time. Unlike cloud calculators, we run entirely in the browser. Part of 200+ format tools. No upload 2026.
+
+Why use a local temperature converter? Converting °C to °F or K is common for science, cooking, or travel. Doing it locally means your data never leaves your device. A privacy first converter never receives your numbers. How does it work? Enter a value and choose the unit. Conversions are computed in your tab. Copy or download results. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools.
+`.trim();
+
+const CURRENCY_BASE = `
+Currency Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert currencies in your browser. PrivacyConvert is a privacy first converter: exchange rates are fetched from a free public API (Frankfurter); conversion math runs 100% on your device. We do not upload your amount to our servers. This no upload 2026 approach keeps your data local. Supported currencies include USD, EUR, GBP, CNY, JPY, CHF, CAD, AUD, INR, KRW. Enter amount and select from/to; result is computed locally after rates are loaded. Compare vs Convertio; we do not send your amounts to our servers. Part of 200+ format tools. Privacy first: only public rates are fetched; your numbers stay in your browser.
+
+Why use this currency converter? Converting USD to EUR, JPY to CNY, etc. is common for travel or business. We fetch rates from a free API; conversion is then done in your tab. Your amount is never sent to us. How does it work? Select from/to currencies. Rates load once; then you enter amount and see result. Copy or download. We do not collect or store your amount. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools.
+`.trim();
+
+const DATA_STORAGE_BASE = `
+Data Storage Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert bytes, KB, MB, GB, TB, bits in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversions run 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool supports byte, bit, kilobyte, megabyte, gigabyte, terabyte, petabyte, KiB, MiB, GiB. Enter a value and select unit; all equivalent sizes update in real time. Unlike cloud tools, we run entirely in the browser. Part of 200+ format tools. No upload 2026.
+
+Why use a local data storage converter? Converting MB to GB, bytes to KB, or bits to bytes is common for storage or bandwidth. Doing it locally means your data never leaves your device. A privacy first converter never receives your numbers. How does it work? Enter a value and choose the unit. Conversions are computed in your tab. Copy or download results. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools.
+`.trim();
+
+const TIME_BASE = `
+Time Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert Unix timestamp, seconds, minutes, hours, days, weeks in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversions run 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool lets you enter seconds or Unix timestamp and get equivalent time in minutes, hours, days, weeks and ISO 8601 date. Real-time conversion. Unlike cloud tools, we run entirely in the browser. Part of 200+ format tools. No upload 2026.
+
+Why use a local time converter? Converting seconds to hours, or Unix timestamp to readable date, is common for development or logging. Doing it locally means your data never leaves your device. A privacy first converter never receives your numbers. How does it work? Enter a value (seconds or timestamp) and select input type. Results and ISO date are computed in your tab. Copy or download. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools.
+`.trim();
+
+const COOKING_BASE = `
+Cooking Units Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert cups, milliliters, teaspoons, tablespoons, fluid ounces in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversions run 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool supports milliliter, liter, US cup, tablespoon, teaspoon, fluid ounce, gram (water/sugar), ounce. Enter a value and select unit; all equivalent cooking units update in real time. Unlike cloud tools, we run entirely in the browser. Part of 200+ format tools. No upload 2026.
+
+Why use a local cooking units converter? Converting cups to ml, tsp to tbsp, or oz to ml is common for recipes. Doing it locally means your data never leaves your device. A privacy first converter never receives your numbers. How does it work? Enter a value and choose the unit. Conversions are computed in your tab. Copy or download results. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools.
+`.trim();

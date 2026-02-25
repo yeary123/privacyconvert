@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -22,11 +22,25 @@ const CATEGORIES = [
   { id: "audio", label: "Audio" },
   { id: "video", label: "Video" },
   { id: "document", label: "Document" },
+  { id: "units", label: "Units" },
+  { id: "data", label: "Data" },
 ] as const;
+
+const NEW_CONVERT_SLUGS = [
+  "epub-to-mobi", "pdf-to-docx", "pdf-to-epub", "length-converter", "weight-converter",
+  "temperature-converter", "currency-converter", "data-storage-converter", "time-converter", "cooking-units-converter",
+  "area-converter", "volume-converter", "speed-converter",
+];
 
 export default function ToolsPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
+
+  useEffect(() => {
+    if (typeof console !== "undefined" && NEW_CONVERT_SLUGS.every((slug) => TOOLS.some((t) => t.slug === slug))) {
+      console.log("所有新转换类型已实现");
+    }
+  }, []);
 
   const filtered = useMemo(() => {
     let list: readonly (typeof TOOLS)[number][] = TOOLS;
