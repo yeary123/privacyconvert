@@ -45,9 +45,6 @@ export default function ToolsPage() {
     return list;
   }, [query, category]);
 
-  // All cards link to static /convert/xxx pages (avif-to-png, wav-to-mp3, etc.)
-  const toolHref = (slug: string) => `/convert/${slug}`;
-
   return (
     <div className="container py-8">
       <h1 className="mb-2 text-3xl font-bold">All Tools</h1>
@@ -83,7 +80,7 @@ export default function ToolsPage() {
         {filtered.map((tool) => (
           <ToolCard
             key={tool.slug}
-            href={toolHref(tool.slug)}
+            href={`/convert/${tool.slug}`}
             slug={tool.slug}
             name={tool.name}
             description={tool.description}

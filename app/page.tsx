@@ -122,6 +122,7 @@ export default function Home() {
             {TOOLS.map((tool) => (
               <ToolCard
                 key={tool.slug}
+                href={`/convert/${tool.slug}`}
                 slug={tool.slug}
                 name={tool.name}
                 description={tool.description}

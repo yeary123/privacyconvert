@@ -28,11 +28,11 @@ export type ToolCardProps = {
 export function ToolCard({ slug, name, description, category, proOnly, href }: ToolCardProps) {
   const linkHref = href ?? `/convert/${slug}`;
   return (
-    <Link href={linkHref} className="block h-full">
+    <Link href={linkHref} className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
       <Card className="h-full transition-colors hover:bg-muted/50">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            {name}
+            <span className="hover:underline">{name}</span>
             <span className="flex items-center gap-1">
               {proOnly && <ProBadgePill />}
               <ArrowRight className="h-4 w-4 text-muted-foreground" />
