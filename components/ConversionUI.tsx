@@ -9,6 +9,7 @@ import { SplitPdfConverter } from "@/components/SplitPdfConverter";
 import { DocxToHtmlConverter } from "@/components/DocxToHtmlConverter";
 import { TextToDocxConverter } from "@/components/TextToDocxConverter";
 import { EpubToMobiConverter } from "@/components/EpubToMobiConverter";
+import { MobiToEpubConverter } from "@/components/MobiToEpubConverter";
 import { PdfToDocxConverter } from "@/components/PdfToDocxConverter";
 import { PdfToEpubConverter } from "@/components/PdfToEpubConverter";
 import { LengthConverter } from "@/components/LengthConverter";
@@ -65,6 +66,9 @@ export function ConversionUI({ slug }: ConversionUIProps) {
   }
   if (slug === "epub-to-mobi") {
     return <EpubToMobiConverter toolSlug="epub-to-mobi" />;
+  }
+  if (slug === "mobi-to-epub") {
+    return <MobiToEpubConverter toolSlug="mobi-to-epub" />;
   }
   if (slug === "pdf-to-docx") {
     return <PdfToDocxConverter toolSlug="pdf-to-docx" />;
