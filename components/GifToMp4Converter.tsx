@@ -99,7 +99,7 @@ export function GifToMp4Converter({ toolSlug = "gif-to-mp4" }: Props) {
           {converting ? (loadingFFmpeg ? "Loading converter…" : "Converting...") : "Drop GIF files here, or click to select"}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
-          {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch, history & P2P with Pro."}
+          {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch & history with Pro."}
         </p>
       </div>
       {converting && (

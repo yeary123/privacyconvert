@@ -67,7 +67,7 @@ export function PricingContent() {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>P2P advanced features</TableCell>
+              <TableCell>Advanced features</TableCell>
               <TableCell className="bg-primary/5 text-center">
                 <Check className="mx-auto h-4 w-4" />
               </TableCell>
@@ -82,7 +82,7 @@ export function PricingContent() {
           <CardHeader>
             <CardTitle>Lifetime Pro</CardTitle>
             <p className="text-2xl font-bold">$9.9</p>
-            <p className="text-sm text-muted-foreground">One-time payment, forever Pro. Unlimited batch, history, P2P.</p>
+            <p className="text-sm text-muted-foreground">One-time payment, forever Pro. Unlimited batch and history.</p>
           </CardHeader>
           <CardContent className="space-y-2">
             <PayPalBuyNowButton />

@@ -47,7 +47,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "How is PrivacyConvert different from Convertio or VERT.sh?",
-    a: "Convertio uploads files to their servers. VERT.sh and localconvert.com are similar to us but we offer more tools, better SEO, and a clear Freemium model with Pro features like unlimited batch and P2P transfer. We focus on 100% client-side with no upload.",
+    a: "Convertio uploads files to their servers. VERT.sh and localconvert.com are similar to us but we offer more tools, better SEO, and a clear Freemium model with Pro features like unlimited batch. We focus on 100% client-side with no upload.",
   },
   {
     q: "Do I need to create an account?",
@@ -63,7 +63,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What is Pro and what do I get?",
-    a: "Pro unlocks unlimited batch conversion, larger file support, conversion history, and P2P file transfer. Free tier stays fully usable for single-file conversion with no account.",
+    a: "Pro unlocks unlimited batch conversion, larger file support, and conversion history. Free tier stays fully usable for single-file conversion with no account.",
   },
   {
     q: "Do you store or log my files?",
@@ -179,7 +179,7 @@ export default function Home() {
                     <TableCell className="bg-primary/5">Free 1 / Pro unlimited</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>P2P / advanced</TableCell>
+                    <TableCell>Advanced</TableCell>
                     <TableCell>No</TableCell>
                     <TableCell>No</TableCell>
                     <TableCell>No</TableCell>
@@ -223,7 +223,7 @@ export default function Home() {
                 <CardTitle className="text-lg">Free + Pro</CardTitle>
               </CardHeader>
               <CardContent className="pt-0 text-sm text-muted-foreground">
-                Free tier for daily use. Pro for unlimited batch, larger files, and P2P.
+                Free tier for daily use. Pro for unlimited batch and larger files.
               </CardContent>
             </Card>
             <Card>

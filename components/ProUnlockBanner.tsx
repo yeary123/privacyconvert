@@ -24,7 +24,7 @@ export function ProUnlockBanner() {
   return (
     <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-muted/30 px-4 py-3 text-sm">
       <span className="text-muted-foreground">
-        Free: 1 file at a time. Unlock batch, history & P2P with Pro.
+        Free: 1 file at a time. Unlock batch & history with Pro.
       </span>
       <Link href="/pricing#pro">
         <Button size="sm">Unlock Pro</Button>

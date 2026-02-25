@@ -61,7 +61,7 @@ const WAV_FAQ = [
   },
   {
     q: "Is it free?",
-    a: "Yes. Single-file conversion is free. Pro adds batch and P2P; core conversion stays 100% local for everyone.",
+    a: "Yes. Single-file conversion is free. Pro adds batch; core conversion stays 100% local for everyone.",
   },
 ];
 
@@ -92,7 +92,7 @@ const AVIF_FAQ = [
   },
   {
     q: "Is conversion really free?",
-    a: "Yes. Single-file conversion is free with no account. Pro adds batch and P2P transfer. Core conversion stays 100% local for everyone.",
+    a: "Yes. Single-file conversion is free with no account. Pro adds batch. Core conversion stays 100% local for everyone.",
   },
   {
     q: "Can I convert multiple AVIF files at once?",
@@ -166,7 +166,7 @@ const MP4_FAQ = [
   },
   {
     q: "Is this really free?",
-    a: "Yes. Single-file conversion is free with no account. Pro adds batch and P2P transfer. Core conversion stays 100% local for everyone.",
+    a: "Yes. Single-file conversion is free with no account. Pro adds batch. Core conversion stays 100% local for everyone.",
   },
 ];
 
@@ -200,7 +200,7 @@ const GIF_FAQ = [
   { q: "Do you store my video?", a: "No. We do not have access to your files. Conversion happens in your browser only." },
   { q: "Privacy comparison?", a: "Cloud converters upload your GIF. PrivacyConvert keeps everything client-side — same no-upload approach as our other tools." },
   { q: "What browsers work?", a: "Modern Chrome, Firefox, Edge, Safari with WebAssembly. FFmpeg loads once and is cached." },
-  { q: "Free or paid?", a: "Single-file conversion is free. Pro adds batch and P2P; core conversion stays local for everyone." },
+  { q: "Free or paid?", a: "Single-file conversion is free. Pro adds batch; core conversion stays local for everyone." },
 ];
 
 const HEIF_FAQ = [
@@ -222,7 +222,7 @@ const PDF_FAQ = [
   { q: "Do you store PDFs?", a: "No. We never receive your files. When the tool ships, conversion will be entirely client-side." },
   { q: "Privacy vs cloud PDF tools?", a: "Many PDF tools upload your file. PrivacyConvert will keep everything local — no upload, same as our other converters." },
   { q: "What image format will be used?", a: "Planned: PNG or JPEG per page. Details will be announced when the feature launches." },
-  { q: "How do I get Pro?", a: "Visit the Pricing page. Pro unlocks batch conversion, P2P transfer, and PDF to Images when available." },
+  { q: "How do I get Pro?", a: "Visit the Pricing page. Pro unlocks batch conversion and PDF to Images when available." },
 ];
 
 const AVIF_SEO_CONTENT = `
@@ -244,7 +244,7 @@ We don’t collect, store, or analyze your images. We don’t use tracking pixel
 
 Limits: Free vs Pro
 
-Free users can convert one AVIF file at a time. Pro users get unlimited batch conversion, so you can process many files in one go. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like P2P transfer.
+Free users can convert one AVIF file at a time. Pro users get unlimited batch conversion, so you can process many files in one go. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like history.
 
 How to use this tool
 
@@ -278,7 +278,7 @@ When you use this tool, the site loads FFmpeg (open-source media toolkit) as Web
 
 Privacy and limits
 
-We do not collect, store, or analyze your audio. Free users can convert one file at a time; Pro users get unlimited batch conversion. Same 100% local conversion for everyone — Pro only relaxes limits and adds features like history and P2P transfer. To support development, you can upgrade via Buy Me a Coffee or PayPal. Comparison with Convertio and VERT.sh: Convertio uploads your WAV to their servers; VERT.sh and PrivacyConvert both run conversion in the browser. We offer a clear Free vs Pro model and more tools in one place for 2026.
+We do not collect, store, or analyze your audio. Free users can convert one file at a time; Pro users get unlimited batch conversion. Same 100% local conversion for everyone — Pro only relaxes limits and adds features like history. To support development, you can upgrade via Buy Me a Coffee or PayPal. Comparison with Convertio and VERT.sh: Convertio uploads your WAV to their servers; VERT.sh and PrivacyConvert both run conversion in the browser. We offer a clear Free vs Pro model and more tools in one place for 2026.
 
 How to use
 
@@ -332,7 +332,7 @@ When you use this tool, the site loads FFmpeg (open-source media toolkit) as Web
 
 Privacy and limits
 
-We do not collect, store, or analyze your images. Free users can convert one file at a time; Pro users get unlimited batch conversion. Same 100% local conversion for everyone — Pro only relaxes limits and adds features like P2P transfer. No upload guarantee. How to use: load FFmpeg once (about 31 MB, cached), then drag and drop PNG files or click to select. Download each JPEG with one click. No account required. Privacy first, 2026.
+We do not collect, store, or analyze your images. Free users can convert one file at a time; Pro users get unlimited batch conversion. Same 100% local conversion for everyone — Pro only relaxes limits and adds features like history. No upload guarantee. How to use: load FFmpeg once (about 31 MB, cached), then drag and drop PNG files or click to select. Download each JPEG with one click. No account required. Privacy first, 2026.
 `.trim();
 
 const OGG_SEO_CONTENT = `
@@ -350,7 +350,7 @@ When you use this tool, the site loads FFmpeg as WebAssembly in your browser. Yo
 
 Privacy and limits
 
-We do not collect, store, or analyze your audio. Free users can convert one file at a time; Pro users get unlimited batch. Same 100% local conversion for everyone. Upgrade via Pricing for batch and P2P. How to use: load FFmpeg once, then drag and drop OGG or OGA files (or click to select). Download each MP3 with one click. No account required. Privacy first, no upload, 2026.
+We do not collect, store, or analyze your audio. Free users can convert one file at a time; Pro users get unlimited batch. Same 100% local conversion for everyone. Upgrade via Pricing for batch and history. How to use: load FFmpeg once, then drag and drop OGG or OGA files (or click to select). Download each MP3 with one click. No account required. Privacy first, no upload, 2026.
 `.trim();
 
 const GIF_SEO_CONTENT = `

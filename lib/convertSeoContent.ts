@@ -26,7 +26,7 @@ We don’t collect, store, or analyze your images. We don’t use tracking pixel
 
 Limits: Free vs Pro. Browser support.
 
-Free users can convert one AVIF file at a time. Pro users get unlimited batch conversion. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like P2P transfer. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached for future use. For very large images we recommend under 50 MB for smooth conversion.
+Free users can convert one AVIF file at a time. Pro users get unlimited batch conversion. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like history. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached for future use. For very large images we recommend under 50 MB for smooth conversion.
 
 Technical note
 
@@ -52,7 +52,7 @@ Modern Chrome, Firefox, Edge, and Safari with WebAssembly support are required. 
 
 Free vs Pro: what you get
 
-Free users can convert one AVIF file at a time with no account. Pro users get unlimited batch conversion, so you can process many files in one go. All conversion still happens in your browser; Pro only relaxes limits and adds features like P2P transfer and history. The core promise is the same for everyone: no upload, privacy first. When evaluating tools, vs Convertio typically charges for batch or requires sign-up; vs VERT.sh and vs localconvert focus on client-side conversion. We offer a clear Free vs Pro split so you know exactly what you get in 2026. For avif to png no upload 2026 and a privacy first file converter that compares well to Convertio, VERT.sh, and localconvert, this page is the place to start.
+Free users can convert one AVIF file at a time with no account. Pro users get unlimited batch conversion, so you can process many files in one go. All conversion still happens in your browser; Pro only relaxes limits and adds features like history. The core promise is the same for everyone: no upload, privacy first. When evaluating tools, vs Convertio typically charges for batch or requires sign-up; vs VERT.sh and vs localconvert focus on client-side conversion. We offer a clear Free vs Pro split so you know exactly what you get in 2026. For avif to png no upload 2026 and a privacy first file converter that compares well to Convertio, VERT.sh, and localconvert, this page is the place to start.
 Security and privacy in practice
 
 We do not collect, store, or analyze your images. We do not use tracking pixels or third-party scripts on the conversion page for the conversion itself. Your AVIF and PNG files exist only in your browser session. If you want to support development and get perks like unlimited batch conversion, you can upgrade to Pro via PayPal or Buy Me a Coffee; the core conversion remains local and private for everyone. When you compare PrivacyConvert vs Convertio, vs VERT.sh, vs localconvert: Convertio stores files temporarily on their servers; VERT.sh and localconvert run client-side like us. We are a privacy first file converter and differentiate with clearer SEO, a modern stack, and a transparent Free vs Pro model. For avif to png no upload 2026, your files never leave your device. Many users choose us after comparing vs Convertio (upload required), vs VERT.sh (browser), and vs localconvert (browser); we run in the browser and add more tools in one place.
@@ -97,7 +97,7 @@ This tool uses a LAME-based JavaScript encoder (lamejs) running in a Web Worker.
 
 Free vs Pro: what you get
 
-Free users can convert one WAV file at a time with no account. Pro users get unlimited batch conversion. All conversion still happens in your browser; Pro only relaxes limits and adds features like P2P transfer and history. The core promise is the same for everyone: no upload, privacy first. When evaluating tools, vs Convertio typically charges for batch or requires sign-up; vs VERT.sh and vs localconvert focus on client-side conversion. We offer a clear Free vs Pro split. For WAV to MP3 no upload 2026 and a privacy first file converter that compares well to Convertio, VERT.sh, and localconvert, this page is the place. Part of 200+ formats, 100% local browser.
+Free users can convert one WAV file at a time with no account. Pro users get unlimited batch conversion. All conversion still happens in your browser; Pro only relaxes limits and adds features like history. The core promise is the same for everyone: no upload, privacy first. When evaluating tools, vs Convertio typically charges for batch or requires sign-up; vs VERT.sh and vs localconvert focus on client-side conversion. We offer a clear Free vs Pro split. For WAV to MP3 no upload 2026 and a privacy first file converter that compares well to Convertio, VERT.sh, and localconvert, this page is the place. Part of 200+ formats, 100% local browser.
 `.trim();
 
 const WEBP_BASE = `
@@ -123,7 +123,7 @@ We do not collect, store, or analyze your images. We do not use tracking pixels 
 
 Limits: Free vs Pro. Browser support.
 
-Free users can convert one WebP file at a time. Pro users get unlimited batch. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like P2P transfer. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached. For very large images we recommend under 50 MB for smooth conversion. No upload 2026: 100% local browser.
+Free users can convert one WebP file at a time. Pro users get unlimited batch. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like history. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached. For very large images we recommend under 50 MB for smooth conversion. No upload 2026: 100% local browser.
 
 When to convert WebP to PNG
 
@@ -157,7 +157,7 @@ We do not collect, store, or analyze your video. We do not use tracking pixels o
 
 Limits: Free vs Pro. Browser support.
 
-Free users can convert one MP4 file at a time. Pro users get unlimited batch. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like P2P transfer. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached. For large files we recommend under 100 MB for smooth conversion; conversion may take a minute or more. No upload 2026: 100% local browser.
+Free users can convert one MP4 file at a time. Pro users get unlimited batch. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like history. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached. For large files we recommend under 100 MB for smooth conversion; conversion may take a minute or more. No upload 2026: 100% local browser.
 
 When to convert MP4 to WebM
 
@@ -233,7 +233,7 @@ We do not collect, store, or analyze your documents. We do not use tracking pixe
 
 Limits: Pro only. Browser support.
 
-PDF to Images is available for Pro users. Pro also unlocks batch conversion and P2P transfer for other tools. All processing still happens in your browser; we never receive your files. Supported browsers: modern Chrome, Firefox, Edge, and Safari. No upload 2026: 100% local browser.
+PDF to Images is available for Pro users. Pro also unlocks batch conversion for other tools. All processing still happens in your browser; we never receive your files. Supported browsers: modern Chrome, Firefox, Edge, and Safari. No upload 2026: 100% local browser.
 
 When to use PDF to Images locally
 

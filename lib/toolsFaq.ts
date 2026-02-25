@@ -3,7 +3,7 @@ import type { FAQItem } from "./schema";
 export const TOOLS_FAQ: FAQItem[] = [
   {
     q: "Are these tools really free?",
-    a: "Yes. Every tool (AVIF to PNG, WAV to MP3, WebP to PNG, MP4 to WebM, PNG to JPEG, OGG to MP3, GIF to MP4) offers free single-file conversion with no account. PDF to Images is Pro-only. Pro unlocks unlimited batch and P2P transfer.",
+    a: "Yes. Every tool (AVIF to PNG, WAV to MP3, WebP to PNG, MP4 to WebM, PNG to JPEG, OGG to MP3, GIF to MP4) offers free single-file conversion with no account. PDF to Images is Pro-only. Pro unlocks unlimited batch conversion.",
   },
   {
     q: "Do my files get uploaded to your server?",
@@ -26,11 +26,7 @@ export const TOOLS_FAQ: FAQItem[] = [
     a: "No account is required for free conversion. Use any tool immediately. Pro features can be unlocked via Pricing (PayPal or Buy Me a Coffee).",
   },
   {
-    q: "What is the P2P Batch Transfer card?",
-    a: "Pro feature: send files directly between browsers using PeerJS. No server in the middle. Click the card to go to the transfer page; Pro users get full access.",
-  },
-  {
     q: "Which tools are Pro-only?",
-    a: "PDF to Images and P2P Transfer are Pro-only. All other tools have free single-file conversion. Same no-upload, privacy-first guarantee for everyone. 2026.",
+    a: "PDF to Images is Pro-only. All other tools have free single-file conversion. Same no-upload, privacy-first guarantee for everyone. 2026.",
   },
 ];

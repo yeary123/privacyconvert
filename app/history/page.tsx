@@ -37,7 +37,7 @@ export default function HistoryPage() {
             <Lock className="mx-auto h-12 w-12 text-primary" />
             <CardTitle className="text-center">Conversion History — Pro</CardTitle>
             <CardDescription className="text-center">
-              View your conversion history with Pro. Unlock batch, history, and P2P on the Pricing page.
+              View your conversion history with Pro. Unlock batch and history on the Pricing page.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center gap-3">

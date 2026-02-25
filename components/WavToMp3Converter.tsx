@@ -204,7 +204,7 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
               : "Drop WAV files here or click to select"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch, history & P2P with Pro."}
+            {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch & history with Pro."}
           </p>
         </label>
         <div className="mt-3 flex flex-wrap items-center justify-center gap-2">

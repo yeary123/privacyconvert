@@ -17,7 +17,7 @@ export type ToolCardProps = {
   description: string;
   category?: string;
   proOnly?: boolean;
-  /** If not set, defaults to /convert/{slug}. Use e.g. "/transfer" for P2P. */
+  /** If not set, defaults to /convert/{slug}. */
   href?: string;
 };
 

@@ -6,7 +6,7 @@
 **Title:** Convert files in your browser — no upload, no server (privacy-first tool)
 
 **Body:**
-I built a file converter that runs 100% in the browser. Your PDF, images, and media never leave your device — no upload to our or anyone else’s servers. Uses FFmpeg.wasm and similar tech; supports AVIF, WebP, PNG, WAV, MP3, OGG, MP4, WebM, GIF, and more. Free for single-file conversion; optional Pro for batch and P2P. No account required for free use. Would love feedback from this community. [privacyconvert.com](https://privacyconvert.com)
+I built a file converter that runs 100% in the browser. Your PDF, images, and media never leave your device — no upload to our or anyone else’s servers. Uses FFmpeg.wasm and similar tech; supports AVIF, WebP, PNG, WAV, MP3, OGG, MP4, WebM, GIF, and more. Free for single-file conversion; optional Pro for batch and history. No account required for free use. Would love feedback from this community. [privacyconvert.com](https://privacyconvert.com)
 
 ---
 
@@ -14,7 +14,7 @@ I built a file converter that runs 100% in the browser. Your PDF, images, and me
 **Title:** Local-only file converter (AVIF, WebP, WAV→MP3, etc.) — no upload, no cloud
 
 **Body:**
-For anyone who wants to convert formats without sending files to the cloud: I run a converter that does everything in the browser. No upload, no server storage — your files stay on your machine. Handles images (AVIF, WebP, PNG, JPEG), audio (WAV, MP3, OGG), video (MP4, WebM, GIF), and PDF→images (Pro). Free single-file; Pro adds batch and P2P. Built for people who care where their data goes. [privacyconvert.com](https://privacyconvert.com)
+For anyone who wants to convert formats without sending files to the cloud: I run a converter that does everything in the browser. No upload, no server storage — your files stay on your machine. Handles images (AVIF, WebP, PNG, JPEG), audio (WAV, MP3, OGG), video (MP4, WebM, GIF), and PDF→images (Pro). Free single-file; Pro adds batch and history. Built for people who care where their data goes. [privacyconvert.com](https://privacyconvert.com)
 
 ---
 
@@ -22,7 +22,7 @@ For anyone who wants to convert formats without sending files to the cloud: I ru
 **Title:** Launched: PrivacyConvert — no-upload file converter (browser-only, PayPal Pro)
 
 **Body:**
-I launched PrivacyConvert: a file converter that runs entirely in the browser. No uploads — conversion happens locally with FFmpeg.wasm. Free tier: one file at a time, no sign-up. Pro (PayPal / Buy Me a Coffee): batch, history, P2P. Tech: Next.js, FFmpeg.wasm, PeerJS. Would love feedback and any ideas for the next formats. [privacyconvert.com](https://privacyconvert.com)
+I launched PrivacyConvert: a file converter that runs entirely in the browser. No uploads — conversion happens locally with FFmpeg.wasm. Free tier: one file at a time, no sign-up. Pro (PayPal / Buy Me a Coffee): batch and history. Tech: Next.js, FFmpeg.wasm. Would love feedback and any ideas for the next formats. [privacyconvert.com](https://privacyconvert.com)
 
 ---
 
@@ -33,7 +33,7 @@ I launched PrivacyConvert: a file converter that runs entirely in the browser. N
 **Tagline:** Convert files in your browser. No upload. Zero privacy risk.
 
 **Description:**
-PrivacyConvert is a privacy-first file converter. All conversion runs in your browser — your files never touch our servers. Convert images (AVIF, WebP, PNG, JPEG), audio (WAV, MP3, OGG), and video (MP4, WebM, GIF) locally. Free for single-file conversion; Pro unlocks batch, history, and P2P transfer. No account required for free use. Built for 2026: no upload, no tracking of your data.
+PrivacyConvert is a privacy-first file converter. All conversion runs in your browser — your files never touch our servers. Convert images (AVIF, WebP, PNG, JPEG), audio (WAV, MP3, OGG), and video (MP4, WebM, GIF) locally. Free for single-file conversion; Pro unlocks batch and history. No account required for free use. Built for 2026: no upload, no tracking of your data.
 
 **Topics / Tags:**
 - Productivity

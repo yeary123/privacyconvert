@@ -22,7 +22,6 @@ export const useProStore = create<{
   setBatchCount: (n: number) => void;
   batchFiles: BatchFileInfo[];
   setBatchFiles: (files: BatchFileInfo[]) => void;
-  p2pEnabled: boolean;
   protectedCount: number;
   incrementProtected: (n: number) => void;
 }>()(
@@ -51,7 +50,6 @@ export const useProStore = create<{
       setBatchCount: (n) => set({ batchCount: n }),
       batchFiles: [],
       setBatchFiles: (files) => set({ batchFiles: files }),
-      p2pEnabled: false,
       protectedCount: DEFAULT_PROTECTED_COUNT,
       incrementProtected: (n) =>
         set((s) => {
@@ -71,7 +69,6 @@ export const useProStore = create<{
       partialize: (s) => ({
         history: s.history,
         batchCount: s.batchCount,
-        p2pEnabled: s.p2pEnabled,
       }),
     }
   )

@@ -49,7 +49,7 @@ const PDF_FAQ = [
   },
   {
     q: "How do I get Pro?",
-    a: "Visit the Pricing page. Pro unlocks batch conversion, P2P transfer, and PDF to Images when available.",
+    a: "Visit the Pricing page. Pro unlocks batch conversion and PDF to Images when available.",
   },
 ];
 

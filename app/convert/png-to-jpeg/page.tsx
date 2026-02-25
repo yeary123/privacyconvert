@@ -101,7 +101,7 @@ We don't collect, store, or analyze your images. We don't use tracking pixels or
 
 Limits: Free vs Pro
 
-Free users can convert one PNG file at a time. Pro users get unlimited batch conversion. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like P2P transfer. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached. For very large images we recommend under 50 MB for smooth conversion. No upload 2026: the entire pipeline is client side and completely local.
+Free users can convert one PNG file at a time. Pro users get unlimited batch conversion. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like history. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached. For very large images we recommend under 50 MB for smooth conversion. No upload 2026: the entire pipeline is client side and completely local.
 
 How to use this tool
 

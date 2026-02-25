@@ -53,7 +53,7 @@ const WAV_FAQ = [
   },
   {
     q: "Is it free?",
-    a: "Yes. Single-file conversion is free. Pro adds batch and P2P; core conversion stays 100% local for everyone.",
+    a: "Yes. Single-file conversion is free. Pro adds batch; core conversion stays 100% local for everyone.",
   },
 ];
 

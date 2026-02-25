@@ -39,7 +39,7 @@ privacyconvert/
 │   ├── tools/              # 工具列表页
 │   ├── pricing/            # 定价页
 │   ├── blog/                # 博客
-│   ├── login/, profile/, history/, transfer/, auth/
+│   ├── login/, profile/, history/, auth/
 │   └── api/                 # API 路由（PayPal、Newsletter、Supabase 等）
 ├── components/             # React 组件（用户层：UI 与流程）
 │   ├── ConversionUI.tsx    # 按 slug 选择具体转换器组件
@@ -64,7 +64,7 @@ privacyconvert/
 │   ├── convertSeoContent.ts
 │   ├── supabase.ts, supabase-admin.ts
 │   ├── blog.ts, blog-utils.ts
-│   ├── peer.ts, pro.ts, utils.ts
+│   ├── pro.ts, utils.ts
 │   └── …
 ├── store/                  # 客户端状态（Zustand）
 │   ├── useAuthStore.ts     # 登录、Pro 状态

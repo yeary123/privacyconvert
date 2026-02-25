@@ -59,7 +59,7 @@ const FAQ = [
   },
   {
     q: "Free or paid?",
-    a: "Single-file conversion is free. Pro adds batch and P2P; core conversion stays local for everyone.",
+    a: "Single-file conversion is free. Pro adds batch; core conversion stays local for everyone.",
   },
 ];
 
@@ -101,7 +101,7 @@ We don't collect, store, or analyze your video. We don't use tracking pixels or 
 
 Limits: Free vs Pro
 
-Free users can convert one GIF file at a time. Pro users get unlimited batch conversion. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like P2P transfer. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached. For large GIFs we recommend under 50 MB for smooth conversion. No upload 2026: the entire pipeline is client side and completely local.
+Free users can convert one GIF file at a time. Pro users get unlimited batch conversion. All processing still happens in your browser; Pro only relaxes limits and unlocks extra features like history. Supported browsers: modern Chrome, Firefox, Edge, and Safari with WebAssembly. FFmpeg loads once (~31 MB) and is cached. For large GIFs we recommend under 50 MB for smooth conversion. No upload 2026: the entire pipeline is client side and completely local.
 
 How to use this tool
 

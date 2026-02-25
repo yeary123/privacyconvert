@@ -49,7 +49,7 @@ const MP4_FAQ = [
   },
   {
     q: "Is this really free?",
-    a: "Yes. Single-file conversion is free with no account. Pro adds batch and P2P transfer. Core conversion stays 100% local for everyone.",
+    a: "Yes. Single-file conversion is free with no account. Pro adds batch. Core conversion stays 100% local for everyone.",
   },
 ];
 

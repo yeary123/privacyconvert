@@ -7,7 +7,6 @@ const footerLinks = [
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
-  { href: "https://www.filetransfer.ink", label: "P2P File Transfer", external: true },
 ];
 
 export function Footer() {

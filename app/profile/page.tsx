@@ -61,7 +61,7 @@ export default function ProfilePage() {
             <div>
               <p className="text-sm font-medium">Pro</p>
               <p className="text-sm text-muted-foreground">
-                {isPro ? "Lifetime Pro — batch, history & P2P unlocked." : "Free — upgrade on Pricing for $9.9 lifetime."}
+                {isPro ? "Lifetime Pro — batch & history unlocked." : "Free — upgrade on Pricing for $9.9 lifetime."}
               </p>
             </div>
           </div>

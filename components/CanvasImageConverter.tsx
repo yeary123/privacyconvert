@@ -159,7 +159,7 @@ export function CanvasImageConverter({ config }: Props) {
           {isConverting ? "Converting..." : dropMessage}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
-          {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch, history & P2P with Pro."}
+          {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch & history with Pro."}
         </p>
       </div>
 

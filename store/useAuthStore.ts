@@ -37,9 +37,6 @@ export const useAuthStore = create<{
         .single();
       const isPro = !!profile?.is_pro || get().demoProOverride;
       set({ user, isPro, loading: false });
-      // Keep useProStore.p2pEnabled in sync for transfer page
-      const { useProStore } = await import("@/store/useProStore");
-      useProStore.setState({ p2pEnabled: isPro });
     } catch {
       set({ user: null, isPro: false, loading: false });
     }
@@ -48,7 +45,5 @@ export const useAuthStore = create<{
   signOut: async () => {
     await supabase.auth.signOut();
     set({ user: null, isPro: false });
-    const { useProStore } = await import("@/store/useProStore");
-    useProStore.setState({ p2pEnabled: false });
   },
 }));
