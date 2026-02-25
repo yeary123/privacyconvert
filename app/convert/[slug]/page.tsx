@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ConversionUI } from "@/components/ConversionUI";
 import { ConvertPageLayout } from "@/components/ConvertPageLayout";
 import { TOOLS } from "@/lib/tools";
+import { getConvertMetadata } from "@/lib/convertMetadata";
 import { getConvertSeoContent } from "@/lib/convertSeoContent";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -17,12 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const tool = TOOLS.find((t) => t.slug === slug);
   if (!tool) return { title: "Tool Not Found" };
-  const title = `${tool.name} No Upload – 100% Local Browser Converter 2026`;
-  const description = `${tool.description}. No upload 2026, privacy first. 100% local browser converter, zero privacy risk.`;
+  const meta = getConvertMetadata(tool.name);
   return {
-    title,
-    description,
-    openGraph: { title, description },
+    title: meta.title,
+    description: meta.description,
+    openGraph: meta.openGraph,
   };
 }
 

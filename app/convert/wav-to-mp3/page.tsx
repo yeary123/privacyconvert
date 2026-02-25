@@ -13,6 +13,7 @@ import {
   buildHowToSchema,
   buildSoftwareApplicationSchema,
 } from "@/lib/schema";
+import { getConvertMetadata } from "@/lib/convertMetadata";
 import { getConvertSeoContent } from "@/lib/convertSeoContent";
 
 const TOOL_SLUG = "wav-to-mp3";
@@ -20,13 +21,11 @@ const TOOL_NAME = "WAV to MP3";
 const DESCRIPTION =
   "Convert WAV to MP3 in your browser. Choose bitrate 96–320 kbps. No upload 2026, privacy first file converter. 100% client-side, completely local.";
 
+const meta = getConvertMetadata(TOOL_NAME);
 export const metadata: Metadata = {
-  title: `${TOOL_NAME} 96–320 kbps No Upload – 100% Local Browser Converter 2026`,
-  description: `${DESCRIPTION}. Choose 128, 192, or 320 kbps. No upload, browser local conversion. Zero privacy risk.`,
-  openGraph: {
-    title: `${TOOL_NAME} – Choose Bitrate, No Upload 2026 | PrivacyConvert`,
-    description: DESCRIPTION,
-  },
+  title: meta.title,
+  description: meta.description,
+  openGraph: meta.openGraph,
 };
 
 const FAQ = [

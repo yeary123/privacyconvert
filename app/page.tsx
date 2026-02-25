@@ -22,13 +22,16 @@ import { ProtectedCounter } from "@/components/ProtectedCounter";
 import { TOOLS } from "@/lib/tools";
 import { buildFAQSchema } from "@/lib/schema";
 
+const HOME_TITLE = "PrivacyConvert – 100% Local File Converter | No Upload, Zero Privacy Risk | 2026";
+const HOME_DESCRIPTION =
+  "No upload, 100% local in browser. Privacy-first. 200+ formats. Convert images, audio, video—files never leave your device. Zero privacy risk. 2026. Free & Pro.";
+
 export const metadata: Metadata = {
-  title: "PrivacyConvert - 100% Local File Converter | No Upload, Zero Privacy Risk | 2026",
-  description:
-    "Convert images, audio, video in your browser. No upload, no server, zero privacy risk. Free & Pro. 2026.",
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
   openGraph: {
-    title: "PrivacyConvert - Local File Converter, No Upload | 2026",
-    description: "100% browser-side conversion. Zero privacy risk.",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     type: "website",
   },
 };

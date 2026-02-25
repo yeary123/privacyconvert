@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HeifToJpgConverter } from "@/components/HeifToJpgConverter";
 import { ConvertPageLayout } from "@/components/ConvertPageLayout";
+import { getConvertMetadata } from "@/lib/convertMetadata";
 import { getConvertSeoContent } from "@/lib/convertSeoContent";
 
 const TOOL_SLUG = "heif-to-jpg";
@@ -10,13 +11,11 @@ const DESCRIPTION =
 
 const TOOL = { name: TOOL_NAME, description: DESCRIPTION, slug: TOOL_SLUG };
 
+const meta = getConvertMetadata(TOOL_NAME);
 export const metadata: Metadata = {
-  title: `${TOOL_NAME} No Upload – 100% Local Browser Converter 2026`,
-  description: `${DESCRIPTION}. No upload, browser local conversion. Zero privacy risk.`,
-  openGraph: {
-    title: `${TOOL_NAME} – No Upload 2026 | PrivacyConvert`,
-    description: DESCRIPTION,
-  },
+  title: meta.title,
+  description: meta.description,
+  openGraph: meta.openGraph,
 };
 
 const FAQ = [

@@ -13,6 +13,7 @@ import {
   buildHowToSchema,
   buildSoftwareApplicationSchema,
 } from "@/lib/schema";
+import { getConvertMetadata } from "@/lib/convertMetadata";
 import { getConvertSeoContent } from "@/lib/convertSeoContent";
 
 const TOOL_SLUG = "ogg-to-mp3";
@@ -20,13 +21,11 @@ const TOOL_NAME = "OGG to MP3";
 const DESCRIPTION =
   "Convert OGG to MP3 in your browser. No upload 2026, privacy first file converter. 100% client-side, completely local.";
 
+const meta = getConvertMetadata(TOOL_NAME);
 export const metadata: Metadata = {
-  title: `${TOOL_NAME} No Upload – 100% Local Browser Converter 2026`,
-  description: `${DESCRIPTION}. No upload, browser local conversion. Zero privacy risk.`,
-  openGraph: {
-    title: `${TOOL_NAME} – No Upload 2026 | PrivacyConvert`,
-    description: DESCRIPTION,
-  },
+  title: meta.title,
+  description: meta.description,
+  openGraph: meta.openGraph,
 };
 
 const FAQ = [

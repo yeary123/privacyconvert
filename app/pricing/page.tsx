@@ -2,10 +2,17 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PricingContent } from "./PricingContent";
 
+const PRICING_TITLE = "Pricing – Free & Pro | No Upload Converter | PrivacyConvert 2026";
+const PRICING_DESCRIPTION =
+  "No upload, 100% local. Privacy-first. Free: 1 file; Pro: 200+ formats, unlimited batch. Your files never leave your device. 2026. Free & Pro.";
+
 export const metadata: Metadata = {
-  title: "Pricing - Free & Pro | No Upload Converter | PrivacyConvert 2026",
-  description:
-    "Free: 1 file at a time, no upload. Pro: $9.9 one-time, unlimited batch, history, P2P. 2026.",
+  title: PRICING_TITLE,
+  description: PRICING_DESCRIPTION,
+  openGraph: {
+    title: PRICING_TITLE,
+    description: PRICING_DESCRIPTION,
+  },
   keywords: ["pricing", "pro", "no upload", "file converter", "2026"],
 };
 
