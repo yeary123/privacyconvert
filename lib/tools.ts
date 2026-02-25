@@ -1,3 +1,5 @@
+import { CURRENCY_PAIR_TOOLS } from "./currencyPairs";
+
 export const TOOLS = [
   // ---- Image ----
   { slug: "avif-to-png", name: "AVIF to PNG", description: "Convert AVIF images to PNG in browser", category: "image", proOnly: false },
@@ -222,7 +224,6 @@ export const TOOLS = [
   { slug: "split-pdf", name: "Split PDF", description: "Split PDF into one file per page", category: "document", proOnly: false },
   { slug: "docx-to-html", name: "DOCX to HTML", description: "Convert Word document to HTML", category: "document", proOnly: false },
   { slug: "text-to-docx", name: "Text to DOCX", description: "Create Word document from title and paragraphs", category: "document", proOnly: false },
-  { slug: "epub-to-mobi", name: "EPUB to MOBI / AZW3", description: "Extract EPUB to HTML for Calibre (MOBI/AZW3), 100% local", category: "document", proOnly: false },
   { slug: "mobi-to-epub", name: "MOBI to EPUB", description: "Convert MOBI or AZW3 to EPUB e-book in browser, 100% local", category: "document", proOnly: false },
   { slug: "pdf-to-docx", name: "PDF to Word (DOCX)", description: "Convert PDF to DOCX in browser, no upload", category: "document", proOnly: false },
   { slug: "pdf-to-epub", name: "PDF to EPUB", description: "Convert PDF to EPUB e-book in browser", category: "document", proOnly: false },
@@ -240,6 +241,7 @@ export const TOOLS = [
   { slug: "fahrenheit-to-celsius", name: "Fahrenheit to Celsius", description: "Convert Fahrenheit ↔ Celsius — 100% local", category: "units", proOnly: false },
   { slug: "fahrenheit-to-kelvin", name: "Fahrenheit to Kelvin", description: "Convert Fahrenheit ↔ Kelvin — 100% local", category: "units", proOnly: false },
   { slug: "celsius-to-kelvin", name: "Celsius to Kelvin", description: "Convert Celsius ↔ Kelvin — 100% local", category: "units", proOnly: false },
+  ...CURRENCY_PAIR_TOOLS,
   { slug: "currency-converter", name: "Currency Converter", description: "Convert USD, EUR, CNY, JPY with live rates", category: "units", proOnly: false },
   { slug: "data-storage-converter", name: "Data Storage Converter", description: "Convert bytes, KB, MB, GB, TB — 100% local", category: "data", proOnly: false },
   { slug: "time-converter", name: "Time Converter", description: "Unix timestamp, date, seconds to hours/days — 100% local", category: "units", proOnly: false },

@@ -298,8 +298,6 @@ export function getConvertSeoContent(slug: string): string {
       return PDF_BASE;
     case "heif-to-jpg":
       return HEIF_BASE;
-    case "epub-to-mobi":
-      return EPUB_BASE;
     case "pdf-to-docx":
       return PDF_DOCX_BASE;
     case "pdf-to-epub":

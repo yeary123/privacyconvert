@@ -27,7 +27,7 @@ const CATEGORIES = [
 ] as const;
 
 const NEW_CONVERT_SLUGS = [
-  "epub-to-mobi", "pdf-to-docx", "pdf-to-epub", "length-converter", "weight-converter",
+  "pdf-to-docx", "pdf-to-epub", "length-converter", "weight-converter",
   "temperature-converter", "currency-converter", "data-storage-converter", "time-converter", "cooking-units-converter",
   "area-converter", "volume-converter", "speed-converter",
 ];

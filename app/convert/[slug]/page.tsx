@@ -490,7 +490,6 @@ const FAQ_MAP: Record<string, { q: string; a: string }[]> = {
   "gif-to-mp4": GIF_FAQ,
   "heif-to-jpg": HEIF_FAQ,
   "pdf-to-images": PDF_FAQ,
-  "epub-to-mobi": [],
   "pdf-to-docx": PDF_DOCX_FAQ,
   "pdf-to-epub": PDF_EPUB_FAQ,
   "length-converter": LENGTH_FAQ,

@@ -8,7 +8,6 @@ import { MergePdfsConverter } from "@/components/MergePdfsConverter";
 import { SplitPdfConverter } from "@/components/SplitPdfConverter";
 import { DocxToHtmlConverter } from "@/components/DocxToHtmlConverter";
 import { TextToDocxConverter } from "@/components/TextToDocxConverter";
-import { EpubToMobiConverter } from "@/components/EpubToMobiConverter";
 import { MobiToEpubConverter } from "@/components/MobiToEpubConverter";
 import { PdfToDocxConverter } from "@/components/PdfToDocxConverter";
 import { PdfToEpubConverter } from "@/components/PdfToEpubConverter";
@@ -19,6 +18,8 @@ import { WeightPairConverter } from "@/components/WeightPairConverter";
 import { TemperatureConverter } from "@/components/TemperatureConverter";
 import { TemperaturePairConverter } from "@/components/TemperaturePairConverter";
 import { CurrencyConverter } from "@/components/CurrencyConverter";
+import { CurrencyPairConverter } from "@/components/CurrencyPairConverter";
+import { isCurrencyPairSlug } from "@/lib/currencyPairs";
 import { DataStorageConverter } from "@/components/DataStorageConverter";
 import { TimeConverter } from "@/components/TimeConverter";
 import { CookingUnitsConverter } from "@/components/CookingUnitsConverter";
@@ -64,9 +65,6 @@ export function ConversionUI({ slug }: ConversionUIProps) {
   if (slug === "text-to-docx") {
     return <TextToDocxConverter toolSlug="text-to-docx" />;
   }
-  if (slug === "epub-to-mobi") {
-    return <EpubToMobiConverter toolSlug="epub-to-mobi" />;
-  }
   if (slug === "mobi-to-epub") {
     return <MobiToEpubConverter toolSlug="mobi-to-epub" />;
   }
@@ -93,6 +91,9 @@ export function ConversionUI({ slug }: ConversionUIProps) {
   }
   if (slug === "fahrenheit-to-celsius" || slug === "fahrenheit-to-kelvin" || slug === "celsius-to-kelvin") {
     return <TemperaturePairConverter toolSlug={slug} />;
+  }
+  if (isCurrencyPairSlug(slug)) {
+    return <CurrencyPairConverter toolSlug={slug} />;
   }
   if (slug === "currency-converter") {
     return <CurrencyConverter />;
