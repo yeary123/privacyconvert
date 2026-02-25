@@ -10,7 +10,7 @@
 
 | 层次 | 职责 | 位置 |
 |------|------|------|
-| **功能层（Function Layer）** | 所有格式转换逻辑：单文件入、单文件出，不包含 UI | `lib/conversion/`、`lib/ffmpeg.ts`、`lib/imageConversion.ts`、`lib/heicConversion.ts`、`lib/wavMp3WorkerCode.ts` |
+| **功能层（Function Layer）** | 所有格式转换逻辑：单文件入、单文件出，不包含 UI | `lib/conversion/`、`lib/ffmpeg.ts`、`lib/imageConversion.ts`、`lib/heicConversion.ts`、`lib/wavMp3WorkerCode.ts`、`lib/pdfConversion.ts`、`lib/documentConversion.ts` |
 | **用户层（User Layer）** | 页面、上传/拖拽、进度展示、结果下载；只调用功能层 API，不实现转换 | `app/`、`components/*Converter*.tsx`、`components/ConversionUI.tsx` |
 
 - **功能层**：对外统一入口为 `convert(slug, file, options)`（及 HEIC 的 `convertHeicToJpeg`），内部按 `slug` 分发到不同实现（Canvas、FFmpeg WASM、Worker 等）。
@@ -57,6 +57,8 @@ privacyconvert/
 │   ├── imageConversion.ts  # Canvas 图片转换（AVIF/WebP/PNG→JPEG）
 │   ├── heicConversion.ts    # HEIC→JPEG（heic2any）
 │   ├── wavMp3WorkerCode.ts  # WAV→MP3 Worker 内联代码（lamejs）
+│   ├── pdfConversion.ts    # PDF↔图片（pdfjs-dist、jspdf）
+│   ├── documentConversion.ts # HTML→PDF、PDF 合并/拆分、DOCX→HTML、生成 DOCX
 │   ├── tools.ts            # TOOLS 列表与 ToolSlug 类型
 │   ├── schema.ts           # SEO/结构化数据
 │   ├── convertSeoContent.ts
@@ -69,6 +71,7 @@ privacyconvert/
 │   └── useProStore.ts      # Pro 功能（历史、受保护计数等）
 └── docs/                   # 文档
     ├── ARCHITECTURE.md     # 本文档
+    ├── DOCUMENT_CONVERSION.md # 文档转换 API（HTML/PDF/DOCX）
     └── ENV_KEYS.md         # 环境变量说明
 ```
 
@@ -162,6 +165,7 @@ privacyconvert/
   - **Canvas**：`lib/imageConversion` 使用浏览器 Canvas API（AVIF/WebP/PNG→PNG 或 JPEG）。  
   - **HEIC**：`heic2any`，动态 import，仅浏览器端。  
   - **WAV→MP3**：`lamejs`（通过 Worker 内联脚本加载）。  
+  - **PDF**：`lib/pdfConversion` 使用 `pdfjs-dist`（PDF→图）、`jspdf`（图→PDF）；`lib/documentConversion` 使用 `html2canvas`+jspdf（HTML→PDF）、`pdf-lib`（PDF 合并/拆分）、`mammoth`（DOCX→HTML）、`docx`（生成 .docx）。  
 - **框架**：Next.js 16（App Router）、React 19。  
 - **状态**：Zustand（`store/`）。  
 - **后端/第三方**：Supabase（认证/用户）、PayPal（支付）、Newsletter（Brevo/ConvertKit/Buttondown）等，见 `docs/ENV_KEYS.md`。

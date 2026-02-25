@@ -217,6 +217,11 @@ export const TOOLS = [
   // ---- Document ----
   { slug: "pdf-to-images", name: "PDF to Images", description: "Extract PDF pages as images (Pro)", category: "document", proOnly: true },
   { slug: "images-to-pdf", name: "Images to PDF", description: "Combine images into one PDF (Pro)", category: "document", proOnly: true },
+  { slug: "html-to-pdf", name: "HTML to PDF", description: "Convert HTML content to PDF in browser", category: "document", proOnly: false },
+  { slug: "merge-pdfs", name: "Merge PDFs", description: "Combine multiple PDFs into one", category: "document", proOnly: false },
+  { slug: "split-pdf", name: "Split PDF", description: "Split PDF into one file per page", category: "document", proOnly: false },
+  { slug: "docx-to-html", name: "DOCX to HTML", description: "Convert Word document to HTML", category: "document", proOnly: false },
+  { slug: "text-to-docx", name: "Text to DOCX", description: "Create Word document from title and paragraphs", category: "document", proOnly: false },
 ] as const;
 
 export type ToolSlug = (typeof TOOLS)[number]["slug"];

@@ -3,6 +3,11 @@
 import { HeifToJpgConverter } from "@/components/HeifToJpgConverter";
 import { PdfToImagesConverter } from "@/components/PdfToImagesConverter";
 import { ImagesToPdfConverter } from "@/components/ImagesToPdfConverter";
+import { HtmlToPdfConverter } from "@/components/HtmlToPdfConverter";
+import { MergePdfsConverter } from "@/components/MergePdfsConverter";
+import { SplitPdfConverter } from "@/components/SplitPdfConverter";
+import { DocxToHtmlConverter } from "@/components/DocxToHtmlConverter";
+import { TextToDocxConverter } from "@/components/TextToDocxConverter";
 import { GenericConverter } from "@/components/GenericConverter";
 import { hasConvertHandler } from "@/lib/conversion";
 import type { ToolSlug } from "@/lib/tools";
@@ -23,6 +28,21 @@ export function ConversionUI({ slug }: ConversionUIProps) {
   }
   if (slug === "images-to-pdf") {
     return <ImagesToPdfConverter toolSlug="images-to-pdf" />;
+  }
+  if (slug === "html-to-pdf") {
+    return <HtmlToPdfConverter toolSlug="html-to-pdf" />;
+  }
+  if (slug === "merge-pdfs") {
+    return <MergePdfsConverter toolSlug="merge-pdfs" />;
+  }
+  if (slug === "split-pdf") {
+    return <SplitPdfConverter toolSlug="split-pdf" />;
+  }
+  if (slug === "docx-to-html") {
+    return <DocxToHtmlConverter toolSlug="docx-to-html" />;
+  }
+  if (slug === "text-to-docx") {
+    return <TextToDocxConverter toolSlug="text-to-docx" />;
   }
   if (hasConvertHandler(slug as ToolSlug)) {
     return <GenericConverter toolSlug={slug as ToolSlug} />;

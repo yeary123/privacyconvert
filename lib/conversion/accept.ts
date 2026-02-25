@@ -214,6 +214,12 @@ export const CONVERT_ACCEPT: Partial<Record<ToolSlug, Record<string, string[]>>>
   "3gp-to-wmv": { "video/3gpp": [".3gp"] },
   "3gp-to-m4v": { "video/3gpp": [".3gp"] },
   "3gp-to-ogv": { "video/3gpp": [".3gp"] },
+  // Document
+  "merge-pdfs": { "application/pdf": [".pdf"] },
+  "split-pdf": { "application/pdf": [".pdf"] },
+  "docx-to-html": {
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
+  },
 };
 
 export function getAccept(slug: ToolSlug): Record<string, string[]> | undefined {
