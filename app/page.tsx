@@ -22,6 +22,9 @@ import { ProtectedCounter } from "@/components/ProtectedCounter";
 import { TOOLS } from "@/lib/tools";
 import { buildFAQSchema } from "@/lib/schema";
 
+/** Number of tools to show on home as "Popular Tools"; rest via View All Tools. */
+const HOME_POPULAR_TOOLS_COUNT = 24;
+
 const HOME_TITLE = "PrivacyConvert – 100% Local File Converter | No Upload, Zero Privacy Risk | 2026";
 const HOME_DESCRIPTION =
   "No upload, 100% local in browser. Privacy-first. 200+ formats. Convert images, audio, video—files never leave your device. Zero privacy risk. 2026. Free & Pro.";
@@ -122,7 +125,7 @@ export default function Home() {
         <section className="container py-16">
           <h2 className="mb-8 text-2xl font-bold">Popular Tools</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {TOOLS.map((tool) => (
+            {TOOLS.slice(0, HOME_POPULAR_TOOLS_COUNT).map((tool) => (
               <ToolCard
                 key={tool.slug}
                 href={`/convert/${tool.slug}`}

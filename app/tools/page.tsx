@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,9 @@ import { ToolCard } from "@/components/ToolCard";
 import { TOOLS } from "@/lib/tools";
 import { TOOLS_FAQ } from "@/lib/toolsFaq";
 import { cn } from "@/lib/utils";
+
+const GRID_COLUMNS = 4;
+const ROW_HEIGHT_ESTIMATE = 160;
 
 const CATEGORIES = [
   { id: "all", label: "All" },
@@ -35,6 +39,7 @@ const NEW_CONVERT_SLUGS = [
 export default function ToolsPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof console !== "undefined" && NEW_CONVERT_SLUGS.every((slug) => TOOLS.some((t) => t.slug === slug))) {
@@ -59,6 +64,16 @@ export default function ToolsPage() {
     }
     return list;
   }, [query, category]);
+
+  const rowCount = Math.ceil(filtered.length / GRID_COLUMNS);
+  const virtualizer = useVirtualizer({
+    count: rowCount,
+    getScrollElement: () => scrollRef.current,
+    estimateSize: () => ROW_HEIGHT_ESTIMATE,
+    overscan: 3,
+  });
+  const virtualRows = virtualizer.getVirtualItems();
+  const totalHeight = virtualizer.getTotalSize();
 
   return (
     <div className="container py-8">
@@ -91,22 +106,53 @@ export default function ToolsPage() {
           ))}
         </div>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {filtered.map((tool) => (
-          <ToolCard
-            key={tool.slug}
-            href={`/convert/${tool.slug}`}
-            slug={tool.slug}
-            name={tool.name}
-            description={tool.description}
-            category={tool.category}
-            proOnly={tool.proOnly}
-          />
-        ))}
+      <div
+        ref={scrollRef}
+        className="overflow-auto rounded-lg border border-border"
+        style={{ minHeight: 400, maxHeight: "70vh" }}
+      >
+        {filtered.length === 0 ? (
+          <p className="py-8 text-center text-muted-foreground">No tools match your search.</p>
+        ) : (
+          <div
+            style={{
+              height: totalHeight,
+              width: "100%",
+              position: "relative",
+            }}
+          >
+            {virtualRows.map((virtualRow) => {
+              const start = virtualRow.index * GRID_COLUMNS;
+              const rowTools = filtered.slice(start, start + GRID_COLUMNS);
+              return (
+                <div
+                  key={virtualRow.key}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }}
+                  className="grid gap-4 px-1 py-1 sm:grid-cols-2 lg:grid-cols-4"
+                >
+                  {rowTools.map((tool) => (
+                    <ToolCard
+                      key={tool.slug}
+                      href={`/convert/${tool.slug}`}
+                      slug={tool.slug}
+                      name={tool.name}
+                      description={tool.description}
+                      category={tool.category}
+                      proOnly={tool.proOnly}
+                    />
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
-      {filtered.length === 0 && (
-        <p className="py-8 text-center text-muted-foreground">No tools match your search.</p>
-      )}
       <section className="mt-16 border-t border-border pt-12">
         <h2 className="mb-6 text-2xl font-bold">Tools FAQ</h2>
         <Accordion type="single" collapsible className="w-full max-w-2xl">
