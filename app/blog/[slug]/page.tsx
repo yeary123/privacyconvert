@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import { getBlogSlugs, getPostBySlug, getPrevNextSlugs } from "@/lib/blog";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
@@ -100,7 +101,13 @@ export default async function BlogPostPage({ params }: Props) {
             )}
           </header>
           <div className="prose prose-neutral dark:prose-invert max-w-none">
-            <MDXRemote source={post.content} options={{ parseFrontmatter: true }} />
+            <MDXRemote
+              source={post.content}
+              options={{
+                parseFrontmatter: true,
+                mdxOptions: { remarkPlugins: [remarkGfm] },
+              }}
+            />
           </div>
           <footer className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t pt-8">
             <div className="flex gap-4">
