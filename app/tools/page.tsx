@@ -28,6 +28,7 @@ const CATEGORIES = [
   { id: "document", label: "Document" },
   { id: "units", label: "Units" },
   { id: "data", label: "Data" },
+  { id: "number", label: "Number" },
 ] as const;
 
 const NEW_CONVERT_SLUGS = [

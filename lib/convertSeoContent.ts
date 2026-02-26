@@ -316,6 +316,8 @@ export function getConvertSeoContent(slug: string): string {
       return TIME_BASE;
     case "cooking-units-converter":
       return COOKING_BASE;
+    case "base-converter":
+      return BASE_CONVERTER_SEO;
     default:
       return "";
   }
@@ -391,4 +393,12 @@ Cooking Units Converter — No Upload, 100% Local Browser Converter 2026
 Convert cups, milliliters, teaspoons, tablespoons, fluid ounces in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversions run 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool supports milliliter, liter, US cup, tablespoon, teaspoon, fluid ounce, gram (water/sugar), ounce. Enter a value and select unit; all equivalent cooking units update in real time. Unlike cloud tools, we run entirely in the browser. Part of 200+ format tools. No upload 2026.
 
 Why use a local cooking units converter? Converting cups to ml, tsp to tbsp, or oz to ml is common for recipes. Doing it locally means your data never leaves your device. A privacy first converter never receives your numbers. How does it work? Enter a value and choose the unit. Conversions are computed in your tab. Copy or download results. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools.
+`.trim();
+
+const BASE_CONVERTER_SEO = `
+Number Base Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert between number bases (binary, octal, decimal, hexadecimal) in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversion runs 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool supports base 2 (binary), base 8 (octal), base 10 (decimal), and base 16 (hex). Enter a value and choose from/base and to/base; the result updates in real time. Unlike cloud calculators, we run entirely in the browser. Part of 200+ format tools. No upload 2026.
+
+Why use a local number base converter? Converting binary to decimal, decimal to hex, or octal to binary is common in programming, digital logic, and learning. Doing it locally means your data never leaves your device. A privacy first converter never receives your input. How does it work? Enter a number in the source base (e.g. 255 in decimal or 11111111 in binary), select from and to base, and see the result. Copy or download. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools. For quick pair conversions (e.g. binary to decimal, hex to decimal), use the dedicated pair pages linked from the tools list.
 `.trim();

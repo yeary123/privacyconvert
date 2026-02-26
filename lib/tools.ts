@@ -258,6 +258,20 @@ export const TOOLS = [
   { slug: "mph-to-kmh", name: "MPH to Km/h", description: "Convert miles per hour ↔ km/h — 100% local", category: "units", proOnly: false },
   { slug: "knots-to-kmh", name: "Knots to Km/h", description: "Convert knots ↔ km/h — 100% local", category: "units", proOnly: false },
   { slug: "mach-to-kmh", name: "Mach to Km/h", description: "Convert Mach (sea level) ↔ km/h — 100% local", category: "units", proOnly: false },
+  // ---- Number (base) ----
+  { slug: "base-converter", name: "Number Base Converter", description: "Convert between binary, octal, decimal, hex — 100% local", category: "number", proOnly: false },
+  { slug: "binary-to-decimal", name: "Binary to Decimal", description: "Convert binary to decimal — 100% local", category: "number", proOnly: false },
+  { slug: "decimal-to-binary", name: "Decimal to Binary", description: "Convert decimal to binary — 100% local", category: "number", proOnly: false },
+  { slug: "binary-to-octal", name: "Binary to Octal", description: "Convert binary to octal — 100% local", category: "number", proOnly: false },
+  { slug: "octal-to-binary", name: "Octal to Binary", description: "Convert octal to binary — 100% local", category: "number", proOnly: false },
+  { slug: "binary-to-hex", name: "Binary to Hex", description: "Convert binary to hexadecimal — 100% local", category: "number", proOnly: false },
+  { slug: "hex-to-binary", name: "Hex to Binary", description: "Convert hexadecimal to binary — 100% local", category: "number", proOnly: false },
+  { slug: "decimal-to-octal", name: "Decimal to Octal", description: "Convert decimal to octal — 100% local", category: "number", proOnly: false },
+  { slug: "octal-to-decimal", name: "Octal to Decimal", description: "Convert octal to decimal — 100% local", category: "number", proOnly: false },
+  { slug: "decimal-to-hex", name: "Decimal to Hex", description: "Convert decimal to hexadecimal — 100% local", category: "number", proOnly: false },
+  { slug: "hex-to-decimal", name: "Hex to Decimal", description: "Convert hexadecimal to decimal — 100% local", category: "number", proOnly: false },
+  { slug: "octal-to-hex", name: "Octal to Hex", description: "Convert octal to hexadecimal — 100% local", category: "number", proOnly: false },
+  { slug: "hex-to-octal", name: "Hex to Octal", description: "Convert hexadecimal to octal — 100% local", category: "number", proOnly: false },
 ] as const;
 
 export type ToolSlug = (typeof TOOLS)[number]["slug"];

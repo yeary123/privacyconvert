@@ -29,9 +29,12 @@ import {
   LazyVolumePairConverter,
   LazySpeedConverter,
   LazySpeedPairConverter,
+  LazyBaseConverter,
+  LazyBasePairConverter,
   LazyGenericConverter,
 } from "@/components/lazyConverters";
 import { isCurrencyPairSlug } from "@/lib/currencyPairs";
+import { isBasePairSlug } from "@/lib/baseConverter";
 import { hasConvertHandler } from "@/lib/conversion";
 import type { ToolSlug } from "@/lib/tools";
 
@@ -125,6 +128,12 @@ export function ConversionUI({ slug }: ConversionUIProps) {
   }
   if (slug === "mph-to-kmh" || slug === "knots-to-kmh" || slug === "mach-to-kmh") {
     return <LazySpeedPairConverter toolSlug={slug} />;
+  }
+  if (slug === "base-converter") {
+    return <LazyBaseConverter />;
+  }
+  if (isBasePairSlug(slug)) {
+    return <LazyBasePairConverter toolSlug={slug} />;
   }
   if (hasConvertHandler(slug as ToolSlug)) {
     return <LazyGenericConverter toolSlug={slug as ToolSlug} />;

@@ -479,6 +479,25 @@ const COOKING_FAQ = [
   { q: "What browsers work?", a: "Any modern browser. 100% local." },
   { q: "Why use PrivacyConvert?", a: "No upload 2026, privacy first. 200+ formats. Your data never leaves your device." },
 ];
+const BASE_FAQ = [
+  { q: "Is the number base converter local?", a: "Yes. Binary, octal, decimal, and hex conversion run 100% in your browser. No upload, no server. 2026." },
+  { q: "What bases are supported?", a: "Binary (2), octal (8), decimal (10), and hexadecimal (16). Enter a value and choose from/to base; result updates in real time." },
+  { q: "Do you store my input?", a: "No. Nothing is sent to any server. Privacy first, 100% local browser." },
+  { q: "Why convert between number bases?", a: "Binary and hex are used in programming and digital logic; decimal for everyday numbers. Converting helps debugging, learning, and quick reference." },
+  { q: "Can I copy or download results?", a: "Yes. Copy result to clipboard or download as text. All data stays on your device." },
+  { q: "Is it free?", a: "Yes. No account. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Any modern browser. 100% local." },
+  { q: "How does this compare to cloud tools?", a: "We run entirely in your browser. No upload, privacy first. Part of 200+ format tools. 2026." },
+];
+const BASE_PAIR_FAQ = [
+  { q: "Is this base conversion done locally?", a: "Yes. Conversion runs 100% in your browser. No upload, no server. 2026." },
+  { q: "Do you store my number?", a: "No. Nothing is sent to any server. Privacy first, 100% local browser." },
+  { q: "Why convert between these bases?", a: "Binary and hex are common in programming; decimal for everyday use. Quick conversion helps learning and debugging." },
+  { q: "Can I swap from and to bases?", a: "Yes. Use the swap button to reverse the conversion direction. 100% local." },
+  { q: "Can I copy or download the result?", a: "Yes. Copy to clipboard or download as text. No upload 2026." },
+  { q: "Is it free?", a: "Yes. No account. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Any modern browser. 100% local." },
+];
 
 const FAQ_MAP: Record<string, { q: string; a: string }[]> = {
   "avif-to-png": AVIF_FAQ,
@@ -499,6 +518,19 @@ const FAQ_MAP: Record<string, { q: string; a: string }[]> = {
   "data-storage-converter": DATA_STORAGE_FAQ,
   "time-converter": TIME_FAQ,
   "cooking-units-converter": COOKING_FAQ,
+  "base-converter": BASE_FAQ,
+  "binary-to-decimal": BASE_PAIR_FAQ,
+  "decimal-to-binary": BASE_PAIR_FAQ,
+  "binary-to-octal": BASE_PAIR_FAQ,
+  "octal-to-binary": BASE_PAIR_FAQ,
+  "binary-to-hex": BASE_PAIR_FAQ,
+  "hex-to-binary": BASE_PAIR_FAQ,
+  "decimal-to-octal": BASE_PAIR_FAQ,
+  "octal-to-decimal": BASE_PAIR_FAQ,
+  "decimal-to-hex": BASE_PAIR_FAQ,
+  "hex-to-decimal": BASE_PAIR_FAQ,
+  "octal-to-hex": BASE_PAIR_FAQ,
+  "hex-to-octal": BASE_PAIR_FAQ,
 };
 
 const HOWTO_STEPS = {
@@ -595,6 +627,71 @@ const HOWTO_STEPS = {
     { name: "Enter value", text: "Enter a number and select unit (cup, ml, tsp, tbsp, etc.)." },
     { name: "View results", text: "All equivalent cooking units update in real time. 100% local, no upload." },
     { name: "Copy or download", text: "Copy or download results. No upload 2026." },
+  ],
+  "base-converter": [
+    { name: "Enter value", text: "Enter a number in the source base (e.g. 255 for decimal, 11111111 for binary)." },
+    { name: "Choose bases", text: "Select from base and to base (binary, octal, decimal, hex). Result updates in real time." },
+    { name: "Copy or download", text: "Copy result or download as text. 100% local, no upload 2026." },
+  ],
+  "binary-to-decimal": [
+    { name: "Enter binary", text: "Enter a binary number (0 and 1 only)." },
+    { name: "View result", text: "Decimal result updates in real time. You can swap to convert decimal to binary. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "decimal-to-binary": [
+    { name: "Enter decimal", text: "Enter a decimal number (0–9)." },
+    { name: "View result", text: "Binary result updates in real time. You can swap to convert binary to decimal. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "binary-to-octal": [
+    { name: "Enter binary", text: "Enter a binary number (0 and 1 only)." },
+    { name: "View result", text: "Octal result updates in real time. Swap to convert octal to binary. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "octal-to-binary": [
+    { name: "Enter octal", text: "Enter an octal number (0–7)." },
+    { name: "View result", text: "Binary result updates in real time. Swap to convert binary to octal. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "binary-to-hex": [
+    { name: "Enter binary", text: "Enter a binary number (0 and 1 only)." },
+    { name: "View result", text: "Hexadecimal result updates in real time. Swap to convert hex to binary. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "hex-to-binary": [
+    { name: "Enter hex", text: "Enter a hexadecimal number (0–9, A–F)." },
+    { name: "View result", text: "Binary result updates in real time. Swap to convert binary to hex. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "decimal-to-octal": [
+    { name: "Enter decimal", text: "Enter a decimal number (0–9)." },
+    { name: "View result", text: "Octal result updates in real time. Swap to convert octal to decimal. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "octal-to-decimal": [
+    { name: "Enter octal", text: "Enter an octal number (0–7)." },
+    { name: "View result", text: "Decimal result updates in real time. Swap to convert decimal to octal. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "decimal-to-hex": [
+    { name: "Enter decimal", text: "Enter a decimal number (0–9)." },
+    { name: "View result", text: "Hexadecimal result updates in real time. Swap to convert hex to decimal. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "hex-to-decimal": [
+    { name: "Enter hex", text: "Enter a hexadecimal number (0–9, A–F)." },
+    { name: "View result", text: "Decimal result updates in real time. Swap to convert decimal to hex. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "octal-to-hex": [
+    { name: "Enter octal", text: "Enter an octal number (0–7)." },
+    { name: "View result", text: "Hexadecimal result updates in real time. Swap to convert hex to octal. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
+  ],
+  "hex-to-octal": [
+    { name: "Enter hex", text: "Enter a hexadecimal number (0–9, A–F)." },
+    { name: "View result", text: "Octal result updates in real time. Swap to convert octal to hex. 100% local." },
+    { name: "Copy or download", text: "Copy or download result. No upload 2026." },
   ],
 } as const;
 

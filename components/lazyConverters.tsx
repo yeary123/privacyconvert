@@ -117,6 +117,14 @@ export const LazySpeedPairConverter = dynamic(
   () => import("@/components/SpeedPairConverter").then((m) => ({ default: m.SpeedPairConverter })),
   { loading }
 );
+export const LazyBaseConverter = dynamic(
+  () => import("@/components/BaseConverter").then((m) => ({ default: m.BaseConverter })),
+  { loading }
+);
+export const LazyBasePairConverter = dynamic(
+  () => import("@/components/BasePairConverter").then((m) => ({ default: m.BasePairConverter })),
+  { loading }
+);
 export const LazyGenericConverter = dynamic(
   () => import("@/components/GenericConverter").then((m) => ({ default: m.GenericConverter })),
   { loading }
