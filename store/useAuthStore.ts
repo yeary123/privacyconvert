@@ -12,6 +12,7 @@ export const useAuthStore = create<{
   loading: boolean;
   demoProOverride: boolean;
   setDemoProOverride: (v: boolean) => void;
+  setPro: (v: boolean) => void;
   fetchUser: () => Promise<void>;
   signOut: () => Promise<void>;
 }>((set, get) => ({
@@ -20,6 +21,7 @@ export const useAuthStore = create<{
   loading: true,
   demoProOverride: false,
   setDemoProOverride: (v) => set({ demoProOverride: v }),
+  setPro: (v) => set({ isPro: v }),
 
   fetchUser: async () => {
     set({ loading: true });

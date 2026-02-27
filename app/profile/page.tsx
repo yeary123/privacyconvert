@@ -7,13 +7,31 @@ import { isLifetimeProPeriod } from "@/lib/pricing";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuthStore } from "@/store/useAuthStore";
+import { supabase } from "@/lib/supabase";
 
 export default function ProfilePage() {
-  const { user, isPro, loading, fetchUser, signOut } = useAuthStore();
+  const { user, isPro, loading, fetchUser, signOut, setPro } = useAuthStore();
 
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  // Sync Pro status from server (runs sync + returns authoritative is_pro) so Pro users always see correct state
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (cancelled || !session?.access_token) return;
+      const res = await fetch("/api/me", {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      if (cancelled || !res.ok) return;
+      const data = await res.json();
+      if (typeof data.isPro === "boolean") setPro(data.isPro);
+    })();
+    return () => { cancelled = true; };
+  }, [user?.id, setPro]);
 
   if (loading) {
     return (
