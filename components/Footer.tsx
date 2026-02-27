@@ -4,7 +4,7 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 const footerLinks: { href: string; label: string; external?: boolean }[] = [
   { href: "/", label: "Home" },
   { href: "/tools", label: "Tools" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/pricing#pro", label: "Pro" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
 ];
