@@ -96,24 +96,43 @@ export default async function BlogPostPage({ params }: Props) {
         description={description}
         slug={slug}
       />
-      <div className="container py-10">
+      <div className="container py-10 sm:py-12">
         <Link
           href="/blog"
           className="text-sm text-muted-foreground hover:underline"
         >
           ← Blog
         </Link>
-        <article className="mx-auto max-w-2xl pt-6">
-          <header className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
-            {date && <time dateTime={date}>{date}</time>}
-            {readingTime && (
-              <>
-                <span aria-hidden>·</span>
-                <span>{readingTime}</span>
-              </>
-            )}
+        <article className="mx-auto max-w-prose pt-8">
+          <header className="mb-10">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              {title}
+            </h1>
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+              {date && <time dateTime={date}>{date}</time>}
+              {readingTime && (
+                <>
+                  <span aria-hidden>·</span>
+                  <span>{readingTime}</span>
+                </>
+              )}
+            </div>
           </header>
-          <div className="prose prose-neutral dark:prose-invert max-w-none">
+          <div
+            className={[
+              "prose prose-neutral dark:prose-invert",
+              "prose-lg max-w-none",
+              "prose-headings:font-semibold prose-headings:tracking-tight",
+              "prose-h1:hidden",
+              "prose-h2:mt-12 prose-h2:mb-4 prose-h2:pb-2 prose-h2:text-xl sm:prose-h2:text-2xl",
+              "prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-lg",
+              "prose-p:my-5 prose-p:leading-relaxed",
+              "[&>p:first-of-type]:text-lg [&>p:first-of-type]:text-muted-foreground [&>p:first-of-type]:leading-relaxed",
+              "prose-ul:my-5 prose-li:my-1.5 prose-li:leading-relaxed",
+              "prose-img:my-8 prose-img:rounded-xl prose-img:shadow-md",
+              "prose-table:my-8 prose-th:py-3 prose-td:py-2",
+            ].join(" ")}
+          >
             <MDXRemote
               source={post.content}
               options={{
@@ -122,7 +141,7 @@ export default async function BlogPostPage({ params }: Props) {
               }}
             />
           </div>
-          <footer className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t pt-8">
+          <footer className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-10">
             <div className="flex gap-4">
               {prev && (
                 <Link
