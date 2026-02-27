@@ -10,6 +10,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
+// 邮件里的登录链接必须指向正式站。若用 process.env 或 window.origin，在本地/Vercel 未配置时会变成 localhost；
+// 且若此 URL 未加入 Supabase Redirect URLs 白名单，Supabase 会回退到 Dashboard 的 Site URL（若为 localhost 则邮件链接仍是 localhost）
+const EMAIL_CALLBACK_BASE = "https://www.privacyconvert.online";
+
 export default function LoginPage() {
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") ?? "/";
@@ -26,11 +30,7 @@ export default function LoginPage() {
     }
     setLoading(true);
     try {
-      // 始终用配置的站点 URL 或默认正式站，避免邮件链接变成 localhost（NEXT_PUBLIC_* 在构建时内联，Vercel 需配置后重新部署才生效）
-      const redirectBase =
-        (typeof process !== "undefined" && process.env.NEXT_PUBLIC_SITE_URL) ||
-        "https://www.privacyconvert.online";
-      const callbackUrl = `${redirectBase.replace(/\/$/, "")}/auth/callback?redirect=${encodeURIComponent(redirectTo)}`;
+      const callbackUrl = `${EMAIL_CALLBACK_BASE.replace(/\/$/, "")}/auth/callback?redirect=${encodeURIComponent(redirectTo)}`;
       const { error } = await supabase.auth.signInWithOtp({
         email: trimmed,
         options: {

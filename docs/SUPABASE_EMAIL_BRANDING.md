@@ -62,11 +62,12 @@
 你需要在 Supabase 中把该回调地址加入白名单，否则会被拒绝：
 
 1. **Authentication** → **URL Configuration**。
-2. 在 **Redirect URLs** 中加入：
-   - **开发（当前使用）**：`https://privacyconvert-five.vercel.app/auth/callback`
-   - **正式**：`https://www.privacyconvert.online/auth/callback`
-   - **本地**：`http://localhost:3000/auth/callback`
-3. **Site URL**：当前用开发站则设为 `https://privacyconvert-five.vercel.app`；正式上线时改为 `https://www.privacyconvert.online`。
+2. 在 **Redirect URLs** 中必须包含正式站回调（否则邮件链接会错）：
+   - **正式（必加）**：`https://www.privacyconvert.online/auth/callback`
+   - 开发：`https://privacyconvert-five.vercel.app/auth/callback`
+   - 本地：`http://localhost:3000/auth/callback`
+3. **Site URL**：正式环境务必设为 `https://www.privacyconvert.online`，不要用 `http://localhost:3000`。  
+   **重要**：若代码里传的 `emailRedirectTo` 不在 Redirect URLs 白名单中，Supabase 会回退使用这里的 **Site URL**；若 Site URL 是 localhost，邮件里的登录链接就会是 localhost。
 
 这样邮件里的确认/登录链接会跳转到你的站点 `/auth/callback`，由本项目的 callback 逻辑完成登录并进入已登录的网站。
 
