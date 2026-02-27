@@ -45,8 +45,8 @@ export function Navbar() {
           <span>PrivacyConvert</span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex">
+        {/* Desktop nav: 统一间距，Pro 与主导航同一组，不单独堆在右侧 */}
+        <nav className="hidden items-center gap-3 md:flex">
           {navLinks.map(({ href, label }) => {
             const active = isActivePath(pathname, href);
             return (
@@ -57,6 +57,11 @@ export function Navbar() {
               </Link>
             );
           })}
+          <Link href="/pricing#pro">
+            <Button variant={isActivePath(pathname, "/pricing") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/pricing") ? "bg-muted" : undefined}>
+              Pro
+            </Button>
+          </Link>
           {isPro && (
             <Link href="/history">
               <Button variant={isActivePath(pathname, "/history") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/history") ? "bg-muted" : undefined}>History</Button>
@@ -71,9 +76,6 @@ export function Navbar() {
               <Button variant={isActivePath(pathname, "/login") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/login") ? "bg-muted" : undefined}>Login</Button>
             </Link>
           )}
-          <Link href="/pricing#pro">
-            <Button size="sm">Pro</Button>
-          </Link>
           {mounted && (
             <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
               {resolvedTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
