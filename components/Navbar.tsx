@@ -57,13 +57,6 @@ export function Navbar() {
               </Link>
             );
           })}
-          {!isPro && (
-            <Link href="/pricing#pro">
-              <Button variant={isActivePath(pathname, "/pricing") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/pricing") ? "bg-muted" : undefined}>
-                Pro
-              </Button>
-            </Link>
-          )}
           {isPro && (
             <Link href="/history">
               <Button variant={isActivePath(pathname, "/history") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/history") ? "bg-muted" : undefined}>History</Button>
@@ -141,17 +134,6 @@ export function Navbar() {
                 onClick={() => setMobileOpen(false)}
               >
                 Login
-              </Link>
-            )}
-            {!isPro && (
-              <Link
-                href="/pricing#pro"
-                className="mx-3 mt-2"
-                onClick={() => setMobileOpen(false)}
-              >
-                <Button size="sm" className="w-full">
-                  Pro
-                </Button>
               </Link>
             )}
             {mounted && (
