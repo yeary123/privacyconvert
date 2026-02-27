@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { Crown, Mail, Loader2, LogOut } from "lucide-react";
+import { isLifetimeProPeriod } from "@/lib/pricing";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -61,7 +62,7 @@ export default function ProfilePage() {
             <div>
               <p className="text-sm font-medium">Pro</p>
               <p className="text-sm text-muted-foreground">
-                {isPro ? "Lifetime Pro — batch & history unlocked." : "Free — upgrade on Pricing for $9.9 lifetime."}
+                {isPro ? "Lifetime Pro — batch & history unlocked." : isLifetimeProPeriod() ? "Free — upgrade on Pricing for $9.9 lifetime (limited time)." : "Free — upgrade on Pricing from $3.9/mo."}
               </p>
             </div>
           </div>
