@@ -26,15 +26,11 @@ export default function LoginPage() {
     }
     setLoading(true);
     try {
+      // 始终用配置的站点 URL 或默认正式站，避免邮件链接变成 localhost（NEXT_PUBLIC_* 在构建时内联，Vercel 需配置后重新部署才生效）
       const redirectBase =
-        typeof process !== "undefined" && process.env.NEXT_PUBLIC_SITE_URL
-          ? process.env.NEXT_PUBLIC_SITE_URL
-          : typeof window !== "undefined"
-            ? window.location.origin
-            : undefined;
-      const callbackUrl = redirectBase
-        ? `${redirectBase.replace(/\/$/, "")}/auth/callback?redirect=${encodeURIComponent(redirectTo)}`
-        : undefined;
+        (typeof process !== "undefined" && process.env.NEXT_PUBLIC_SITE_URL) ||
+        "https://www.privacyconvert.online";
+      const callbackUrl = `${redirectBase.replace(/\/$/, "")}/auth/callback?redirect=${encodeURIComponent(redirectTo)}`;
       const { error } = await supabase.auth.signInWithOtp({
         email: trimmed,
         options: {
