@@ -28,7 +28,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const isPro = useAuthStore((s) => s.isPro);
+  const { user, isPro } = useAuthStore();
   const hydrate = useProStore((s) => s.hydrate);
   useEffect(() => setMounted(true), []);
   useEffect(() => { hydrate(); }, [hydrate]);
@@ -63,12 +63,15 @@ export function Navbar() {
               <Button variant={isActivePath(pathname, "/history") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/history") ? "bg-muted" : undefined}>History</Button>
             </Link>
           )}
-          <Link href="/profile">
-            <Button variant={isActivePath(pathname, "/profile") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/profile") ? "bg-muted" : undefined}>Profile</Button>
-          </Link>
-          <Link href="/login">
-            <Button variant={isActivePath(pathname, "/login") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/login") ? "bg-muted" : undefined}>Login</Button>
-          </Link>
+          {user ? (
+            <Link href="/profile" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/20 text-sm font-medium text-primary ring-1 ring-border" aria-label="Profile">
+              {(user.email?.[0] ?? "U").toUpperCase()}
+            </Link>
+          ) : (
+            <Link href="/login">
+              <Button variant={isActivePath(pathname, "/login") ? "secondary" : "ghost"} size="sm" className={isActivePath(pathname, "/login") ? "bg-muted" : undefined}>Login</Button>
+            </Link>
+          )}
           <Link href="/pricing#pro">
             <Button size="sm">Pro</Button>
           </Link>
@@ -117,20 +120,26 @@ export function Navbar() {
                 History
               </Link>
             )}
-            <Link
-              href="/profile"
-              className={cn("rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent", isActivePath(pathname, "/profile") && "bg-muted")}
-              onClick={() => setMobileOpen(false)}
-            >
-              Profile
-            </Link>
-            <Link
-              href="/login"
-              className={cn("rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent", isActivePath(pathname, "/login") && "bg-muted")}
-              onClick={() => setMobileOpen(false)}
-            >
-              Login
-            </Link>
+            {user ? (
+              <Link
+                href="/profile"
+                className={cn("flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent", isActivePath(pathname, "/profile") && "bg-muted")}
+                onClick={() => setMobileOpen(false)}
+              >
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-sm font-medium text-primary">
+                  {(user.email?.[0] ?? "U").toUpperCase()}
+                </span>
+                Profile
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className={cn("rounded-md px-3 py-2.5 text-sm font-medium hover:bg-accent", isActivePath(pathname, "/login") && "bg-muted")}
+                onClick={() => setMobileOpen(false)}
+              >
+                Login
+              </Link>
+            )}
             <Link
               href="/pricing#pro"
               className="mx-3 mt-2"

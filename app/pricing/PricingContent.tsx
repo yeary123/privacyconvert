@@ -77,7 +77,7 @@ export function PricingContent() {
       </div>
 
       {/* Lifetime Pro */}
-      <div className="max-w-md">
+      <div className="mx-auto max-w-md">
         <Card className="border-primary">
           <CardHeader>
             <CardTitle>Lifetime Pro</CardTitle>
