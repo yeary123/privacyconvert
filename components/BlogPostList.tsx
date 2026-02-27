@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button";
 import type { PostMeta } from "@/lib/blog-utils";
 import { getPostCoverUrl } from "@/lib/blog-utils";
 
+function getCoverUrl(post: PostMeta): string {
+  return post.cover ?? getPostCoverUrl(post.slug);
+}
+
 const PER_PAGE = 9;
 
 export function BlogPostList({ posts }: { posts: PostMeta[] }) {
@@ -24,12 +28,11 @@ export function BlogPostList({ posts }: { posts: PostMeta[] }) {
               <Link href={`/blog/${post.slug}`} className="block">
                 <div className="relative aspect-[16/10] w-full bg-muted">
                   <Image
-                    src={getPostCoverUrl(post.slug)}
+                    src={getCoverUrl(post)}
                     alt=""
                     fill
                     className="object-cover"
                     sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                    unoptimized
                   />
                 </div>
                 <CardHeader className="space-y-1 pb-2">

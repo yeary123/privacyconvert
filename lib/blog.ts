@@ -30,6 +30,8 @@ export function getPosts(): PostMeta[] {
       excerpt: (data.excerpt as string) ?? (data.description as string) ?? "",
       description: data.description as string | undefined,
       readingTime: data.readingTime as string | undefined,
+      cover: data.cover as string | undefined,
+      proCta: data.proCta as boolean | undefined,
     });
   }
   posts.sort((a, b) => (b.date > a.date ? 1 : -1));

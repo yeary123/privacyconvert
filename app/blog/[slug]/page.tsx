@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getBlogSlugs, getPostBySlug, getPrevNextSlugs } from "@/lib/blog";
+import { getPostCoverUrl } from "@/lib/blog-utils";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
 
@@ -21,10 +22,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     (post.frontmatter.description as string) ??
     (post.frontmatter.excerpt as string) ??
-    `${title}. No upload, local conversion. PrivacyConvert blog 2026.`;
+    `${title}.`;
+  const coverUrl = (post.frontmatter.cover as string) || getPostCoverUrl(slug);
   return {
-    title: `${title} | Blog | PrivacyConvert 2026`,
+    title: `${title} | Blog | PrivacyConvert`,
     description,
+    openGraph: {
+      title: `${title} | PrivacyConvert Blog`,
+      description,
+      images: [{ url: coverUrl, width: 800, height: 450, alt: title }],
+    },
   };
 }
 
@@ -46,6 +53,11 @@ function BlogPostingJsonLd({
     datePublished: date || undefined,
     description,
     url: `${BASE_URL}/blog/${slug}`,
+    author: {
+      "@type": "Organization",
+      name: "PrivacyConvert",
+      url: BASE_URL,
+    },
     publisher: {
       "@type": "Organization",
       name: "PrivacyConvert",
@@ -72,6 +84,7 @@ export default async function BlogPostPage({ params }: Props) {
     (post.frontmatter.excerpt as string) ??
     "";
   const readingTime = (post.frontmatter.readingTime as string) ?? "";
+  const proCta = (post.frontmatter.proCta as boolean) ?? false;
 
   const { prev, next } = getPrevNextSlugs(slug);
 
@@ -128,12 +141,21 @@ export default async function BlogPostPage({ params }: Props) {
                 </Link>
               )}
             </div>
-            <Link
-              href="/pricing"
-              className="text-sm font-medium text-primary hover:underline"
-            >
-              Upgrade to Pro
-            </Link>
+            {proCta ? (
+              <Link
+                href="/pricing"
+                className="text-sm font-medium text-primary hover:underline"
+              >
+                Upgrade to Pro
+              </Link>
+            ) : (
+              <Link
+                href="/tools"
+                className="text-sm font-medium text-primary hover:underline"
+              >
+                Explore tools
+              </Link>
+            )}
           </footer>
         </article>
       </div>

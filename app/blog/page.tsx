@@ -5,26 +5,17 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { BlogPostList } from "@/components/BlogPostList";
 
 export const metadata: Metadata = {
-  title: "PrivacyConvert Blog – No Upload 2026 Local File Conversion Guide",
+  title: "PrivacyConvert Blog – Local File Conversion Tips & Guides",
   description:
-    "No upload 2026 local file conversion guide: client-side, browser local, completely local conversion tips, privacy-first file converter comparison (vs Convertio, VERT.sh, localconvert).",
-  keywords: [
-    "no upload 2026",
-    "privacy first file converter",
-    "client side",
-    "browser local",
-    "completely local",
-    "local convert",
-    "file converter",
-    "blog",
-  ],
+    "Guides and tips for local, privacy-first file conversion. Client-side conversion, format comparisons, and how to get the most from your converter.",
+  keywords: ["privacy-first file converter", "local conversion", "file converter", "blog"],
 };
 
-const SIDEBAR_POPULAR_COUNT = 6;
+const SIDEBAR_LATEST_COUNT = 6;
 
 export default function BlogPage() {
   const posts = getPosts();
-  const popular = posts.slice(0, SIDEBAR_POPULAR_COUNT);
+  const latest = posts.slice(0, SIDEBAR_LATEST_COUNT);
 
   return (
     <div className="container py-10">
@@ -34,7 +25,7 @@ export default function BlogPage() {
             PrivacyConvert Blog
           </h1>
           <p className="text-lg text-muted-foreground">
-            No upload 2026 local conversion guide — client-side, browser local, privacy-first file converter tips and comparisons
+            Tips, guides, and comparisons for local, privacy-first file conversion.
           </p>
         </header>
 
@@ -55,14 +46,14 @@ export default function BlogPage() {
                 Subscribe
               </h3>
               <p className="mb-4 text-sm text-muted-foreground">
-                No upload 2026 and privacy-first conversion tips and product updates, delivered to your inbox.
+                Privacy-first conversion tips and product updates, delivered to your inbox.
               </p>
               <NewsletterForm />
             </div>
             <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
-              <h3 className="mb-3 font-semibold">Popular</h3>
+              <h3 className="mb-3 font-semibold">Latest</h3>
               <ul className="space-y-3">
-                {popular.map((p) => (
+                {latest.map((p) => (
                   <li key={p.slug}>
                     <Link
                       href={`/blog/${p.slug}`}
