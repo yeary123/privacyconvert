@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Shield, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,8 @@ import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
 export default function LoginPage() {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") ?? "/";
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -29,10 +32,13 @@ export default function LoginPage() {
           : typeof window !== "undefined"
             ? window.location.origin
             : undefined;
+      const callbackUrl = redirectBase
+        ? `${redirectBase.replace(/\/$/, "")}/auth/callback?redirect=${encodeURIComponent(redirectTo)}`
+        : undefined;
       const { error } = await supabase.auth.signInWithOtp({
         email: trimmed,
         options: {
-          emailRedirectTo: redirectBase ? `${redirectBase.replace(/\/$/, "")}/auth/callback` : undefined,
+          emailRedirectTo: callbackUrl,
         },
       });
       if (error) {

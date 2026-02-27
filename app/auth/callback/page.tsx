@@ -78,7 +78,9 @@ export default function AuthCallbackPage() {
 
         if (cancelled) return;
         setStatus("ok");
-        window.location.replace("/");
+        const redirectTo = searchParams.get("redirect");
+        const path = redirectTo?.startsWith("/") && !redirectTo.startsWith("//") ? redirectTo : "/";
+        window.location.replace(path);
       } catch (e) {
         if (!cancelled) {
           setStatus("error");

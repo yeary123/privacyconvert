@@ -86,7 +86,7 @@ export function PricingContent() {
           </CardHeader>
           <CardContent className="space-y-2">
             <PayPalBuyNowButton />
-            <p className="text-xs text-muted-foreground">PayPal Buy Now. After payment, Pro activates (you may need to sign in with the same email).</p>
+            <p className="text-xs text-muted-foreground">PayPal Buy Now. After payment, Pro activates for your account.</p>
           </CardContent>
         </Card>
       </div>
