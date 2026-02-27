@@ -25,9 +25,9 @@ function PayPalBuyNowInner() {
   if (!user) {
     return (
       <div className="space-y-3 rounded-md border border-dashed border-border bg-muted/30 p-4 text-center text-sm">
-        <p className="text-muted-foreground">请先登录后再购买 Pro。</p>
+        <p className="text-muted-foreground">Sign in first to purchase Pro.</p>
         <Link href="/login?redirect=/pricing">
-          <Button size="sm" className="w-full">登录</Button>
+          <Button size="sm" className="w-full">Sign in</Button>
         </Link>
       </div>
     );
@@ -40,7 +40,7 @@ function PayPalBuyNowInner() {
         const { data: { session } } = await supabase.auth.getSession();
         const token = session?.access_token;
         if (!token) {
-          toast.error("登录已过期，请重新登录后再付款。");
+          toast.error("Session expired. Please sign in again to pay.");
           throw new Error("Not authenticated");
         }
         const res = await fetch("/api/paypal/create-order", {
@@ -50,10 +50,10 @@ function PayPalBuyNowInner() {
         const data = await res.json();
         if (!res.ok) {
           if (res.status === 401) {
-            toast.error("请先登录后再付款。");
+            toast.error("Please sign in first to pay.");
             router.push("/login?redirect=/pricing");
           } else {
-            toast.error(data.error ?? "创建订单失败");
+            toast.error(data.error ?? "Failed to create order");
           }
           throw new Error(data.error ?? "Failed to create order");
         }
@@ -82,6 +82,7 @@ export function PayPalBuyNowButton() {
         clientId: CLIENT_ID,
         intent: "capture",
         currency: "USD",
+        locale: "en_US",
       }}
     >
       <PayPalBuyNowInner />

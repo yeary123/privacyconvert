@@ -103,7 +103,7 @@ export function PricingContent() {
                 {daysLeft !== null && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2.5 py-0.5 text-xs font-medium text-amber-700 dark:text-amber-400">
                     <Clock className="h-3.5 w-3.5" />
-                    {daysLeft} days left
+                    Offer ends in {daysLeft} days
                   </span>
                 )}
               </div>
