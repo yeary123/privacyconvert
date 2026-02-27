@@ -258,7 +258,18 @@ export const TOOLS = [
   { slug: "mph-to-kmh", name: "MPH to Km/h", description: "Convert miles per hour ↔ km/h — 100% local", category: "units", proOnly: false },
   { slug: "knots-to-kmh", name: "Knots to Km/h", description: "Convert knots ↔ km/h — 100% local", category: "units", proOnly: false },
   { slug: "mach-to-kmh", name: "Mach to Km/h", description: "Convert Mach (sea level) ↔ km/h — 100% local", category: "units", proOnly: false },
+  { slug: "kw-to-kva", name: "KW to KVA", description: "Convert kW to kVA with power factor — 100% local", category: "units", proOnly: false },
+  // ---- Size (by category: pants, shoes, ring, etc.) ----
+  { slug: "pants-size-converter", name: "W30 L32 Pants Size Converter", description: "Convert pants/jeans waist (W) and length (L) — US inches to cm", category: "size", proOnly: false },
+  // ---- Image (resize / special) ----
+  { slug: "image-to-1000x1000", name: "Image to 1000×1000", description: "Resize image to 1000×1000 pixels in browser", category: "image", proOnly: false },
+  { slug: "image-to-1400x1400", name: "Image to 1400×1400", description: "Resize image to 1400×1400 pixels in browser", category: "image", proOnly: false },
+  { slug: "image-to-3000x3000", name: "Image to 3000×3000", description: "Resize image to 3000×3000 pixels in browser", category: "image", proOnly: false },
+  { slug: "image-to-cross-stitch", name: "Image to Cross Stitch Pattern", description: "Convert image to cross stitch pattern with limited colors", category: "image", proOnly: false },
+  // ---- Document (metadata / code) ----
+  { slug: "salesforce-15-to-18", name: "Salesforce 15 to 18", description: "Convert Salesforce metadata/code from API version 15 to 18", category: "document", proOnly: false },
   // ---- Number (base) ----
+  { slug: "roman-numeral-converter", name: "Roman Numeral Converter", description: "Convert decimal ↔ Roman numerals (I–MMMCMXCIX) — 100% local", category: "number", proOnly: false },
   { slug: "base-converter", name: "Number Base Converter", description: "Convert between binary, octal, decimal, hex — 100% local", category: "number", proOnly: false },
   { slug: "binary-to-decimal", name: "Binary to Decimal", description: "Convert binary to decimal — 100% local", category: "number", proOnly: false },
   { slug: "decimal-to-binary", name: "Decimal to Binary", description: "Convert decimal to binary — 100% local", category: "number", proOnly: false },

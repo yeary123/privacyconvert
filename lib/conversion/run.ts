@@ -8,7 +8,9 @@ import type { FFmpeg } from "@ffmpeg/ffmpeg";
 import type { ToolSlug } from "@/lib/tools";
 import type { ConversionHandler, ConversionOptions } from "./types";
 import { loadFFmpeg, getFFmpeg } from "@/lib/ffmpeg";
-import { convertImageFile, DEFAULT_JPEG_QUALITY } from "@/lib/imageConversion";
+import { convertImageFile, DEFAULT_JPEG_QUALITY, resizeImageTo1000x1000, resizeImageTo1400x1400, resizeImageTo3000x3000 } from "@/lib/imageConversion";
+import { convertImageToCrossStitch } from "@/lib/crossStitchConversion";
+import { convertSalesforceFile15To18 } from "@/lib/salesforceVersionConversion";
 import { WAV_MP3_WORKER_CODE } from "@/lib/wavMp3WorkerCode";
 import { decodeAudioFileToWav } from "@/lib/webAudioToWav";
 import { tryMp4ToWebM } from "@/lib/mediabunnyConversion";
@@ -337,6 +339,29 @@ const handlers: Partial<Record<ToolSlug, ConversionHandler>> = {
   "svg-to-webp": async (file, _options) => {
     const blob = await convertImageFile(file, "image/webp", DEFAULT_JPEG_QUALITY);
     return { blob, suggestedName: file.name.replace(/\.svgz?$/i, ".webp") };
+  },
+  "image-to-1000x1000": async (file, _options) => {
+    const blob = await resizeImageTo1000x1000(file);
+    const base = file.name.replace(/\.[^.]+$/i, "") || "image";
+    return { blob, suggestedName: `${base}-1000x1000.png` };
+  },
+  "image-to-1400x1400": async (file, _options) => {
+    const blob = await resizeImageTo1400x1400(file);
+    const base = file.name.replace(/\.[^.]+$/i, "") || "image";
+    return { blob, suggestedName: `${base}-1400x1400.png` };
+  },
+  "image-to-3000x3000": async (file, _options) => {
+    const blob = await resizeImageTo3000x3000(file);
+    const base = file.name.replace(/\.[^.]+$/i, "") || "image";
+    return { blob, suggestedName: `${base}-3000x3000.png` };
+  },
+  "image-to-cross-stitch": async (file, _options) => {
+    const blob = await convertImageToCrossStitch(file);
+    const base = file.name.replace(/\.[^.]+$/i, "") || "image";
+    return { blob, suggestedName: `${base}-cross-stitch.png` };
+  },
+  "salesforce-15-to-18": async (file, _options) => {
+    return convertSalesforceFile15To18(file);
   },
   "wav-to-mp3": wavToMp3Handler,
   "ogg-to-mp3": async (file, options) => {

@@ -117,8 +117,20 @@ export const LazySpeedPairConverter = dynamic(
   () => import("@/components/SpeedPairConverter").then((m) => ({ default: m.SpeedPairConverter })),
   { loading }
 );
+export const LazyKwKvaConverter = dynamic(
+  () => import("@/components/KwKvaConverter").then((m) => ({ default: m.KwKvaConverter })),
+  { loading }
+);
+export const LazyPantsSizeConverter = dynamic(
+  () => import("@/components/PantsSizeConverter").then((m) => ({ default: m.PantsSizeConverter })),
+  { loading }
+);
 export const LazyBaseConverter = dynamic(
   () => import("@/components/BaseConverter").then((m) => ({ default: m.BaseConverter })),
+  { loading }
+);
+export const LazyRomanNumeralConverter = dynamic(
+  () => import("@/components/RomanNumeralConverter").then((m) => ({ default: m.RomanNumeralConverter })),
   { loading }
 );
 export const LazyBasePairConverter = dynamic(

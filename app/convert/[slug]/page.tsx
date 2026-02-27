@@ -499,6 +499,16 @@ const BASE_PAIR_FAQ = [
   { q: "What browsers work?", a: "Any modern browser. 100% local." },
 ];
 
+const ROMAN_NUMERAL_FAQ = [
+  { q: "Is the Roman numeral converter local?", a: "Yes. Decimal ↔ Roman conversion runs 100% in your browser. No upload, no server. 2026." },
+  { q: "What range is supported?", a: "Standard Roman numerals 1–3999 (I to MMMCMXCIX). Uses subtractive notation (e.g. IV=4, IX=9, XL=40)." },
+  { q: "Do you store my input?", a: "No. Nothing is sent to any server. Privacy first, 100% local browser." },
+  { q: "Why convert to or from Roman numerals?", a: "Common in outlines, clock faces, book chapters, and education. Converting helps readability and learning." },
+  { q: "Can I copy or download the result?", a: "Yes. Copy to clipboard or download as text. No upload 2026." },
+  { q: "Is it free?", a: "Yes. No account. 100% local, no upload 2026." },
+  { q: "What browsers work?", a: "Any modern browser. 100% local." },
+];
+
 const FAQ_MAP: Record<string, { q: string; a: string }[]> = {
   "avif-to-png": AVIF_FAQ,
   "wav-to-mp3": WAV_FAQ,
@@ -519,6 +529,7 @@ const FAQ_MAP: Record<string, { q: string; a: string }[]> = {
   "time-converter": TIME_FAQ,
   "cooking-units-converter": COOKING_FAQ,
   "base-converter": BASE_FAQ,
+  "roman-numeral-converter": ROMAN_NUMERAL_FAQ,
   "binary-to-decimal": BASE_PAIR_FAQ,
   "decimal-to-binary": BASE_PAIR_FAQ,
   "binary-to-octal": BASE_PAIR_FAQ,
@@ -632,6 +643,11 @@ const HOWTO_STEPS = {
     { name: "Enter value", text: "Enter a number in the source base (e.g. 255 for decimal, 11111111 for binary)." },
     { name: "Choose bases", text: "Select from base and to base (binary, octal, decimal, hex). Result updates in real time." },
     { name: "Copy or download", text: "Copy result or download as text. 100% local, no upload 2026." },
+  ],
+  "roman-numeral-converter": [
+    { name: "Enter decimal or Roman", text: "Type a number (1–3999) in the decimal box or a Roman numeral (I, V, X, L, C, D, M) in the Roman box." },
+    { name: "View result", text: "The other field updates in real time. Use swap to switch which side is primary. 100% local, no upload." },
+    { name: "Copy or download", text: "Copy result or download as text. No upload 2026." },
   ],
   "binary-to-decimal": [
     { name: "Enter binary", text: "Enter a binary number (0 and 1 only)." },

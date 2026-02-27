@@ -318,6 +318,8 @@ export function getConvertSeoContent(slug: string): string {
       return COOKING_BASE;
     case "base-converter":
       return BASE_CONVERTER_SEO;
+    case "roman-numeral-converter":
+      return ROMAN_NUMERAL_SEO;
     default:
       return "";
   }
@@ -401,4 +403,12 @@ Number Base Converter — No Upload, 100% Local Browser Converter 2026
 Convert between number bases (binary, octal, decimal, hexadecimal) in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversion runs 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool supports base 2 (binary), base 8 (octal), base 10 (decimal), and base 16 (hex). Enter a value and choose from/base and to/base; the result updates in real time. Unlike cloud calculators, we run entirely in the browser. Part of 200+ format tools. No upload 2026.
 
 Why use a local number base converter? Converting binary to decimal, decimal to hex, or octal to binary is common in programming, digital logic, and learning. Doing it locally means your data never leaves your device. A privacy first converter never receives your input. How does it work? Enter a number in the source base (e.g. 255 in decimal or 11111111 in binary), select from and to base, and see the result. Copy or download. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools. For quick pair conversions (e.g. binary to decimal, hex to decimal), use the dedicated pair pages linked from the tools list.
+`.trim();
+
+const ROMAN_NUMERAL_SEO = `
+Roman Numeral Converter — No Upload, 100% Local Browser Converter 2026
+
+Convert between decimal numbers (1–3999) and Roman numerals (I, V, X, L, C, D, M) in your browser with zero privacy risk. PrivacyConvert is a privacy first converter: all conversion runs 100% on your device. No upload, no server. This no upload 2026, 100% local browser tool uses standard subtractive notation (IV=4, IX=9, XL=40, XC=90, CD=400, CM=900). Enter a decimal or a Roman numeral; the other field updates in real time. Unlike cloud tools, we run entirely in the browser. Part of 200+ format tools. No upload 2026.
+
+Why use a local Roman numeral converter? Converting to or from Roman numerals is common in outlines, clock faces, book chapters, and education. Doing it locally means your data never leaves your device. A privacy first converter never receives your input. How does it work? Type a number (1–3999) or a Roman numeral; the result updates instantly. Copy or download. No data is sent to our servers. 100% local browser. No upload 2026. We do not collect or store your input. Free; no account. Any modern browser. No upload 2026, privacy first, 200+ format tools.
 `.trim();

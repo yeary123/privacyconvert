@@ -27,6 +27,7 @@ const CATEGORIES = [
   { id: "video", label: "Video" },
   { id: "document", label: "Document" },
   { id: "units", label: "Units" },
+  { id: "size", label: "Size" },
   { id: "data", label: "Data" },
   { id: "number", label: "Number" },
 ] as const;

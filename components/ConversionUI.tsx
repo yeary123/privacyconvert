@@ -29,7 +29,10 @@ import {
   LazyVolumePairConverter,
   LazySpeedConverter,
   LazySpeedPairConverter,
+  LazyKwKvaConverter,
+  LazyPantsSizeConverter,
   LazyBaseConverter,
+  LazyRomanNumeralConverter,
   LazyBasePairConverter,
   LazyGenericConverter,
 } from "@/components/lazyConverters";
@@ -129,8 +132,17 @@ export function ConversionUI({ slug }: ConversionUIProps) {
   if (slug === "mph-to-kmh" || slug === "knots-to-kmh" || slug === "mach-to-kmh") {
     return <LazySpeedPairConverter toolSlug={slug} />;
   }
+  if (slug === "kw-to-kva") {
+    return <LazyKwKvaConverter toolSlug={slug} />;
+  }
+  if (slug === "pants-size-converter") {
+    return <LazyPantsSizeConverter toolSlug={slug} />;
+  }
   if (slug === "base-converter") {
     return <LazyBaseConverter />;
+  }
+  if (slug === "roman-numeral-converter") {
+    return <LazyRomanNumeralConverter />;
   }
   if (isBasePairSlug(slug)) {
     return <LazyBasePairConverter toolSlug={slug} />;
