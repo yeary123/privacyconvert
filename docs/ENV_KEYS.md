@@ -47,6 +47,14 @@ Keys to configure in `.env.local` (or your hosting platform’s environment vari
 
 Current pricing page is “Lifetime Pro” one-time purchase. You mainly need: `NEXT_PUBLIC_PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_ID`, `PAYPAL_SECRET`; add `PAYPAL_WEBHOOK_ID` if using Webhook.
 
+**从沙盒切到正式环境：**
+
+1. 登录 [PayPal Developer](https://developer.paypal.com/dashboard/) → 顶部切换为 **Live**（不要用 Sandbox）。
+2. 在 Live 下使用已有应用或新建应用，获取 **Live** 的 Client ID 和 Secret（与沙盒的完全不同）。
+3. 在 `.env.local` 中：把 `NEXT_PUBLIC_PAYPAL_CLIENT_ID`、`PAYPAL_CLIENT_ID`、`PAYPAL_SECRET` 全部换成上述 **Live** 应用的值；将 `PAYPAL_SANDBOX=true` 改为 `PAYPAL_SANDBOX=false`，或删除该行（不设为 `"true"` 即走正式 API）。
+4. 若使用 Webhook：在 Live 应用下配置 Webhook（URL 用正式站地址），把新的 Webhook ID 填入 `PAYPAL_WEBHOOK_ID`。
+5. 重新部署或重启本地服务，使环境变量生效。
+
 ---
 
 ## 4. Newsletter
