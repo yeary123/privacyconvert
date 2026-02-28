@@ -1,7 +1,7 @@
 import Script from "next/script";
 
-// Hardcoded GA4 measurement ID; set to empty string "" when not using GA
-const GA_ID = "G-XXXXXXXXXX";
+// GA4 measurement ID; override with NEXT_PUBLIC_GA_ID in .env.local to disable set to ""
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-C6ZE3ZF599";
 
 /**
  * Google Analytics (GA4). Used in layout for Search Console and analytics.
