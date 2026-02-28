@@ -104,11 +104,11 @@ export function ConvertPageLayout({
           <p className="text-muted-foreground">{tool.description}</p>
         </div>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,420px),1fr]">
-          <div className="lg:sticky lg:top-24 lg:self-start order-2 lg:order-1">
+          <div className="lg:sticky lg:top-24 lg:self-start order-1 lg:order-1">
             <ProUnlockBanner />
             {converter}
           </div>
-          <aside className="min-w-0 order-1 lg:order-2">
+          <aside className="min-w-0 order-2 lg:order-2">
             {seoContent && (
               <div className="space-y-6 whitespace-pre-wrap text-sm text-muted-foreground">
                 {seoContent}
