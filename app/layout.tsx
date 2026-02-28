@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
-import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { PwaRegister } from "@/components/PwaRegister";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
@@ -51,6 +50,8 @@ export const metadata: Metadata = {
   },
 };
 
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-C6ZE3ZF599";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -64,9 +65,26 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
         />
+        {GA_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: [
+                  "window.dataLayer = window.dataLayer || [];",
+                  "function gtag(){dataLayer.push(arguments);}",
+                  "gtag('js', new Date());",
+                  `gtag('config', '${GA_ID}', { send_page_view: true, anonymize_ip: true });`,
+                ].join("\n"),
+              }}
+            />
+          </>
+        )}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
-        <GoogleAnalytics />
         <PwaRegister />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AuthInit />
