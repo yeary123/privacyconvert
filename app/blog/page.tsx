@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description:
     "Guides and tips for local, privacy-first file conversion. Client-side conversion, format comparisons, and how to get the most from your converter.",
   keywords: ["privacy-first file converter", "local conversion", "file converter", "blog"],
+  alternates: { canonical: "/blog" },
 };
 
 const SIDEBAR_LATEST_COUNT = 6;

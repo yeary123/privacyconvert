@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import { ContactEmail } from "@/components/ContactEmail";
 
 const footerLinks: { href: string; label: string; external?: boolean }[] = [
   { href: "/", label: "Home" },
@@ -54,6 +55,9 @@ export function Footer() {
                 )
               )}
             </nav>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Support &amp; inquiries: <ContactEmail className="text-muted-foreground hover:text-foreground underline underline-offset-2" />
+            </p>
           </div>
         </div>
         <div className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">

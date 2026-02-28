@@ -13,6 +13,15 @@ import {
   buildHowToSchema,
   buildSoftwareApplicationSchema,
 } from "@/lib/schema";
+import { HOW_IT_WORKS_HEADING, HOW_IT_WORKS_SHORT } from "@/components/HowItWorksPrivacy";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export type ConvertPageLayoutTool = {
   name: string;
@@ -179,6 +188,44 @@ export function ConvertPageLayout({
                 </Accordion>
               </div>
             )}
+            <div className="mt-6">
+              <h3 className="mb-2 font-semibold text-sm">{HOW_IT_WORKS_HEADING}</h3>
+              {HOW_IT_WORKS_SHORT}
+            </div>
+            <div className="mt-6">
+              <h3 className="mb-2 font-semibold text-sm">PrivacyConvert vs cloud converters</h3>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[32%] text-muted-foreground"> </TableHead>
+                    <TableHead className="text-muted-foreground">PrivacyConvert (Local)</TableHead>
+                    <TableHead className="text-muted-foreground">Cloud converters</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium">Privacy</TableCell>
+                    <TableCell>File never leaves your device</TableCell>
+                    <TableCell>File uploaded to their servers</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Data location</TableCell>
+                    <TableCell>100% in your browser</TableCell>
+                    <TableCell>Processed on remote servers</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Speed</TableCell>
+                    <TableCell>Depends on your device; no upload wait</TableCell>
+                    <TableCell>Upload + server processing</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Security</TableCell>
+                    <TableCell>No server copy; you control the file</TableCell>
+                    <TableCell>You rely on their storage and policies</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </div>
             {relatedTools.length > 0 && (
               <div className="mt-8">
                 <h3 className="mb-3 font-semibold">Related tools</h3>

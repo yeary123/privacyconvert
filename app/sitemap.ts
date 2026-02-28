@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getPosts } from "@/lib/blog";
+import { getPriorityTools, toolToSitemapEntry } from "@/lib/sitemapTools";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
 
 /**
- * Root sitemap: core pages + blog only.
- * Tool URLs are in /convert/sitemap.xml so you can submit core first to GSC, then tools later.
+ * Sitemap A: core pages + blog + ~50 priority tools (with FAQ/long content).
+ * Submit this first to GSC. Then submit B/C/D from /sitemaps/image, /sitemaps/media, /sitemaps/other.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
@@ -27,5 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...blogPages];
+  const priorityTools = getPriorityTools().map((t) => toolToSitemapEntry(t.slug));
+
+  return [...staticPages, ...blogPages, ...priorityTools];
 }

@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     description: PRICING_DESCRIPTION,
   },
   keywords: ["pricing", "pro", "no upload", "file converter", "2026"],
+  alternates: { canonical: "/pricing" },
 };
 
 export default function PricingPage() {

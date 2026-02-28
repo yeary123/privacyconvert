@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     "Terms of use for PrivacyConvert. Use our local, in-browser converters responsibly. No upload, privacy first. 2026.",
   keywords: ["terms of service", "terms of use", "local converter", "no upload", "2026"],
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

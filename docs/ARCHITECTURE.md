@@ -26,8 +26,11 @@ privacyconvert/
 │   ├── layout.tsx          # 根布局
 │   ├── page.tsx            # 首页
 │   ├── convert/            # 转换工具页
-│   │   ├── [slug]/page.tsx # 所有工具共用；generateStaticParams 构建时预生成每工具静态页
-│   │   └── sitemap.ts      # /convert/sitemap.xml
+│   │   └── [slug]/page.tsx # 所有工具共用；generateStaticParams 构建时预生成
+│   ├── sitemaps/           # Sitemap B/C/D（A = 根 sitemap.xml，先提交 A 再提交 B/C/D）
+│   │   ├── image/sitemap.ts   # /sitemaps/image/sitemap.xml
+│   │   ├── media/sitemap.ts   # /sitemaps/media/sitemap.xml
+│   │   └── other/sitemap.ts  # /sitemaps/other/sitemap.xml
 │   ├── tools/              # 工具列表页
 │   ├── pricing/            # 定价页
 │   ├── blog/                # 博客

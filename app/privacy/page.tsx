@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     "PrivacyConvert privacy policy: we do not collect or store your files. Conversion runs 100% in your browser. No upload, zero privacy risk. 2026.",
   keywords: ["privacy policy", "no upload", "local converter", "data protection", "2026"],
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPage() {

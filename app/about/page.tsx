@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ContactEmail } from "@/components/ContactEmail";
+import { HOW_IT_WORKS_HEADING, HOW_IT_WORKS_CONTENT } from "@/components/HowItWorksPrivacy";
 
 export const metadata: Metadata = {
   title: "About - No Upload, Local Converter | PrivacyConvert 2026",
   description:
     "Why we built a 100% local file converter. No upload, zero privacy risk. Our story and thanks to Pro users. 2026.",
   keywords: ["about", "privacy", "no upload", "local converter", "2026"],
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
@@ -37,12 +46,32 @@ export default function AboutPage() {
         </section>
 
         <section>
+          <Accordion type="single" collapsible className="text-left">
+            <AccordionItem value="how-it-works">
+              <AccordionTrigger className="text-xl font-semibold">
+                {HOW_IT_WORKS_HEADING}
+              </AccordionTrigger>
+              <AccordionContent>{HOW_IT_WORKS_CONTENT}</AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </section>
+
+        <section>
           <h2 className="mb-4 text-xl font-semibold">Team</h2>
           <p className="text-muted-foreground">
             PrivacyConvert is built by a small team that cares about privacy and open tooling. We
             don’t collect your files, we don’t track you for ads, and we don’t sell data. We offer
             optional Pro so we can maintain the site and add more formats and tools
             in 2026 and beyond.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-xl font-semibold">Contact</h2>
+          <p className="text-muted-foreground">
+            For support, feedback, or partnership inquiries, reach us at{" "}
+            <ContactEmail className="text-muted-foreground hover:text-foreground underline underline-offset-2" />.
+            We respond to legitimate requests and do not use your address for marketing.
           </p>
         </section>
 
