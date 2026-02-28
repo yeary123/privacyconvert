@@ -61,12 +61,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-        />
+        {/* GA 紧接在 head 之后，便于 Google 验证检测 */}
         {GA_ID && (
           <>
+            <script
+              type="text/template"
+              dangerouslySetInnerHTML={{
+                __html: "<!-- Google tag (gtag.js) -->",
+              }}
+            />
             <script
               async
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
@@ -83,6 +86,10 @@ export default function RootLayout({
             />
           </>
         )}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
         <PwaRegister />
