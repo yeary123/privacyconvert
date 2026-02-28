@@ -6,12 +6,20 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ProUnlockBanner } from "@/components/ProUnlockBanner";
-import { buildArticleSchema, buildFAQSchema, buildHowToSchema, buildSoftwareApplicationSchema } from "@/lib/schema";
+import {
+  buildArticleSchema,
+  buildBreadcrumbListSchema,
+  buildFAQSchema,
+  buildHowToSchema,
+  buildSoftwareApplicationSchema,
+} from "@/lib/schema";
 
 export type ConvertPageLayoutTool = {
   name: string;
   description: string;
   slug: string;
+  /** For breadcrumb and related tools; e.g. "image", "audio" */
+  category?: string;
 };
 
 export type ConvertPageLayoutProps = {
@@ -27,6 +35,19 @@ export type ConvertPageLayoutProps = {
   howToSteps?: { name: string; text: string }[];
   /** 正文 SEO 长文，可选；无则仅显示 FAQ（若有） */
   seoContent?: string;
+  /** 同分类的其它工具，用于底部「Related tools」区块与内部链接 */
+  relatedTools?: { slug: string; name: string }[];
+};
+
+const CATEGORY_LABELS: Record<string, string> = {
+  image: "Image",
+  audio: "Audio",
+  video: "Video",
+  document: "Document",
+  units: "Units",
+  data: "Data",
+  size: "Size",
+  number: "Number",
 };
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
@@ -43,6 +64,7 @@ export function ConvertPageLayout({
   faqTitle,
   howToSteps,
   seoContent,
+  relatedTools = [],
 }: ConvertPageLayoutProps) {
   const faqSchema = faq?.length ? buildFAQSchema(faq) : null;
   const howToSchema =
@@ -68,6 +90,16 @@ export function ConvertPageLayout({
       articleBody: seoContent.trim(),
     })
     : null;
+
+  const breadcrumbItems = [
+    { name: "Home", url: BASE_URL },
+    { name: "Tools", url: `${BASE_URL}/tools` },
+    ...(tool.category ?
+      [{ name: CATEGORY_LABELS[tool.category] ?? tool.category, url: `${BASE_URL}/tools?category=${tool.category}` }]
+    : []),
+    { name: tool.name, url: `${BASE_URL}/convert/${tool.slug}` },
+  ];
+  const breadcrumbSchema = buildBreadcrumbListSchema(breadcrumbItems);
 
   const sectionTitle = (faqTitle ?? `${tool.name} FAQ`).trim();
 
@@ -95,11 +127,31 @@ export function ConvertPageLayout({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="container py-8">
         <div className="mb-6">
-          <Link href="/tools" className="text-sm text-muted-foreground hover:underline">
-            ← All tools
-          </Link>
+          <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
+            <Link href="/" className="hover:underline">
+              Home
+            </Link>
+            {" · "}
+            <Link href="/tools" className="hover:underline">
+              Tools
+            </Link>
+            {tool.category && (
+              <>
+                {" · "}
+                <Link href={`/tools?category=${tool.category}`} className="hover:underline">
+                  {CATEGORY_LABELS[tool.category] ?? tool.category}
+                </Link>
+              </>
+            )}
+            {" · "}
+            <span className="text-foreground">{tool.name}</span>
+          </nav>
           <h1 className="mt-2 text-3xl font-bold">{tool.name}</h1>
           <p className="text-muted-foreground">{tool.description}</p>
         </div>
@@ -127,7 +179,24 @@ export function ConvertPageLayout({
                 </Accordion>
               </div>
             )}
-            {!seoContent && !faq?.length && (
+            {relatedTools.length > 0 && (
+              <div className="mt-8">
+                <h3 className="mb-3 font-semibold">Related tools</h3>
+                <ul className="flex flex-wrap gap-2 text-sm">
+                  {relatedTools.map((t) => (
+                    <li key={t.slug}>
+                      <Link
+                        href={`/convert/${t.slug}`}
+                        className="text-muted-foreground underline underline-offset-2 hover:text-foreground"
+                      >
+                        {t.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {!seoContent && !faq?.length && relatedTools.length === 0 && (
               <p className="text-muted-foreground">
                 This tool is available. <Link href="/tools" className="underline">Browse all tools</Link>.
               </p>

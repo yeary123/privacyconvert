@@ -96,6 +96,22 @@ export function buildArticleSchema(options: {
 }
 
 /**
+ * BreadcrumbList schema for convert and other hierarchical pages.
+ */
+export function buildBreadcrumbListSchema(items: { name: string; url: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList" as const,
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem" as const,
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
+/**
  * ItemList schema for Tools page (list of converters).
  */
 export function buildItemListSchema(options: {

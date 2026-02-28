@@ -26,16 +26,8 @@ privacyconvert/
 │   ├── layout.tsx          # 根布局
 │   ├── page.tsx            # 首页
 │   ├── convert/            # 转换工具页
-│   │   ├── [slug]/page.tsx # 动态 slug 页（未知 slug 时 404）
-│   │   ├── avif-to-png/    # 各工具静态路由（SEO/预生成）
-│   │   ├── heif-to-jpg/
-│   │   ├── wav-to-mp3/
-│   │   ├── webp-to-png/
-│   │   ├── mp4-to-webm/
-│   │   ├── png-to-jpeg/
-│   │   ├── ogg-to-mp3/
-│   │   ├── gif-to-mp4/
-│   │   └── pdf-to-images/
+│   │   ├── [slug]/page.tsx # 所有工具共用；generateStaticParams 构建时预生成每工具静态页
+│   │   └── sitemap.ts      # /convert/sitemap.xml
 │   ├── tools/              # 工具列表页
 │   ├── pricing/            # 定价页
 │   ├── blog/                # 博客
@@ -111,9 +103,7 @@ privacyconvert/
 ### 4.1 路由与页面
 
 - **工具列表**：`/tools` 使用 `lib/tools.TOOLS` 渲染卡片，链接到 `/convert/{slug}`。
-- **转换页**：  
-  - 静态路由：`/convert/avif-to-png`、`/convert/wav-to-mp3` 等（SEO、预生成）。  
-  - 动态路由：`/convert/[slug]/page.tsx`，根据 `slug` 渲染同一套布局，内容区为 `<ConversionUI slug={slug} />`；若 `slug` 不在 `TOOLS` 中则 404。
+- **转换页**：`/convert/[slug]/page.tsx` 统一处理所有工具。`generateStaticParams` 在构建时为每个 `TOOLS` 中的 slug 预生成静态 HTML；根据 `slug` 渲染同一套布局，内容区为 `<ConversionUI slug={slug} />`；若 `slug` 不在 `TOOLS` 中则 404。
 
 ### 4.2 组件分工
 

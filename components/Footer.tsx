@@ -7,6 +7,8 @@ const footerLinks: { href: string; label: string; external?: boolean }[] = [
   { href: "/pricing#pro", label: "Pro" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
 ];
 
 export function Footer() {

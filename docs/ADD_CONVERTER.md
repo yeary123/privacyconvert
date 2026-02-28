@@ -12,12 +12,7 @@
 - 右侧/下方：SEO 长文 + FAQ 手风琴
 - 自动输出：FAQ / HowTo / SoftwareApplication 的 JSON-LD
 
-**两种入口：**
-
-| 方式 | 适用 | 路由 |
-|------|------|------|
-| **动态页** | 大部分工具，无需单独 SEO 时 | `/convert/[slug]`，在 `TOOLS` 中注册即可 |
-| **静态页** | 需要独立 SEO、自定义 FAQ/HowTo 时 | `app/convert/{slug}/page.tsx`，使用本模板 |
+**入口**：所有工具统一走 `/convert/[slug]`（`app/convert/[slug]/page.tsx`）。构建时通过 `generateStaticParams` 为每个 slug 预生成静态 HTML，无需单独建页面文件。
 
 ---
 
@@ -43,78 +38,26 @@
 "xxx-to-yyy": { "input/mime": [".ext1", ".ext2"] },
 ```
 
-### 2.4 UI 路由（二选一）
+### 2.4 UI 路由
 
-- **走动态页**：无需新建文件。`ConversionUI` 会对 `hasConvertHandler(slug)` 为 true 的工具渲染 `GenericConverter`，访问 `/convert/xxx-to-yyy` 即可。
-- **走静态页**：需要独立 metadata、FAQ、HowTo 时，在 `app/convert/xxx-to-yyy/` 下新建 `page.tsx`，按下方静态页模板编写。
+无需新建页面文件。在 `TOOLS` 中注册后，`ConversionUI` 会对 `hasConvertHandler(slug)` 为 true 的工具渲染 `GenericConverter`，访问 `/convert/xxx-to-yyy` 即可；该页在构建时随 `generateStaticParams` 预生成。
 
 ### 2.5（可选）SEO 长文
 
-在 `lib/convertSeoContent.ts` 的 `getConvertSeoContent(slug)` 中为该 slug 增加长文内容，动态页和静态页都会优先使用此处内容。
+在 `lib/convertSeoContent.ts` 的 `getConvertSeoContent(slug)` 中为该 slug 增加长文内容，转换页会使用此处内容。
 
-### 2.6（仅动态页）FAQ / HowTo
+### 2.6（可选）FAQ / HowTo
 
-若希望该工具在动态页中显示 FAQ 或 HowTo，需在 `app/convert/[slug]/page.tsx` 中：
+若希望该工具页显示 FAQ 或 HowTo，在 `app/convert/[slug]/page.tsx` 中：
 
 - 在 `FAQ_MAP` 中增加 `"xxx-to-yyy": YOUR_FAQ_ARRAY`；
 - 在 `HOWTO_STEPS` 中增加 `"xxx-to-yyy": YOUR_STEPS_ARRAY`。
 
 ---
 
-## 3. 静态页模板（`app/convert/{slug}/page.tsx`）
+## 3. 转换页逻辑说明
 
-复制以下模板，替换 `TOOL_SLUG`、`TOOL_NAME`、`DESCRIPTION`、FAQ、HowTo 和 Converter 组件即可。
-
-```tsx
-import type { Metadata } from "next";
-import { YourConverter } from "@/components/YourConverter";  // 或 GenericConverter
-import { ConvertPageLayout } from "@/components/ConvertPageLayout";
-import { getConvertSeoContent } from "@/lib/convertSeoContent";
-
-const TOOL_SLUG = "xxx-to-yyy";
-const TOOL_NAME = "XXX to YYY";
-const DESCRIPTION = "Convert XXX to YYY in your browser. No upload 2026, privacy first.";
-
-const TOOL = { name: TOOL_NAME, description: DESCRIPTION, slug: TOOL_SLUG };
-
-export const metadata: Metadata = {
-  title: `${TOOL_NAME} No Upload – 100% Local Browser Converter 2026`,
-  description: `${DESCRIPTION}. No upload, browser local conversion. Zero privacy risk.`,
-  openGraph: {
-    title: `${TOOL_NAME} – No Upload 2026 | PrivacyConvert`,
-    description: DESCRIPTION,
-  },
-};
-
-const FAQ = [
-  { q: "Is conversion done locally?", a: "Yes. …" },
-  // …
-];
-
-const HOWTO_STEPS = [
-  { name: "Load FFmpeg", text: "Click 'Load FFmpeg' once (~31 MB, cached)." },
-  { name: "Add files", text: "Drag and drop XXX files. Free: 1 file; Pro: batch." },
-  { name: "Convert", text: "Conversion runs locally. No upload." },
-  { name: "Download", text: "Download each YYY. Files never leave your device." },
-];
-
-export default async function Page() {
-  const seoContent = getConvertSeoContent(TOOL_SLUG);
-  return (
-    <ConvertPageLayout
-      tool={TOOL}
-      converter={<YourConverter toolSlug={TOOL_SLUG} />}
-      faq={FAQ}
-      faqTitle={`${TOOL_NAME} FAQ`}
-      howToSteps={HOWTO_STEPS}
-      seoContent={seoContent ?? undefined}
-    />
-  );
-}
-```
-
-- **不需要 FFmpeg** 的工具：HowTo 里可去掉 “Load FFmpeg” 步骤。
-- **使用通用 UI**：`converter={<GenericConverter toolSlug={TOOL_SLUG} />}`，并确保该 slug 已在 `lib/conversion/accept.ts` 和 `handlers` 中配置。
+所有转换页由 `app/convert/[slug]/page.tsx` 统一渲染：从 `TOOLS` 取当前 slug 的 name/description/category，从 `FAQ_MAP`、`HOWTO_STEPS` 取可选 FAQ/HowTo，从 `getConvertSeoContent(slug)` 取 SEO 长文；metadata 由 `getConvertMetadata(tool.name)` 生成。无需再为单个工具新建 `app/convert/{slug}/page.tsx`。新增工具时只需在 `TOOLS` 中注册，并在需要时在 `FAQ_MAP`、`HOWTO_STEPS`、`getConvertSeoContent` 中补充内容。示例（FAQ_MAP / HOWTO_STEPS）：
 
 ---
 
@@ -136,8 +79,7 @@ export default async function Page() {
 | `components/ConvertPageLayout.tsx` | 转换页通用布局（标题、描述、转换区、侧栏、Schema） |
 | `components/ConversionUI.tsx` | 按 slug 选择具体 Converter 或 GenericConverter |
 | `components/GenericConverter.tsx` | 通用转换 UI（FFmpeg/非 FFmpeg、进度、结果） |
-| `app/convert/[slug]/page.tsx` | 动态转换页，使用 ConvertPageLayout + FAQ_MAP + HOWTO_STEPS |
-| `app/convert/avif-to-png/page.tsx` | 静态页示例，使用 ConvertPageLayout |
+| `app/convert/[slug]/page.tsx` | 所有转换页入口；ConvertPageLayout + FAQ_MAP + HOWTO_STEPS；构建时按 TOOLS 预生成静态页 |
 | `docs/ARCHITECTURE.md` | 项目架构与功能层说明 |
 
-新增转换按上述模式开发即可与现有 30 个工具保持一致体验和 SEO 结构。
+新增转换只需在 `lib/tools.ts` 的 TOOLS 中增加一项并实现对应 handler/UI，即可与现有工具保持一致体验和 SEO 结构。

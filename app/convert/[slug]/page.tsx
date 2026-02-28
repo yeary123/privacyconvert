@@ -8,10 +8,9 @@ import { getConvertSeoContent } from "@/lib/convertSeoContent";
 
 type Props = { params: Promise<{ slug: string }> };
 
-// Static converter pages (app/convert/avif-to-png/page.tsx etc.) own these routes.
-// [slug] only handles unknown slugs (e.g. 404). Do not pre-generate the 8 static paths here.
+// Pre-render all tool pages at build time. Single code path; static HTML per slug.
 export async function generateStaticParams() {
-  return [];
+  return TOOLS.map((t) => ({ slug: t.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -711,6 +710,8 @@ const HOWTO_STEPS = {
   ],
 } as const;
 
+const RELATED_TOOLS_COUNT = 5;
+
 export default async function ConvertPage({ params }: Props) {
   const { slug } = await params;
   const tool = TOOLS.find((t) => t.slug === slug);
@@ -720,13 +721,23 @@ export default async function ConvertPage({ params }: Props) {
   const steps = HOWTO_STEPS[slug as keyof typeof HOWTO_STEPS];
   const seoContent = getConvertSeoContent(slug);
 
+  const relatedTools = TOOLS.filter((t) => t.category === tool.category && t.slug !== slug)
+    .slice(0, RELATED_TOOLS_COUNT)
+    .map((t) => ({ slug: t.slug, name: t.name }));
+
   return (
     <ConvertPageLayout
-      tool={{ name: tool.name, description: tool.description, slug: tool.slug }}
+      tool={{
+        name: tool.name,
+        description: tool.description,
+        slug: tool.slug,
+        category: tool.category,
+      }}
       converter={<ConversionUI slug={slug} />}
       faq={faqItems ?? undefined}
       howToSteps={steps ? steps.map((s) => ({ name: s.name, text: s.text })) : undefined}
       seoContent={seoContent ?? undefined}
+      relatedTools={relatedTools}
     />
   );
 }
