@@ -104,7 +104,7 @@ export function ConvertPageLayout({
           <p className="text-muted-foreground">{tool.description}</p>
         </div>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,420px),1fr]">
-          <div className="lg:sticky lg:top-24 lg:self-start order-1 lg:order-1">
+          <div className="xl:sticky xl:top-24 xl:self-start order-1 lg:order-1">
             <ProUnlockBanner />
             {converter}
           </div>
