@@ -57,9 +57,27 @@ export default function AboutPage() {
         </section>
 
         <section>
+          <h2 className="mb-4 text-xl font-semibold">How We Ensure Quality</h2>
+          <p className="mb-4 text-muted-foreground">
+            We’re not a bulk-generated directory. Every tool is added and verified with a clear process:
+          </p>
+          <ul className="list-inside list-disc space-y-2 text-left text-muted-foreground">
+            <li>
+              <strong className="text-foreground">Tool selection:</strong> We add converters based on real privacy-sensitive use cases (e.g. ID photos, internal documents, personal media) and only ship when the conversion works reliably in the browser.
+            </li>
+            <li>
+              <strong className="text-foreground">Security verification:</strong> Before release, each tool is tested with browser DevTools: we confirm that during conversion no binary file data is sent to any server. Only the initial script/WASM load hits the network.
+            </li>
+            <li>
+              <strong className="text-foreground">Core libraries:</strong> We build on long-standing open-source projects (e.g. FFmpeg, pdf.js) and use their WebAssembly builds. That way conversion quality and behaviour are backed by community-tested code, not opaque cloud APIs.
+            </li>
+          </ul>
+        </section>
+
+        <section>
           <h2 className="mb-4 text-xl font-semibold">Team</h2>
           <p className="text-muted-foreground">
-            PrivacyConvert is built by a small team that cares about privacy and open tooling. We
+            PrivacyConvert is built by developers who care about privacy and open tooling. We
             don’t collect your files, we don’t track you for ads, and we don’t sell data. We offer
             optional Pro so we can maintain the site and add more formats and tools
             in 2026 and beyond.

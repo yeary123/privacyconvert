@@ -36,8 +36,12 @@ export function buildSoftwareApplicationSchema(options: {
   description: string;
   url: string;
   applicationCategory?: string;
+  operatingSystem?: string;
+  browserRequirements?: string;
+  offers?: { price: string; priceCurrency: string };
+  featureList?: string[];
 }) {
-  return {
+  const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication" as const,
     name: options.name,
@@ -45,6 +49,23 @@ export function buildSoftwareApplicationSchema(options: {
     url: options.url,
     applicationCategory: options.applicationCategory ?? "UtilitiesApplication",
   };
+  if (options.operatingSystem !== undefined) {
+    schema.operatingSystem = options.operatingSystem;
+  }
+  if (options.browserRequirements !== undefined) {
+    schema.browserRequirements = options.browserRequirements;
+  }
+  if (options.offers !== undefined) {
+    schema.offers = {
+      "@type": "Offer" as const,
+      price: options.offers.price,
+      priceCurrency: options.offers.priceCurrency,
+    };
+  }
+  if (options.featureList !== undefined && options.featureList.length > 0) {
+    schema.featureList = options.featureList;
+  }
+  return schema;
 }
 
 export function buildHowToSchema(options: {

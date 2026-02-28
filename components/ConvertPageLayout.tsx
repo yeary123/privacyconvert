@@ -84,10 +84,24 @@ export function ConvertPageLayout({
       steps: howToSteps,
     })
     : null;
+  const applicationCategory =
+    tool.category === "image" || tool.category === "audio" || tool.category === "video"
+      ? "MultimediaApplication"
+      : "UtilitiesApplication";
   const appSchema = buildSoftwareApplicationSchema({
     name: `${tool.name} - No Upload 2026`,
     description: `${tool.description}. 100% local browser converter. No upload, privacy first.`,
     url: `${BASE_URL}/convert/${tool.slug}`,
+    applicationCategory,
+    operatingSystem: "Any (Web Browser)",
+    browserRequirements: "Requires HTML5 and WebAssembly support",
+    offers: { price: "0", priceCurrency: "USD" },
+    featureList: [
+      "Local conversion (FFmpeg.wasm or client-side library)",
+      "No file upload required",
+      "Batch processing (Pro)",
+      "Works in browser; no server upload",
+    ],
   });
 
   const articleSchema =
