@@ -8,14 +8,22 @@ const TO_MAJOR = 18;
 
 /**
  * Replaces Salesforce API version references from 15 to 18 in file content.
- * Handles: 15.0 → 18.0, apiVersion="15" → apiVersion="18", <version>15.0</version> → <version>18.0</version>, etc.
+ * Handles: package.xml <version>15.0</version>, *-meta.xml apiVersion="15"|"15.0", <version>15</version>, and standalone 15.0.
  */
 export function convertSalesforce15To18(content: string): string {
   let out = content;
-  out = out.replace(/\b15\.0\b/g, "18.0");
+  // Explicit version attributes (avoid touching other "15.0" in content)
+  out = out.replace(/apiVersion="15\.0"/g, 'apiVersion="18.0"');
+  out = out.replace(/apiVersion='15\.0'/g, "apiVersion='18.0'");
   out = out.replace(/apiVersion="15"/g, 'apiVersion="18"');
   out = out.replace(/apiVersion='15'/g, "apiVersion='18'");
+  out = out.replace(/<version>15\.0<\/version>/gi, "<version>18.0</version>");
   out = out.replace(/<version>15<\/version>/g, "<version>18</version>");
+  // sourceAPIVersion in sfdx-project.json
+  out = out.replace(/"sourceAPIVersion"\s*:\s*"15\.0"/g, '"sourceAPIVersion": "18.0"');
+  out = out.replace(/"sourceAPIVersion"\s*:\s*"15"/g, '"sourceAPIVersion": "18"');
+  // Any remaining standalone 15.0 (e.g. in comments or other version refs)
+  out = out.replace(/\b15\.0\b/g, "18.0");
   return out;
 }
 

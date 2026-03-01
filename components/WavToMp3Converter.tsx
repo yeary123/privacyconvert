@@ -201,7 +201,7 @@ export function WavToMp3Converter({ toolSlug = "wav-to-mp3" }: Props) {
           <p className="mt-2 text-sm text-muted-foreground">
             {selectedFiles.length > 0
               ? `${selectedFiles.length} file(s) selected`
-              : "Drop WAV files here or click to select"}
+              : "Drop WAV files (.wav) here, or click to select"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch & history with Pro."}

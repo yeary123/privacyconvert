@@ -64,7 +64,7 @@ export function MobiToEpubConverter({ toolSlug }: Props) {
         <input {...getInputProps()} aria-label="Drop or select MOBI/AZW3 file" />
         <BookOpen className="mx-auto h-10 w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? "Converting…" : "Drop MOBI or AZW3 here, or click to select"}
+          {converting ? "Converting…" : "Drop MOBI or AZW3 file (.mobi, .azw3) here, or click to select"}
         </p>
       </div>
       {error && (

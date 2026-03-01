@@ -11,7 +11,7 @@ const CONFIG = {
   inputExtPattern: /\.avif$/i,
   toolSlug: "avif-to-png" as const,
   ariaLabel: "Drop or select AVIF files",
-  dropMessage: "Drop AVIF files here, or click to select",
+  dropMessage: "Drop AVIF files (.avif) here, or click to select",
 };
 
 type Props = { toolSlug?: ToolSlug };

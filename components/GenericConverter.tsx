@@ -5,7 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { FileImage, Music, Video } from "lucide-react";
 import { ConversionResult } from "@/components/ConversionResult";
 import { convert, loadFFmpeg, needsFFmpeg } from "@/lib/conversion";
-import { getAccept } from "@/lib/conversion/accept";
+import { getAccept, getAcceptDropHint } from "@/lib/conversion/accept";
 import { TOOLS, type ToolSlug } from "@/lib/tools";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
@@ -110,7 +110,11 @@ export function GenericConverter({ toolSlug }: Props) {
         <input {...getInputProps()} aria-label={`Drop or select files for ${tool?.name ?? toolSlug}`} />
         <Icon className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? (loadingFFmpeg ? "Loading converter…" : "Converting...") : `Drop files here, or click to select`}
+          {converting
+            ? loadingFFmpeg
+              ? "Loading converter…"
+              : "Converting..."
+            : `Drop ${getAcceptDropHint(toolSlug)} here, or click to select`}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch & history with Pro."}

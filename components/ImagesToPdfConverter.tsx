@@ -109,7 +109,7 @@ export function ImagesToPdfConverter({ toolSlug = "images-to-pdf" }: Props) {
         <label htmlFor="images-pdf-input" className="cursor-pointer flex flex-col items-center w-full">
           <FileImage className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
           <p className="mt-2 text-sm text-muted-foreground">
-            {files.length > 0 ? `${files.length} image(s) selected` : "Drop images here or click to select"}
+            {files.length > 0 ? `${files.length} image(s) selected` : "Drop PNG, JPEG, WebP, GIF, or BMP images here, or click to select"}
           </p>
         </label>
         {files.length > 0 && !loading && (

@@ -88,7 +88,7 @@ export function SplitPdfConverter({ toolSlug = "split-pdf" }: Props) {
         <label htmlFor="split-pdf-input" className="cursor-pointer flex flex-col items-center w-full">
           <FileText className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
           <p className="mt-2 text-sm text-muted-foreground">
-            {file ? file.name : "Drop a PDF here or click to select"}
+            {file ? file.name : "Drop a PDF file (.pdf) here, or click to select"}
           </p>
         </label>
         {file && !loading && (

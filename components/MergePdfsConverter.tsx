@@ -87,7 +87,7 @@ export function MergePdfsConverter({ toolSlug = "merge-pdfs" }: Props) {
         <label htmlFor="merge-pdfs-input" className="cursor-pointer flex flex-col items-center w-full">
           <FileText className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
           <p className="mt-2 text-sm text-muted-foreground">
-            {files.length > 0 ? `${files.length} PDF(s) — order preserved` : "Drop PDFs here or click to select"}
+            {files.length > 0 ? `${files.length} PDF(s) — order preserved` : "Drop PDF files (.pdf) here, or click to select"}
           </p>
         </label>
         {files.length >= 2 && !loading && (

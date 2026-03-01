@@ -62,7 +62,7 @@ export function PdfToEpubConverter({ toolSlug }: Props) {
         <input {...getInputProps()} aria-label="Drop or select PDF file" />
         <BookOpen className="mx-auto h-10 w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? "Converting…" : "Drop PDF here, or click to select"}
+          {converting ? "Converting…" : "Drop PDF file (.pdf) here, or click to select"}
         </p>
       </div>
       {error && (

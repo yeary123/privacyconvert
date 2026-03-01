@@ -12,7 +12,7 @@ const CONFIG = {
   quality: 0.92,
   toolSlug: "png-to-jpeg" as const,
   ariaLabel: "Drop or select PNG files",
-  dropMessage: "Drop PNG files here, or click to select",
+  dropMessage: "Drop PNG files (.png) here, or click to select",
 };
 
 type Props = { toolSlug?: ToolSlug };

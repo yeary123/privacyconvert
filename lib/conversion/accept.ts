@@ -64,7 +64,8 @@ export const CONVERT_ACCEPT: Partial<Record<ToolSlug, Record<string, string[]>>>
   },
   "salesforce-15-to-18": {
     "application/xml": [".xml"],
-    "text/plain": [".xml", ".cls", ".trigger", ".apex", ".profile", ".permissionset", ".object", ".labels", ".workflow", ".layout"],
+    "application/json": [".json"],
+    "text/plain": [".xml", ".cls", ".trigger", ".apex", ".profile", ".permissionset", ".object", ".labels", ".workflow", ".layout", ".json"],
   },
   // Audio
   "wav-to-mp3": { "audio/wav": [".wav"], "audio/wave": [".wav"] },
@@ -260,4 +261,33 @@ export const CONVERT_ACCEPT: Partial<Record<ToolSlug, Record<string, string[]>>>
 
 export function getAccept(slug: ToolSlug): Record<string, string[]> | undefined {
   return CONVERT_ACCEPT[slug];
+}
+
+/** Human-readable hint for drop zone: what file type(s) to upload. */
+export function getAcceptDropHint(slug: ToolSlug): string {
+  const accept = CONVERT_ACCEPT[slug];
+  if (!accept) {
+    return "supported files";
+  }
+  const exts = new Set<string>();
+  for (const list of Object.values(accept)) {
+    for (const ext of list) exts.add(ext.toLowerCase());
+  }
+  const arr = [...exts].sort();
+  if (arr.length === 0) return "supported files";
+  const extList = arr.join(", ");
+  if (slug === "salesforce-15-to-18") {
+    return `Salesforce metadata (${extList})`;
+  }
+  if (slug.startsWith("image-to-") || slug === "image-to-cross-stitch") {
+    return `Images: ${extList}`;
+  }
+  if (arr.length === 1) {
+    const name = arr[0].slice(1).toUpperCase();
+    return `${name} files (${arr[0]})`;
+  }
+  if (arr.length <= 5) {
+    return `files (${extList})`;
+  }
+  return `files (${arr.slice(0, 5).join(", ")}…)`;
 }

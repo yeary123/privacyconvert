@@ -11,7 +11,7 @@ const CONFIG = {
   inputExtPattern: /\.webp$/i,
   toolSlug: "webp-to-png" as const,
   ariaLabel: "Drop or select WebP files",
-  dropMessage: "Drop WebP files here, or click to select",
+  dropMessage: "Drop WebP files (.webp) here, or click to select",
 };
 
 type Props = { toolSlug?: ToolSlug };

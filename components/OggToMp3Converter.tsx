@@ -96,7 +96,7 @@ export function OggToMp3Converter({ toolSlug = "ogg-to-mp3" }: Props) {
         <input {...getInputProps()} aria-label="Drop or select OGG files" />
         <Music className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? (loadingFFmpeg ? "Loading converter…" : "Converting...") : "Drop OGG files here, or click to select"}
+          {converting ? (loadingFFmpeg ? "Loading converter…" : "Converting...") : "Drop OGG/OGA files (.ogg, .oga) here, or click to select"}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch & history with Pro."}

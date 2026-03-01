@@ -96,7 +96,7 @@ export function GifToMp4Converter({ toolSlug = "gif-to-mp4" }: Props) {
         <input {...getInputProps()} aria-label="Drop or select GIF files" />
         <Video className="mx-auto h-8 w-8 sm:h-10 sm:w-10 text-muted-foreground" />
         <p className="mt-2 text-sm text-muted-foreground">
-          {converting ? (loadingFFmpeg ? "Loading converter…" : "Converting...") : "Drop GIF files here, or click to select"}
+          {converting ? (loadingFFmpeg ? "Loading converter…" : "Converting...") : "Drop GIF files (.gif) here, or click to select"}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           {isPro ? "Pro active — batch & more unlocked" : "Free: 1 file at a time. Unlock batch & history with Pro."}
