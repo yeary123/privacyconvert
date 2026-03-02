@@ -9,6 +9,7 @@ import type { ToolSlug } from "@/lib/tools";
 import type { ConversionHandler, ConversionOptions } from "./types";
 import { loadFFmpeg, getFFmpeg } from "@/lib/ffmpeg";
 import { convertImageFile, DEFAULT_JPEG_QUALITY, resizeImageTo1000x1000, resizeImageTo1400x1400, resizeImageTo3000x3000 } from "@/lib/imageConversion";
+import { convertImageToCur } from "@/lib/curConversion";
 import { convertImageToCrossStitch } from "@/lib/crossStitchConversion";
 import { convertSalesforceFile15To18 } from "@/lib/salesforceVersionConversion";
 import { WAV_MP3_WORKER_CODE } from "@/lib/wavMp3WorkerCode";
@@ -304,6 +305,30 @@ const handlers: Partial<Record<ToolSlug, ConversionHandler>> = {
     const blob = await convertImageFile(file, "image/webp", DEFAULT_JPEG_QUALITY);
     return { blob, suggestedName: file.name.replace(/\.ico$/i, ".webp") };
   },
+  "cur-to-png": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/png");
+    return { blob, suggestedName: file.name.replace(/\.cur$/i, ".png") };
+  },
+  "cur-to-jpeg": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/jpeg", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.cur$/i, ".jpg") };
+  },
+  "cur-to-webp": async (file, _options) => {
+    const blob = await convertImageFile(file, "image/webp", DEFAULT_JPEG_QUALITY);
+    return { blob, suggestedName: file.name.replace(/\.cur$/i, ".webp") };
+  },
+  "png-to-cur": async (file, _options) => {
+    const blob = await convertImageToCur(file);
+    return { blob, suggestedName: file.name.replace(/\.png$/i, ".cur") };
+  },
+  "jpeg-to-cur": async (file, _options) => {
+    const blob = await convertImageToCur(file);
+    return { blob, suggestedName: file.name.replace(/\.(jpe?g|jfif)$/i, ".cur") };
+  },
+  "webp-to-cur": async (file, _options) => {
+    const blob = await convertImageToCur(file);
+    return { blob, suggestedName: file.name.replace(/\.webp$/i, ".cur") };
+  },
   "tiff-to-png": async (file, _options) => {
     const blob = await convertImageFile(file, "image/png");
     return { blob, suggestedName: file.name.replace(/\.tiff?$/i, ".png") };
@@ -466,6 +491,7 @@ const handlers: Partial<Record<ToolSlug, ConversionHandler>> = {
   "m4a-to-opus": ffmpegAudioHandler("m4a", "opus", "audio/opus", ".opus", /\.m4a$/i),
   "m4a-to-wma": ffmpegAudioHandler("m4a", "wma", "audio/x-ms-wma", ".wma", /\.m4a$/i),
   "m4a-to-aiff": ffmpegAudioHandler("m4a", "aiff", "audio/aiff", ".aiff", /\.m4a$/i),
+  "alac-to-flac": ffmpegAudioHandler("m4a", "flac", "audio/flac", ".flac", /\.m4a$/i),
   "aac-to-wav": webAudioToWavHandler(/\.aac$/i),
   "aac-to-ogg": ffmpegAudioHandler("aac", "ogg", "audio/ogg", ".ogg", /\.aac$/i),
   "aac-to-flac": ffmpegAudioHandler("aac", "flac", "audio/flac", ".flac", /\.aac$/i),
