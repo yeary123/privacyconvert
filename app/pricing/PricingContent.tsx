@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useTransition, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Check, Clock } from "lucide-react";
@@ -12,9 +13,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { PayPalBuyNowButton } from "@/components/PayPalBuyNowButton";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useProStore } from "@/store/useProStore";
+
+const PayPalBuyNowButton = dynamic(
+  () => import("@/components/PayPalBuyNowButton").then((m) => ({ default: m.PayPalBuyNowButton })),
+  { ssr: false, loading: () => <div className="h-10 animate-pulse rounded-md bg-muted" /> }
+);
 import {
   isLifetimeProPeriod,
   getDaysLeftForLifetimePro,

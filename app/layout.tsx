@@ -7,6 +7,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { AuthInit } from "@/components/AuthInit";
 import { getSiteSoftwareApplicationSchema } from "@/lib/schema";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -50,8 +51,6 @@ export const metadata: Metadata = {
   },
 };
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-C6ZE3ZF599";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -61,37 +60,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* GA 紧接在 head 之后，便于 Google 验证检测 */}
-        {GA_ID && (
-          <>
-            <script
-              type="text/template"
-              dangerouslySetInnerHTML={{
-                __html: "<!-- Google tag (gtag.js) -->",
-              }}
-            />
-            <script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-            />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: [
-                  "window.dataLayer = window.dataLayer || [];",
-                  "function gtag(){dataLayer.push(arguments);}",
-                  "gtag('js', new Date());",
-                  `gtag('config', '${GA_ID}', { send_page_view: true, anonymize_ip: true });`,
-                ].join("\n"),
-              }}
-            />
-          </>
-        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
+        <GoogleAnalytics />
         <PwaRegister />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AuthInit />
