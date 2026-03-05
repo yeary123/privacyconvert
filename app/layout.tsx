@@ -20,8 +20,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.privacyconvert.online"),
+  metadataBase: new URL(SITE_URL),
   robots: {
     index: true,
     follow: true,

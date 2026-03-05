@@ -8,10 +8,10 @@ Keys to configure in `.env.local` (or your hosting platform’s environment vari
 
 | 环境 | 域名 | 说明 |
 |------|------|------|
-| **开发** | `https://privacyconvert-five.vercel.app/` | Vercel 部署，当前使用此域名。 |
-| **正式** | `https://www.privacyconvert.online` | 正式生产站。 |
+| **开发** | `https://your-preview.vercel.app/` 或 `http://localhost:3000` | 本地或 Vercel 预览。 |
+| **正式** | `https://www.your-domain.com` | 生产站（需与 Supabase Redirect URLs 一致）。 |
 
-配置 `NEXT_PUBLIC_SITE_URL` 时：当前用开发站则设为开发域名；上线正式站时改为正式域名（用于邮件回调、sitemap、分享链接等）。
+配置 `NEXT_PUBLIC_SITE_URL` 时：开发时用预览/本地 URL；上线后改为正式域名（用于邮件回调、sitemap、分享链接等）。
 
 ---
 
@@ -19,7 +19,7 @@ Keys to configure in `.env.local` (or your hosting platform’s environment vari
 
 | Variable | Description | Required | Default |
 |----------|-------------|----------|---------|
-| `NEXT_PUBLIC_SITE_URL` | Site root URL (sharing, sitemap, robots, SEO, auth redirect) | Recommended | 正式站 `https://www.privacyconvert.online`；**当前用开发站时设为** `https://privacyconvert-five.vercel.app` |
+| `NEXT_PUBLIC_SITE_URL` | Site root URL (sharing, sitemap, robots, SEO, auth redirect) | Recommended | 生产站用正式域名；开发时用 `http://localhost:3000` 或 Vercel 预览 URL |
 
 ---
 
@@ -108,8 +108,8 @@ If none are set, the subscribe API still returns success (placeholder behavior) 
 ## Example `.env.local` (reference only; do not commit real keys)
 
 ```bash
-# Site（当前用开发域名；正式上线时改为 https://www.privacyconvert.online）
-NEXT_PUBLIC_SITE_URL=https://privacyconvert-five.vercel.app
+# Site（开发用 localhost 或预览 URL，正式上线改为你的生产域名）
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 # Supabase (as needed)
 # NEXT_PUBLIC_SUPABASE_URL=
@@ -129,6 +129,9 @@ NEXT_PUBLIC_SITE_URL=https://privacyconvert-five.vercel.app
 # CONVERTKIT_API_KEY=
 # CONVERTKIT_FORM_ID=
 # BUTTONDOWN_API_KEY=
+
+# Contact email domain (optional; for support@your-domain.com)
+# NEXT_PUBLIC_CONTACT_DOMAIN=your-domain.com
 
 # Google Analytics
 # NEXT_PUBLIC_GA_ID=

@@ -2,6 +2,8 @@
 
 为了让登录/注册确认邮件体现 **PrivacyConvert** 网站，并确保点击邮件中的链接能正确进入已登录状态，需要在本项目代码之外完成以下 Supabase 控制台配置。
 
+> **Fork 说明：** 下文中的 “PrivacyConvert” 仅为示例品牌名，你可替换为自己的产品名；链接与域名请使用你自己的站点地址。
+
 ---
 
 ## 1. 邮件体现 PrivacyConvert 网站
@@ -22,7 +24,7 @@
 <h2>Confirm your signup – PrivacyConvert</h2>
 <p>You signed up at <strong>PrivacyConvert</strong>. Follow this link to confirm your email:</p>
 <p><a href="{{ .ConfirmationURL }}">Confirm your email</a></p>
-<p>If you didn't sign up at privacyconvert.online, you can ignore this email.</p>
+<p>If you didn't sign up at this site, you can ignore this email.</p>
 ```
 
 **Magic Link（魔法链接登录）**
@@ -42,7 +44,7 @@
 
 若希望发件人显示为 “PrivacyConvert” 而不是 “Supabase Auth”：
 
-- **Authentication** → **Providers** → **Email** → **SMTP Settings** 中配置自定义 SMTP（如 Brevo、SendGrid 等），并设置 **Sender name** 为 `PrivacyConvert`，发件地址使用你的域名（例如 `noreply@privacyconvert.online`）。
+- **Authentication** → **Providers** → **Email** → **SMTP Settings** 中配置自定义 SMTP（如 Brevo、SendGrid 等），并设置 **Sender name** 为 `PrivacyConvert`，发件地址使用你的域名（例如 `noreply@your-domain.com`）。
 - 若使用 Supabase 默认邮件服务，发件人名称和地址由 Supabase 固定，无法改为 PrivacyConvert，只能通过上面修改邮件正文和主题来体现品牌。
 
 ---
@@ -57,16 +59,16 @@
    无论 Supabase 用哪种方式重定向，用户点击邮件链接后都会进入已登录状态并跳转到首页。
 
 2. **登录时使用的重定向地址**  
-   - 若配置了 `NEXT_PUBLIC_SITE_URL`（例如 `https://www.privacyconvert.online`），邮件中的链接会指向该站点的 `/auth/callback`，保证生产环境始终跳回正式站。
+   - 若配置了 `NEXT_PUBLIC_SITE_URL`（例如 `https://www.your-domain.com`），邮件中的链接会指向该站点的 `/auth/callback`，保证生产环境始终跳回正式站。
 
 你需要在 Supabase 中把该回调地址加入白名单，否则会被拒绝：
 
 1. **Authentication** → **URL Configuration**。
 2. 在 **Redirect URLs** 中必须包含正式站回调（否则邮件链接会错）：
-   - **正式（必加）**：`https://www.privacyconvert.online/auth/callback`
-   - 开发：`https://privacyconvert-five.vercel.app/auth/callback`
+   - **正式（必加）**：`https://www.your-domain.com/auth/callback`
+   - 预览：`https://your-preview.vercel.app/auth/callback`
    - 本地：`http://localhost:3000/auth/callback`
-3. **Site URL**：正式环境务必设为 `https://www.privacyconvert.online`，不要用 `http://localhost:3000`。  
+3. **Site URL**：正式环境设为你的生产站根 URL（如 `https://www.your-domain.com`）；本地开发可用 `http://localhost:3000`。  
    **重要**：若代码里传的 `emailRedirectTo` 不在 Redirect URLs 白名单中，Supabase 会回退使用这里的 **Site URL**；若 Site URL 是 localhost，邮件里的登录链接就会是 localhost。
 
 这样邮件里的确认/登录链接会跳转到你的站点 `/auth/callback`，由本项目的 callback 逻辑完成登录并进入已登录的网站。
@@ -78,8 +80,8 @@
 确保生产环境配置：
 
 ```bash
-# 当前使用开发域名；正式上线时改为 https://www.privacyconvert.online
-NEXT_PUBLIC_SITE_URL=https://privacyconvert-five.vercel.app
+# 开发用 localhost 或预览 URL；正式上线改为生产站根 URL
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 这样登录页请求 magic link 时会使用该 URL 作为 `emailRedirectTo` 的基础，邮件中的链接会指向生产站而非当前访问的域名。
@@ -92,5 +94,5 @@ NEXT_PUBLIC_SITE_URL=https://privacyconvert-five.vercel.app
 |------|------|
 | 邮件内容体现 PrivacyConvert | 在 Supabase Email Templates 中修改 Confirm signup / Magic Link 的主题和正文，加入 “PrivacyConvert” 和站点说明。 |
 | 发件人显示为 PrivacyConvert | 配置自定义 SMTP，并设置 Sender name 为 PrivacyConvert（可选）。 |
-| 点击链接进入已登录网站 | 在 Redirect URLs 中加入 `https://www.privacyconvert.online/auth/callback` 与本地 URL；设置 Site URL；项目已支持 code 与 hash 两种回调。 |
+| 点击链接进入已登录网站 | 在 Redirect URLs 中加入你的生产站 `/auth/callback` 与本地 URL；设置 Site URL；项目已支持 code 与 hash 两种回调。 |
 | 生产环境链接指向正式站 | 设置 `NEXT_PUBLIC_SITE_URL` 为生产站根 URL。 |

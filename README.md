@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PrivacyConvert
 
-## Getting Started
+Privacy-first file converter that runs **100% in the browser**. Your files never leave your device — no upload to any server. Supports images (AVIF, WebP, PNG, JPEG), audio (WAV, MP3, OGG), video (MP4, WebM, GIF), and documents (PDF, DOCX, HTML). Free for single-file conversion; optional Pro for batch and history.
 
-First, run the development server:
+**Tech:** Next.js 16, React 19, FFmpeg.wasm, Canvas API, Supabase (auth), PayPal (payments).
+
+---
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 18+
+- npm / yarn / pnpm
+
+### Run locally
 
 ```bash
+# Clone and install
+git clone https://github.com/yeary123/privacyconvert.git
+cd privacyconvert
+npm install
+
+# Copy env template and add your keys (see below)
+cp .env.example .env.local
+
+# Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The app works without any env vars for basic conversion; set variables in `.env.local` to enable login, PayPal, newsletter, and analytics.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See **[docs/ENV_KEYS.md](docs/ENV_KEYS.md)** for the full list. Summary:
 
-## Learn More
+| Purpose        | Variables |
+|----------------|-----------|
+| Site URL       | `NEXT_PUBLIC_SITE_URL` |
+| Auth / users   | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` |
+| Payments       | `NEXT_PUBLIC_PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_ID`, `PAYPAL_SECRET`, etc. |
+| Newsletter     | `BREVO_API_KEY` or ConvertKit / Buttondown |
+| Analytics      | `NEXT_PUBLIC_GA_ID` (optional) |
+| Contact email  | `NEXT_PUBLIC_CONTACT_DOMAIN` (optional, for forks) |
 
-To learn more about Next.js, take a look at the following resources:
+Never commit `.env.local` or real keys. Use `.env.example` as a template only.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+- **`app/`** — Next.js App Router (pages, API routes, sitemaps).
+- **`components/`** — React UI and converter components.
+- **`lib/`** — Conversion logic (FFmpeg, Canvas, PDF, docs), Supabase, schema.
+- **`store/`** — Client state (Zustand): auth, Pro.
+- **`docs/`** — Architecture, env keys, adding converters, Supabase/email setup.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For architecture and how to add a new converter, see **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** and **[docs/ADD_CONVERTER.md](docs/ADD_CONVERTER.md)**.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Scripts
+
+| Command       | Description        |
+|---------------|--------------------|
+| `npm run dev` | Start dev server   |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint         |
+
+---
+
+## Contributing
+
+Issues and pull requests are welcome. Please read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ADD_CONVERTER.md](docs/ADD_CONVERTER.md) if you plan to add or change conversion tools.
+
+---
+
+## License
+
+MIT. See [LICENSE](LICENSE).

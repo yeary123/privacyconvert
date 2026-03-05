@@ -1,5 +1,7 @@
 # PrivacyConvert — Promotion Materials (Phase 7)
 
+> **For maintainers:** These are ready-to-use copy for Reddit, ProductHunt, Twitter, etc. When forking, replace `privacyconvert.com` (or the official site URL) with your own deployment URL in links and copy.
+
 ## Reddit post copy
 
 ### r/privacy

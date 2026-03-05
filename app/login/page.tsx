@@ -10,9 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
-// 邮件里的登录链接必须指向正式站。若用 process.env 或 window.origin，在本地/Vercel 未配置时会变成 localhost；
-// 且若此 URL 未加入 Supabase Redirect URLs 白名单，Supabase 会回退到 Dashboard 的 Site URL（若为 localhost 则邮件链接仍是 localhost）
-const EMAIL_CALLBACK_BASE = "https://www.privacyconvert.online";
+// 邮件里的登录链接需与 NEXT_PUBLIC_SITE_URL 一致，并已加入 Supabase Redirect URLs 白名单
+const EMAIL_CALLBACK_BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
 
 export default function LoginPage() {
   const searchParams = useSearchParams();

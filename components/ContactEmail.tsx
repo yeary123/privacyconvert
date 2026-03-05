@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 /**
  * Contact email link. Renders mailto only after client mount so the address
  * is not in the initial HTML, reducing exposure to address-harvesting bots.
- * Email is assembled from parts to avoid a single literal in the bundle.
+ * Set NEXT_PUBLIC_CONTACT_DOMAIN in .env (e.g. your-domain.com) for forks.
  */
 const LOCAL_PART = "support";
-const DOMAIN_PART = "privacyconvert.online";
+const DOMAIN_PART = process.env.NEXT_PUBLIC_CONTACT_DOMAIN ?? "privacyconvert.online";
 
 export function ContactEmail({
   label,
