@@ -3,17 +3,40 @@
  * Submit site URLs to IndexNow (Bing, Yandex, etc.).
  *
  * Prerequisites:
- * 1. Set INDEXNOW_KEY in your env (8–128 chars, a-z, A-Z, 0-9, hyphens).
+ * 1. Set INDEXNOW_KEY in your env or .env.local (8–128 chars, a-z, A-Z, 0-9, hyphens).
  *    Generate at: https://www.bing.com/indexnow/getstarted
  * 2. Deploy the site so the key file is live: https://YOUR_SITE/{INDEXNOW_KEY}.txt
  *
  * Usage:
- *   BASE_URL=https://www.privacyconvert.online INDEXNOW_KEY=your-key node scripts/indexnow-submit.mjs
- *   Or set env in .env.local and run: node scripts/indexnow-submit.mjs
+ *   npm run indexnow
+ *   Or: BASE_URL=https://... INDEXNOW_KEY=your-key node scripts/indexnow-submit.mjs
  *
  * The script fetches sitemap.xml from BASE_URL, extracts <loc> URLs, and POSTs
  * them to https://api.indexnow.org/indexnow (batch, up to 10,000 per request).
  */
+
+import { readFileSync, existsSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const root = join(__dirname, "..");
+const envPath = join(root, ".env.local");
+if (existsSync(envPath)) {
+  const content = readFileSync(envPath, "utf-8");
+  for (const line of content.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eq = trimmed.indexOf("=");
+    if (eq > 0) {
+      const key = trimmed.slice(0, eq).trim();
+      let val = trimmed.slice(eq + 1).trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'")))
+        val = val.slice(1, -1);
+      if (!process.env[key]) process.env[key] = val;
+    }
+  }
+}
 
 const BASE_URL = process.env.BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://www.privacyconvert.online";
 const INDEXNOW_KEY = process.env.INDEXNOW_KEY;
@@ -27,13 +50,28 @@ const host = new URL(BASE_URL).host;
 const keyLocation = `${BASE_URL.replace(/\/$/, "")}/${INDEXNOW_KEY}.txt`;
 const indexNowUrl = "https://api.indexnow.org/indexnow";
 
+const SITEMAP_PATHS = [
+  "/sitemap.xml",
+  "/sitemaps/image/sitemap.xml",
+  "/sitemaps/media/sitemap.xml",
+  "/sitemaps/other/sitemap.xml",
+];
+
 async function fetchSitemapUrls() {
-  const sitemapUrl = `${BASE_URL.replace(/\/$/, "")}/sitemap.xml`;
-  const res = await fetch(sitemapUrl);
-  if (!res.ok) throw new Error(`Sitemap fetch failed: ${res.status} ${sitemapUrl}`);
-  const xml = await res.text();
-  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
-  return locs;
+  const base = BASE_URL.replace(/\/$/, "");
+  const allUrls = new Set();
+  for (const path of SITEMAP_PATHS) {
+    const sitemapUrl = `${base}${path}`;
+    const res = await fetch(sitemapUrl);
+    if (!res.ok) {
+      console.warn(`Skipping ${sitemapUrl}: ${res.status}`);
+      continue;
+    }
+    const xml = await res.text();
+    const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
+    locs.forEach((u) => allUrls.add(u));
+  }
+  return [...allUrls];
 }
 
 async function submitBatch(urlList) {
