@@ -93,6 +93,21 @@ If none are set, the subscribe API still returns success (placeholder behavior) 
 
 ---
 
+## 6. IndexNow (Bing / Yandex 等快速收录)
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `INDEXNOW_KEY` | IndexNow API key（8–128 位，仅 a-z、A-Z、0-9、连字符） | 需要启用 IndexNow 时必填 |
+
+**配置步骤：**
+
+1. **生成 Key**：打开 [Bing IndexNow 入门](https://www.bing.com/indexnow/getstarted)，点击 “Generate” 得到一串 key（或自拟符合规则的 key）。
+2. **设置环境变量**：在部署环境（Vercel / 自建等）和本地 `.env.local` 中设置 `INDEXNOW_KEY=你的key`。
+3. **验证 key 文件**：部署后访问 `https://你的域名/{INDEXNOW_KEY}.txt`，应返回与 key 相同的纯文本（由本站通过 env 动态提供，无需在仓库中放真实 key）。
+4. **提交 URL**：可选。发布或更新内容后，可运行 `npm run indexnow`（需已设置 `INDEXNOW_KEY` 和 `BASE_URL` 或 `NEXT_PUBLIC_SITE_URL`），脚本会拉取站点的 `sitemap.xml` 并将 URL 批量提交到 IndexNow；也可在 Bing Webmaster Tools 中查看收录情况。
+
+---
+
 ## Summary by platform
 
 | Platform | Variables | Purpose |
@@ -102,6 +117,7 @@ If none are set, the subscribe API still returns success (placeholder behavior) 
 | **PayPal** | `NEXT_PUBLIC_PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_ID`, `PAYPAL_SECRET`, `PAYPAL_WEBHOOK_ID` (optional), `PAYPAL_SANDBOX` (optional), `NEXT_PUBLIC_PAYPAL_PLAN_*` (subscription only) | Payments & Webhook |
 | **Newsletter** | `BREVO_API_KEY` (+ `BREVO_LIST_ID`) or ConvertKit/Buttondown | Email subscription |
 | **Google** | `NEXT_PUBLIC_GA_ID` | GA4 analytics |
+| **IndexNow** | `INDEXNOW_KEY` | Bing/Yandex 等快速收录；key 文件由站点根路径 `/{key}.txt` 动态提供 |
 
 ---
 
@@ -135,4 +151,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 # Google Analytics
 # NEXT_PUBLIC_GA_ID=
+
+# IndexNow (Bing / Yandex 快速收录；生成 key: https://www.bing.com/indexnow/getstarted)
+# INDEXNOW_KEY=
 ```
