@@ -5,6 +5,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getBlogSlugs, getPostBySlug, getPrevNextSlugs } from "@/lib/blog";
 import { getPostCoverUrl } from "@/lib/blog-utils";
+import { CopyInvisibleChar } from "@/components/CopyInvisibleChar";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.privacyconvert.online";
 
@@ -139,6 +140,9 @@ export default async function BlogPostPage({ params }: Props) {
               options={{
                 parseFrontmatter: true,
                 mdxOptions: { remarkPlugins: [remarkGfm] },
+              }}
+              components={{
+                CopyInvisibleChar,
               }}
             />
           </div>
